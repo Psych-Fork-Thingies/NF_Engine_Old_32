@@ -188,7 +188,7 @@
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 
 	<!-- _________________________________ Android Stuff _______________________________ -->
-	<android target-sdk-version="29" if="EXTERNAL || MEDIA"/>
+	<android target-sdk-version="29"/>
 	<android requestLegacyExternalStorage="true"/>
 	<config:android permission="android.permission.WRITE_EXTERNAL_STORAGE" if="android"/>
   <config:android gradle-version="7.5.1" />
