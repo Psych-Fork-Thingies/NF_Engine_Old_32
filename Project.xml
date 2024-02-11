@@ -188,17 +188,15 @@
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 
 	<!-- _________________________________ Android Stuff _______________________________ -->
-	<section if="android">
-			<!-- Do whatever you want I'm tired uninstall and install everytime -->
-			<certificate path="key.keystore" password="nullfunni" alias="null" alias-password="nullfunni" unless="debug" />
+  <!-- Do whatever you want I'm tired uninstall and install everytime -->
+  <certificate path="key.keystore" password="nullfunni" alias="null" alias-password="nullfunni" unless="debug" />
 
-			<!--Target SDK-->
-			<android target-sdk-version="29"/>
+  <!--Target SDK-->
+  <android target-sdk-version="29"/>
 
-			<android requestLegacyExternalStorage="true"/>
+  <android requestLegacyExternalStorage="true"/>
 
-		       <config:android permission="android.permission.MANAGE_EXTERNAL_STORAGE"/>
-		</section>
+  <config:android permission="android.permission.MANAGE_EXTERNAL_STORAGE"/>
   <config:android gradle-version="7.5.1" />
   <config:android gradle-plugin="7.3.1" />
 
