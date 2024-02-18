@@ -13,17 +13,17 @@
             "version":"9.1.0"
         },
         {
-            "name":"flixel",
-            "type":"haxelib",
-            "version":"4.11.0"
-        },
-        {
             "name": "flixel",
             "type": "git",
             "dir": null,
             "ref": "dev",
             "url": "https://github.com/beihu235/flixel"
         },
+        {
+            "name": "flixel-addons",
+            "type": "haxelib",
+            "version": null
+    },
         {
             "name":"flixel-tools",
             "type":"haxelib",
