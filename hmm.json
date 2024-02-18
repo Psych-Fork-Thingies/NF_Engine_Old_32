@@ -1,11 +1,9 @@
 {
     "dependencies":[
         {
-            "name": "lime",
-            "type": "git",
-            "dir": null,
-            "ref": "main",
-            "url": "https://github.com/mcagabe19-stuff/lime"
+            "name":"lime",
+            "type":"haxelib",
+            "version":"7.9.0"
         },
         {
             "name":"openfl",
@@ -33,11 +31,9 @@
             "version":null
         },
         {
-            "name": "hxcpp"
-            "type": "git",
-            "dir": null,
-            "ref": "master",
-            "url": "https://github.com/mcagabe19-stuff/hxcpp"
+            "name":"hxcpp",
+            "type":"haxelib",
+            "version":"4.2.1"
         },
         {
             "name":"tjson",
@@ -88,4 +84,4 @@
             "url":"https://github.com/MaysLastPlay77/extension-androidtools"
         }
     ]
-}
+        }
