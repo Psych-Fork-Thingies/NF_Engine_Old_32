@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin' NF Engine" file="NF Engine" packageName="com.NFengine" package="com.NFengine" main="Main" version="1.0.1" company="ShadowMario" />
+	<app title="FNF' NF Engine 0.6.3" file="NF Engine" packageName="com.NFengine063" package="com.NFengine063" main="Main" version="1.0.1" company="ShadowMario" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -188,18 +188,8 @@
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 
 	<!-- _________________________________ Android Stuff _______________________________ -->
-
-		<section if="android">
-			<!-- Do whatever you want I'm tired uninstall and install everytime -->
-			<certificate path="key.keystore" password="nullfunni" alias="null" alias-password="nullfunni" unless="debug" />
-
-			<!--Target SDK-->
-			<android target-sdk-version="29"/>
-
-			<android requestLegacyExternalStorage="true"/>
-		        <config:android permission="android.permission.READ_EXTERNAL_STORAGE"/>
-		        <config:android permission="android.permission.WRITE_EXTERNAL_STORAGE"/>
-		</section>
+	<config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>
+	<config:android permission="android.permission.WRITE_EXTERNAL_STORAGE" if="android"/>
   <config:android gradle-version="7.5.1" />
   <config:android gradle-plugin="7.3.1" />
 
