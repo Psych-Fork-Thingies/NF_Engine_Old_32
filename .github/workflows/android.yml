@@ -33,8 +33,8 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install hmm --quiet
-          haxelib run hmm install --quiet
+          haxelib install hmm2 --quiet
+          haxelib run hmm2 install --quiet
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
 
