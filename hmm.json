@@ -1,9 +1,11 @@
 {
     "dependencies":[
         {
-            "name":"lime",
-            "type":"haxelib",
-            "version":"7.9.0"
+            "name": "lime",
+            "type": "git",
+            "dir": null,
+            "ref": "main",
+            "url": "https://github.com/beihu235/lime"
         },
         {
             "name":"openfl",
@@ -16,9 +18,11 @@
             "version":"4.11.0"
         },
         {
-            "name":"flixel-addons",
-            "type":"haxelib",
-            "version":"2.11.0"
+            "name": "flixel",
+            "type": "git",
+            "dir": null,
+            "ref": "dev",
+            "url": "https://github.com/beihu235/flixel"
         },
         {
             "name":"flixel-tools",
@@ -31,9 +35,11 @@
             "version":null
         },
         {
-            "name":"hxcpp",
-            "type":"haxelib",
-            "version":"4.2.1"
+            "name": "hxcpp",
+            "type": "git",
+            "dir": null,
+            "ref": "master",
+            "url": "https://github.com/beihu235/hxcpp"
         },
         {
             "name":"tjson",
