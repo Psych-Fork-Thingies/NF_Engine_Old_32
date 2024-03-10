@@ -8,9 +8,9 @@ import Controls;
 
 class ClientPrefs {
 	public static var downScroll:Bool = true;
-	public static var middleScroll:Bool = false;
+	public static var middleScroll:Bool = true;
 	public static var opponentStrums:Bool = true;
-	public static var showFPS:Bool = true;
+	public static var showFPS:Bool = false;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
@@ -42,8 +42,8 @@ class ClientPrefs {
 	public static var hitboxmode:String = 'New';  //starting new way to change between hitboxes yay
     
 	public static var hitboxExtend = true;
-	public static var hitboxLocation:String = 'Bottom';
-	public static var hitboxalpha:Float = 0.2; //someone request this lol
+	public static var hitboxLocation:String = 'Top';
+	public static var hitboxalpha:Float = 0; //someone request this lol
 	public static var VirtualPadAlpha:Float = 0.75;
 	public static var VirtualPadSPACE:Array<Float> = [FlxG.width - 44 * 3, FlxG.height - 45 * 3];
 	public static var gameplaySettings:Map<String, Dynamic> = [
@@ -62,7 +62,7 @@ class ClientPrefs {
 		'healthgain' => 1.0,
 		'healthloss' => 1.0,
 		'instakill' => false,
-		'practice' => false,
+		'practice' => true,
 		'botplay' => false,
 		'opponentplay' => false
 	];
