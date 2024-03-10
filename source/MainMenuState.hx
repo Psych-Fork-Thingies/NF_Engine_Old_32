@@ -43,8 +43,8 @@ class MainMenuState extends MusicBeatState
 		//#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		'credits',
 		//#if !switch 'donate', #end
-		'options'
-		'test_button',
+		'options',
+		'test_button'
 	];
 
 	var magenta:FlxSprite;
