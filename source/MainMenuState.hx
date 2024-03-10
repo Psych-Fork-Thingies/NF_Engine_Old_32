@@ -44,7 +44,7 @@ class MainMenuState extends MusicBeatState
 		'credits',
 		//#if !switch 'donate', #end
 		'options',
-		'test_button'
+		//'test_button'
 	];
 
 	var magenta:FlxSprite;
@@ -254,7 +254,7 @@ class MainMenuState extends MusicBeatState
         */
         
 		#if android
-		addVirtualPad(UP_DOWN, A_B_E);
+		addVirtualPad(UP_DOWN, A_B_E_D);
 		//_virtualpad.cameras = [camHUD];
 		#end
 		
@@ -345,7 +345,7 @@ class MainMenuState extends MusicBeatState
 			            
 					}
 				}
-				if (FlxG.mouse.pressed && canClick){
+				if (FlxG.mouse.pressed && canClick && _virtualpad.buttonD.justPressed){
 			    curSelected = spr.ID;
 			    	
 			    if (spr.animation.curAnim.name == 'idle') FlxG.sound.play(Paths.sound('scrollMenu'));	 
@@ -381,6 +381,11 @@ class MainMenuState extends MusicBeatState
 				MusicBeatState.switchState(new TitleState());
 			}		
 	
+			else if (_virtualpad.buttonD.justPressed)
+			{
+				selectedSomethin = true;
+				openSubState(new GameplayChangersSubstate());
+			}
 			
 			#if (desktop || android)
 			else if (FlxG.keys.anyJustPressed(debugKeys) #if android || _virtualpad.buttonE.justPressed #end)
@@ -504,8 +509,8 @@ class MainMenuState extends MusicBeatState
 							MusicBeatState.switchState(new options.OptionsState());
 						case 'credits':
 							MusicBeatState.switchState(new CreditsState());	
-						case 'test_button':
-							MusicBeatState.switchState(new options.GameplaySettingsSubState());
+						//case 'test_button':
+							//openSubState(new GameplayChangersSubstate());
 					    }
 				}    
 		});
