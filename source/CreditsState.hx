@@ -106,8 +106,8 @@ class CreditsState extends MusicBeatState
 
 		    ['NF Engine Old 32 Team'],
 		      //['KralOyuncu',		'KralOyuncu',		'Owner',							'https://youtube.com/@KralOyuncuRBX',	'FFC0CB'],
-			['Prohack101010',		'Prohack101010',		'32 bit support',							'https://youtube.com/@KralOyuncuRBX',	'FFC0CB'],
-			['Prohack202020',		'Prohack202020',		'Helper and video script fixer',							'https://github.com/Prohack202020',	'5DE7FF'],
+			['Prohack101010',		'Prohack101010',		'32 bit support and video sprite script fixer',							'https://youtube.com/@KralOyuncuRBX',	'FFC0CB'],
+			['Prohack202020',		'Prohack202020',		'Helper',							'https://github.com/Prohack202020',	'5DE7FF'],
 			[''],
 		    ['NF Engine Team'],
 			['beihu',		'beihu',		'Main Programmer',							'https://b23.tv/LVj0JVk',	'FFC0CB'],
