@@ -44,6 +44,7 @@ class MainMenuState extends MusicBeatState
 		'credits',
 		//#if !switch 'donate', #end
 		'options'
+		'test_button',
 	];
 
 	var magenta:FlxSprite;
@@ -213,7 +214,7 @@ class MainMenuState extends MusicBeatState
 		versionShit.antialiasing = ClientPrefs.globalAntialiasing;
 		add(versionShit);
 		//versionShit.cameras = [camHUD];
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + '0.2.8', 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + '0.0.0', 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -253,7 +254,7 @@ class MainMenuState extends MusicBeatState
         */
         
 		#if android
-		addVirtualPad(NONE, B_E);
+		addVirtualPad(UP_DOWN, B_E);
 		//_virtualpad.cameras = [camHUD];
 		#end
 		
@@ -503,6 +504,8 @@ class MainMenuState extends MusicBeatState
 							MusicBeatState.switchState(new options.OptionsState());
 						case 'credits':
 							MusicBeatState.switchState(new CreditsState());	
+						case 'test_button':
+							MusicBeatState.switchState(new StoryMenuState());
 					    }
 				}    
 		});
