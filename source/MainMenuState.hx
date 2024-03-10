@@ -505,7 +505,7 @@ class MainMenuState extends MusicBeatState
 						case 'credits':
 							MusicBeatState.switchState(new CreditsState());	
 						case 'test_button':
-							MusicBeatState.switchState(new StoryMenuState());
+							MusicBeatState.switchState(new options.GameplaySettingsSubState());
 					    }
 				}    
 		});
