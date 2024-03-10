@@ -115,7 +115,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	{
 		super();
 		
-		var bg:FlxSprite = new FlxSprite().makeGraphic(10000, 10000, FlxColor.BLACK);
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0.6;
 		add(bg);
 
@@ -133,7 +133,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		for (i in 0...optionsArray.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, 360, optionsArray[i].name, true);
+			var optionText:Alphabet = new Alphabet(200, 360, optionsArray[i].name, true);
 			optionText.isMenuItem = true;
 			optionText.scaleX = 0.8;
 			optionText.scaleY = 0.8;
@@ -141,12 +141,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			grpOptions.add(optionText);
 
 			if(optionsArray[i].type == 'bool') {
-				optionText.x += -110;
+				optionText.x += 110;
 				optionText.startPosition.x += 110;
 				optionText.snapToPosition();
 				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
-				checkbox.offsetX -= 22;
+				checkbox.offsetX -= 32;
 				checkbox.offsetY = -120;
 				checkbox.ID = i;
 				checkboxGroup.add(checkbox);

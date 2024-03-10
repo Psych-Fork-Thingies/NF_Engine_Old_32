@@ -383,8 +383,11 @@ class MainMenuState extends MusicBeatState
 	
 			else if (_virtualpad.buttonD.justPressed)
 			{
-				selectedSomethin = true;
-				openSubState(new GameplayChangersSubstate());
+				//selectedSomethin = true;
+		        //openSubState(new GameplayChangersSubstate());
+		        FlxTransitionableState.skipNextTransIn = true;
+			    FlxTransitionableState.skipNextTransOut = true;
+			    MusicBeatState.switchState(new android.AndroidControlsMenu());
 			}
 			
 			#if (desktop || android)
