@@ -385,7 +385,7 @@ class MainMenuState extends MusicBeatState
 				selectedSomethin = true;
 		        FlxTransitionableState.skipNextTransIn = true;
 			    FlxTransitionableState.skipNextTransOut = true;
-			    MusicBeatState.switchState(new OptionsState());
+			    MusicBeatState.switchState(new options.OptionsState());
 			    openSubState(new android.HitboxSettingsSubState());
 			}
 				
@@ -394,8 +394,7 @@ class MainMenuState extends MusicBeatState
 				selectedSomethin = true;
 		        FlxTransitionableState.skipNextTransIn = true;
 			    FlxTransitionableState.skipNextTransOut = true;
-			    MusicBeatState.switchState(new OptionsState());
-			    openSubState(new android.AndroidControlsMenu());
+			    MusicBeatState.switchState(new android.AndroidControlsMenu());
 			}
 			
 			#if (desktop || android)
