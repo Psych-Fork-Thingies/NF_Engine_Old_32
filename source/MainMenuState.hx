@@ -385,7 +385,7 @@ class MainMenuState extends MusicBeatState
 				selectedSomethin = true;
 		        FlxTransitionableState.skipNextTransIn = true;
 			    FlxTransitionableState.skipNextTransOut = true;
-			    openSubState(new HitboxSettingsSubState());
+			    openSubState(new android.HitboxSettingsSubState());
 			}
 			
 			#if (desktop || android)
