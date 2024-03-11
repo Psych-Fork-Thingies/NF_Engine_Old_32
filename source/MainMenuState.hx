@@ -253,7 +253,7 @@ class MainMenuState extends MusicBeatState
         */
         
 		#if android
-		addVirtualPad(NONE, A_B_E_D);
+		addVirtualPad(NONE, Z_A_B_E_D);
 		//_virtualpad.cameras = [camHUD];
 		#end
 		
@@ -380,12 +380,22 @@ class MainMenuState extends MusicBeatState
 				MusicBeatState.switchState(new TitleState());
 			}	
 				
+			else if (_virtualpad.buttonZ.justPressed)
+			{
+				selectedSomethin = true;
+		        FlxTransitionableState.skipNextTransIn = true;
+			    FlxTransitionableState.skipNextTransOut = true;
+			    MusicBeatState.switchState(new OptionsState());
+			    openSubState(new android.HitboxSettingsSubState());
+			}
+				
 			else if (_virtualpad.buttonD.justPressed)
 			{
 				selectedSomethin = true;
 		        FlxTransitionableState.skipNextTransIn = true;
 			    FlxTransitionableState.skipNextTransOut = true;
-			    openSubState(new android.HitboxSettingsSubState());
+			    MusicBeatState.switchState(new OptionsState());
+			    openSubState(new android.AndroidControlsMenu.hx());
 			}
 			
 			#if (desktop || android)
