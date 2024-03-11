@@ -386,7 +386,7 @@ class MainMenuState extends MusicBeatState
 		        FlxTransitionableState.skipNextTransIn = true;
 			    FlxTransitionableState.skipNextTransOut = true;
 			    MusicBeatState.switchState(new options.OptionsState());
-			    openSubState(new android.HitboxSettingsSubState());
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
 				
 			else if (_virtualpad.buttonD.justPressed)
