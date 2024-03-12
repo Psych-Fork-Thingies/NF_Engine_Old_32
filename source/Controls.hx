@@ -51,6 +51,9 @@ enum abstract Action(String) to String from String
 	var BACK = "back";
 	var PAUSE = "pause";
 	var RESET = "reset";
+	var R = 'r';
+	var R_P = 'r-press';
+	var R_R = 'r-release';
 	var SPACE = 'space';
 	var SPACE_P = 'space-press';
 	var SPACE_R = 'space-release';
@@ -87,6 +90,7 @@ abstract Action(String) to String from String
 	var BACK = "back";
 	var PAUSE = "pause";
 	var RESET = "reset";
+	var R = 'r'
 	var SPACE = 'space';
 }
 #end
@@ -116,6 +120,7 @@ enum Control
 	ACCEPT;
 	BACK;
 	PAUSE;
+	R;
 	SPACE;
 }
 
@@ -161,6 +166,9 @@ class Controls extends FlxActionSet
 	var _back = new FlxActionDigital(Action.BACK);
 	var _pause = new FlxActionDigital(Action.PAUSE);
 	var _reset = new FlxActionDigital(Action.RESET);
+    var _r = new FlxActionDigital(Action.R);
+	var _rP = new FlxActionDigital(Action.R_P);
+	var _rR = new FlxActionDigital(Action.R_R);
 	var _space = new FlxActionDigital(Action.SPACE);
 	var _spaceP = new FlxActionDigital(Action.SPACE_P);
 	var _spaceR = new FlxActionDigital(Action.SPACE_R);
@@ -314,6 +322,21 @@ class Controls extends FlxActionSet
 	inline function get_RESET()
 		return _reset.check();
 	
+	public var R(get, never):Bool;
+
+	inline function get_R()
+		return _r.check();		
+	
+	public var R_R(get, never):Bool;
+
+	inline function get_R_R()
+		return _RR.check();		
+		
+	public var R_P(get, never):Bool;
+
+	inline function get_R_P()
+		return _RP.check();			
+	
 	public var SPACE(get, never):Bool;
 
 	inline function get_SPACE()
@@ -362,6 +385,9 @@ class Controls extends FlxActionSet
 		add(_back);
 		add(_pause);
 		add(_reset);
+		add(_r);
+		add(_rP);
+		add(_rR);
 		add(_space);
 		add(_spaceP);
 		add(_spaceR);
@@ -404,6 +430,9 @@ class Controls extends FlxActionSet
 		add(_back);
 		add(_pause);
 		add(_reset);
+		add(_r);
+		add(_rP);
+		add(_rR);
 		add(_space);
 		add(_spaceP);
 		add(_spaceR);
@@ -466,7 +495,8 @@ class Controls extends FlxActionSet
 		inline forEachBound(Control.NOTE_LEFT, (action, state) -> addButtonNOTES(action, Hitbox.buttonLeft, state));
 		inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addButtonNOTES(action, Hitbox.buttonRight, state));
 		inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addButtonNOTES(action, Hitbox.buttonRight, state));
-		inline forEachBound(Control.SPACE, (action, state) -> addbuttonUI(action, Hitbox.buttonSpace, state));
+		inline forEachBound(Control.R, (action, state) -> addbuttonUI(action, Hitbox.buttonR, state));
+		inline forEachBound(Control.SPACE, (action, state) -> addbuttonUI(action, Hitbox.buttonSPACE, state));
 	}
 	
 	public function setVirtualPadUI(virtualPad:FlxVirtualPad, ?DPad:FlxDPadMode, ?Action:FlxActionMode) 
@@ -685,6 +715,7 @@ class Controls extends FlxActionSet
 			case BACK: _back;
 			case PAUSE: _pause;
 			case RESET: _reset;
+			case R: _r;
 			case SPACE: _space;
 		}
 	}
@@ -745,6 +776,10 @@ class Controls extends FlxActionSet
 				func(_pause, JUST_PRESSED);
 			case RESET:
 				func(_reset, JUST_PRESSED);
+			case R:
+				func(_r, PRESSED);
+				func(_rP, JUST_PRESSED);
+				func(_rR, JUST_RELEASED)
 			case SPACE:
 				func(_space, PRESSED);
 				func(_spaceP, JUST_PRESSED);
