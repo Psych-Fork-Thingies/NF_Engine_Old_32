@@ -172,7 +172,6 @@ class ClientPrefs {
 		FlxG.save.data.hitboxmode = hitboxmode;
 		FlxG.save.data.hitboxalpha = hitboxalpha;
 		FlxG.save.data.VirtualPadAlpha = VirtualPadAlpha;
-		FlxG.save.data.VirtualPadSHIFT = VirtualPadSHIFT;
 		FlxG.save.data.VirtualPadSPACE = VirtualPadSPACE;
 	    FlxG.save.data.hitboxExtend = hitboxExtend;
 	    FlxG.save.data.hitboxLocation = hitboxLocation;
@@ -278,9 +277,6 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.comboOffset != null) {
 			comboOffset = FlxG.save.data.comboOffset;
-		}
-		if(FlxG.save.data.VirtualPadSHIFT != null) {
-			VirtualPadSHIFT = FlxG.save.data.VirtualPadSHIFT;
 		}
 		if(FlxG.save.data.VirtualPadSPACE != null) {
 			VirtualPadSPACE = FlxG.save.data.VirtualPadSPACE;
