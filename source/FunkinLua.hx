@@ -1472,7 +1472,7 @@ class FunkinLua {
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
-				case 'r': key = (PlayState.instance.getControl('R_P') || FlxG.keys.justPressed.SHIFT);//an extra key for convinience
+				case 'r': key = (PlayState.instance.getControl('R_P') || FlxG.keys.justPressed.R);//an extra key for convinience
 				case 'space': key = (PlayState.instance.getControl('SPACE_P') || FlxG.keys.justPressed.SPACE);//an extra key for convinience
 			}
 			return key;
@@ -1484,7 +1484,7 @@ class FunkinLua {
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
-				case 'r': key = (PlayState.instance.getControl('R') || FlxG.keys.pressed.SHIFT);//an extra key for convinience
+				case 'r': key = (PlayState.instance.getControl('R') || FlxG.keys.pressed.R);//an extra key for convinience
 				case 'space': key = (PlayState.instance.getControl('SPACE') || FlxG.keys.pressed.SPACE);//an extra key for convinience
 			}
 			return key;
