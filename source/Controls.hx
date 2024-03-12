@@ -779,7 +779,7 @@ class Controls extends FlxActionSet
 			case R:
 				func(_r, PRESSED);
 				func(_rP, JUST_PRESSED);
-				func(_rR, JUST_RELEASED)
+				func(_rR, JUST_RELEASED);
 			case SPACE:
 				func(_space, PRESSED);
 				func(_spaceP, JUST_PRESSED);
