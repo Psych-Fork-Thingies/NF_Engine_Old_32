@@ -3481,6 +3481,26 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
+    function PauseMenuButtons()
+	{
+		persistentUpdate = false;
+		addVirtualPad(FULL, A);
+	}
+
+    function openOptionsMenu()
+	{
+		persistentUpdate = false;
+		MoveOption = true;
+		PlayState.deathCounter = 0;
+		PlayState.seenCutscene = false;
+		MusicBeatState.switchState(new options.OptionsState());
+		FlxG.sound.playMusic(Paths.music('freakyMenu'));
+
+		#if desktop
+		DiscordClient.changePresence("Options Menu", null, null, true);
+		#end
+	}
+
 	function openChartEditor()
 	{
 		persistentUpdate = false;
