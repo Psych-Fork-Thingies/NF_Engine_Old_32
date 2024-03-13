@@ -1056,6 +1056,57 @@ class FunkinLua {
 			return true;
 		});
 
+        public static function implement(funk:FunkinLua)
+        {
+             funk.set("addVirtualPad", (DPadMode:String, ActionMode:String) ->
+		{
+			PlayState.instance.makeLuaVirtualPad(DPadMode, ActionMode);
+			PlayState.instance.addLuaVirtualPad();
+		});
+
+		funk.set("removeVirtualPad", () ->
+		{
+			PlayState.instance.removeLuaVirtualPad();
+		});
+
+		funk.set("addVirtualPadCamera", () ->
+		{
+			if (PlayState.instance.luaVirtualPad == null)
+			{
+				FunkinLua.luaTrace('addVirtualPadCamera: Virtual Pad does not exist.');
+				return;
+			}
+			PlayState.instance.addLuaVirtualPadCamera();
+		});
+
+		funk.set("virtualPadJustPressed", function(button:Dynamic):Bool
+		{
+			if (PlayState.instance.luaVirtualPad == null)
+			{
+				return false;
+			}
+			return PlayState.instance.luaVirtualPadJustPressed(button);
+		});
+
+		funk.set("virtualPadPressed", function(button:Dynamic):Bool
+		{
+			if (PlayState.instance.luaVirtualPad == null)
+			{
+				return false;
+			}
+			return PlayState.instance.luaVirtualPadPressed(button);
+		});
+
+		funk.set("virtualPadJustReleased", function(button:Dynamic):Bool
+		{
+			if (PlayState.instance.luaVirtualPad == null)
+			{
+				return false;
+			}
+			return PlayState.instance.luaVirtualPadJustReleased(button);
+		});
+	   }
+
 		//shitass stuff for epic coders like me B)  *image of obama giving himself a medal*
 		Lua_helper.add_callback(lua, "getObjectOrder", function(obj:String) {
 			var killMe:Array<String> = obj.split('.');
@@ -1460,6 +1511,25 @@ class FunkinLua {
 			}
 			return Reflect.getProperty(controller.justReleased, name) == true;
 		});
+
+
+        Lua_helper.add_callback(lua, "addvirtualpad", function(name:String) {
+			var key:Bool = false;
+			switch(name) {
+				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_P');
+				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_P');
+				case 'up': key = PlayState.instance.getControl('NOTE_UP_P');
+				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_P');
+				case 'accept': key = PlayState.instance.getControl('ACCEPT');
+				case 'back': key = PlayState.instance.getControl('BACK');
+				case 'pause': key = PlayState.instance.getControl('PAUSE');
+				case 'reset': key = PlayState.instance.getControl('RESET');
+				case 'shift': key = (PlayState.instance.getControl('SHIFT_P') || FlxG.keys.justPressed.SHIFT);//an extra key for convinience
+				case 'space': key = (PlayState.instance.getControl('SPACE_P') || FlxG.keys.justPressed.SPACE);//an extra key for convinience
+			}
+			return key;
+		});
+
 
 		Lua_helper.add_callback(lua, "keyJustPressed", function(name:String) {
 			var key:Bool = false;
