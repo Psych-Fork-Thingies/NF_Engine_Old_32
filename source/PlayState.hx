@@ -3490,7 +3490,6 @@ class PlayState extends MusicBeatState
     function openOptionsMenu()
 	{
 		persistentUpdate = false;
-		MoveOption = true;
 		PlayState.deathCounter = 0;
 		PlayState.seenCutscene = false;
 		MusicBeatState.switchState(new options.OptionsState());
