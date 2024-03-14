@@ -614,6 +614,15 @@ public var EXTRA4(get, never):Bool;
 		inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addButtonNOTES(action, Hitbox.buttonRight, state));
 		inline forEachBound(Control.SHIFT, (action, state) -> addbuttonUI(action, Hitbox.buttonShift, state));
 		inline forEachBound(Control.SPACE, (action, state) -> addbuttonUI(action, Hitbox.buttonSpace, state));
+	}
+	
+	public function setNewHitBox(Hitbox:FlxMaxHitbox)
+	{
+		inline forEachBound(Control.NOTE_UP, (action, state) -> addButtonNOTES(action, Hitbox.buttonUp, state));
+		inline forEachBound(Control.NOTE_DOWN, (action, state) -> addButtonNOTES(action, Hitbox.buttonDown, state));
+		inline forEachBound(Control.NOTE_LEFT, (action, state) -> addButtonNOTES(action, Hitbox.buttonLeft, state));
+		inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addButtonNOTES(action, Hitbox.buttonRight, state));
+		inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addButtonNOTES(action, Hitbox.buttonRight, state));
 		inline forEachBound(Control.EXTRA1, (action, state) -> addbuttonUI(action, Hitbox.buttonExtra1, state));
 		inline forEachBound(Control.EXTRA2, (action, state) -> addbuttonUI(action, Hitbox.buttonExtra2, state));
 		inline forEachBound(Control.EXTRA3, (action, state) -> addbuttonUI(action, Hitbox.buttonExtra3, state));
