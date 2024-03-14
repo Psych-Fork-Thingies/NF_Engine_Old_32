@@ -616,7 +616,7 @@ public var EXTRA4(get, never):Bool;
 		inline forEachBound(Control.SPACE, (action, state) -> addbuttonUI(action, Hitbox.buttonSpace, state));
 	}
 	
-	public function setNewHitBox(Hitbox:FlxMaxHitbox)
+	public function setMaxHitBox(Hitbox:FlxMaxHitbox)
 	{
 		inline forEachBound(Control.NOTE_UP, (action, state) -> addButtonNOTES(action, Hitbox.buttonUp, state));
 		inline forEachBound(Control.NOTE_DOWN, (action, state) -> addButtonNOTES(action, Hitbox.buttonDown, state));
