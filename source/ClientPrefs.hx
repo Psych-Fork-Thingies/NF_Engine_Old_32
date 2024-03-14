@@ -42,6 +42,7 @@ class ClientPrefs {
 	public static var hitboxmode:String = 'New';  //starting new way to change between hitboxes yay
     
 	public static var hitboxExtend = true;
+	public static var hitboxMaxExtend = true;
 	public static var hitboxLocation:String = 'Top';
 	public static var hitboxalpha:Float = 0; //someone request this lol
 	public static var VirtualPadAlpha:Float = 0.75;
@@ -174,6 +175,7 @@ class ClientPrefs {
 		FlxG.save.data.VirtualPadAlpha = VirtualPadAlpha;
 		FlxG.save.data.VirtualPadSPACE = VirtualPadSPACE;
 	    FlxG.save.data.hitboxExtend = hitboxExtend;
+	    FlxG.save.data.hitboxMaxExtend = hitboxMaxExtend;
 	    FlxG.save.data.hitboxLocation = hitboxLocation;
 	        // new extend
 	
@@ -316,6 +318,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.hitboxExtend != null) {
 			hitboxExtend = FlxG.save.data.hitboxExtend;
+		}
+		if(FlxG.save.data.hitboxMaxExtend != null) {
+			hitboxMaxExtend = FlxG.save.data.hitboxMaxExtend;
 		}
 		if(FlxG.save.data.hitboxalpha != null) {
 			hitboxalpha = FlxG.save.data.hitboxalpha;

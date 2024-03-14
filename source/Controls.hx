@@ -15,6 +15,7 @@ import flixel.input.keyboard.FlxKey;
 import flixel.group.FlxGroup;
 import android.FlxHitbox;
 import android.FlxNewHitbox;
+import android.FlxMaxHitbox;
 import android.FlxVirtualPad;
 import flixel.ui.FlxButton;
 import android.flixel.FlxButton as FlxNewButton;
@@ -57,6 +58,18 @@ enum abstract Action(String) to String from String
 	var SPACE = 'space';
 	var SPACE_P = 'space-press';
 	var SPACE_R = 'space-release';
+	var EXTRA1 = 'shift';
+	var EXTRA1_P = 'shift-press';
+	var EXTRA1_R = 'shift-release';
+	var EXTRA2 = 'shift';
+	var EXTRA2_P = 'shift-press';
+	var EXTRA2_R = 'shift-release';
+	var EXTRA3 = 'shift';
+	var EXTRA3_P = 'shift-press';
+	var EXTRA3_R = 'shift-release';
+	var EXTRA4 = 'shift';
+	var EXTRA4_P = 'shift-press';
+	var EXTRA4_R = 'shift-release';
 }
 #else
 @:enum
@@ -92,6 +105,10 @@ abstract Action(String) to String from String
 	var RESET = "reset";
 	var SHIFT = 'shift';
 	var SPACE = 'space';
+	var EXTRA1 = 'extra1';
+	var EXTRA2 = 'extra2';
+	var EXTRA3 = 'extra3';
+	var EXTRA4 = 'extra4';
 }
 #end
 
@@ -122,6 +139,10 @@ enum Control
 	PAUSE;
 	SHIFT;
 	SPACE;
+	EXTRA1;
+	EXTRA2;
+	EXTRA3;
+	EXTRA4;
 }
 
 enum KeyboardScheme
@@ -172,6 +193,18 @@ class Controls extends FlxActionSet
 	var _space = new FlxActionDigital(Action.SPACE);
 	var _spaceP = new FlxActionDigital(Action.SPACE_P);
 	var _spaceR = new FlxActionDigital(Action.SPACE_R);
+	var _extra1 = new FlxActionDigital(Action.EXTRA1);
+	var _extra1P = new FlxActionDigital(Action.EXTRA1_P);
+	var _extra1R = new FlxActionDigital(Action.EXTRA1_R);
+	var _extra2 = new FlxActionDigital(Action.EXTRA2);
+	var _extra2P = new FlxActionDigital(Action.EXTRA2_P);
+	var _extra2R = new FlxActionDigital(Action.EXTRA2_R);
+	var _extra3 = new FlxActionDigital(Action.EXTRA3);
+	var _extra3P = new FlxActionDigital(Action.EXTRA3_P);
+	var _extra3R = new FlxActionDigital(Action.EXTRA3_R);
+	var _extra4  = new FlxActionDigital(Action.EXTRA4);
+	var _extra4P = new FlxActionDigital(Action.EXTRA4_P);
+	var _extra4R = new FlxActionDigital(Action.EXTRA4_R);
 
 	#if (haxe >= "4.0.0")
 	var byName:Map<String, FlxActionDigital> = [];
@@ -351,6 +384,66 @@ class Controls extends FlxActionSet
 
 	inline function get_SPACE_P()
 		return _spaceP.check();			
+//extra keys
+public var EXTRA1(get, never):Bool;
+
+	inline function get_EXTRA1()
+		return _extra1.check();		
+	
+	public var EXTRA1_R(get, never):Bool;
+
+	inline function get_EXTRA1_R()
+		return _extra1R.check();		
+		
+	public var EXTRA1_P(get, never):Bool;
+
+	inline function get_EXTRA1_P()
+		return _extra1P.check();			
+		
+		public var EXTRA2(get, never):Bool;
+
+	inline function get_EXTRA2()
+		return _extra2.check();		
+	
+	public var EXTRA2_R(get, never):Bool;
+
+	inline function get_EXTRA2_R()
+		return _extra2R.check();		
+		
+	public var EXTRA2_P(get, never):Bool;
+
+	inline function get_EXTRA2_P()
+		return _extra2P.check();			
+
+public var EXTRA3(get, never):Bool;
+
+	inline function get_EXTRA3()
+		return _extra3.check();		
+	
+	public var EXTRA3_R(get, never):Bool;
+
+	inline function get_EXTRA3_R()
+		return _extra3R.check();		
+		
+	public var EXTRA3_P(get, never):Bool;
+
+	inline function get_EXTRA3_P()
+		return _extra3P.check();			
+
+public var EXTRA4(get, never):Bool;
+
+	inline function get_EXTRA4()
+		return _extra4.check();		
+	
+	public var EXTRA4_R(get, never):Bool;
+
+	inline function get_EXTRA4_R()
+		return _extra4R.check();		
+		
+	public var EXTRA4_P(get, never):Bool;
+
+	inline function get_EXTRA4_P()
+		return _extra4P.check();			
 
 	#if (haxe >= "4.0.0")
 	public function new(name, scheme = None)
@@ -391,6 +484,18 @@ class Controls extends FlxActionSet
 		add(_space);
 		add(_spaceP);
 		add(_spaceR);
+		add(_extra1);
+		add(_extra1P);
+		add(_extra1R);
+		add(_extra2);
+		add(_extra2P);
+		add(_extra2R);
+		add(_extra3);
+		add(_extra3P);
+		add(_extra3R);
+		add(_extra4);
+		add(_extra4P);
+		add(_extra4R);
 
 		for (action in digitalActions)
 			byName[action.name] = action;
@@ -436,6 +541,18 @@ class Controls extends FlxActionSet
 		add(_space);
 		add(_spaceP);
 		add(_spaceR);
+		add(_extra1);
+		add(_extra1P);
+		add(_extra1R);
+		add(_extra2);
+		add(_extra2P);
+		add(_extra2R);
+		add(_extra3);
+		add(_extra3P);
+		add(_extra3R);
+		add(_extra4);
+		add(_extra4P);
+		add(_extra4R);
 
 		for (action in digitalActions)
 			byName[action.name] = action;
@@ -497,6 +614,10 @@ class Controls extends FlxActionSet
 		inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addButtonNOTES(action, Hitbox.buttonRight, state));
 		inline forEachBound(Control.SHIFT, (action, state) -> addbuttonUI(action, Hitbox.buttonShift, state));
 		inline forEachBound(Control.SPACE, (action, state) -> addbuttonUI(action, Hitbox.buttonSpace, state));
+		inline forEachBound(Control.EXTRA1, (action, state) -> addbuttonUI(action, Hitbox.buttonExtra1, state));
+		inline forEachBound(Control.EXTRA2, (action, state) -> addbuttonUI(action, Hitbox.buttonExtra2, state));
+		inline forEachBound(Control.EXTRA3, (action, state) -> addbuttonUI(action, Hitbox.buttonExtra3, state));
+		inline forEachBound(Control.EXTRA4, (action, state) -> addbuttonUI(action, Hitbox.buttonExtra4, state));
 	}
 	
 	public function setVirtualPadUI(virtualPad:FlxVirtualPad, ?DPad:FlxDPadMode, ?Action:FlxActionMode) 
@@ -717,6 +838,10 @@ class Controls extends FlxActionSet
 			case RESET: _reset;
 			case SHIFT: _shift;
 			case SPACE: _space;
+			case EXTRA1: _extra1;
+			case EXTRA2: _extra2;
+			case EXTRA3: _extra3;
+			case EXTRA4: _extra4;
 		}
 	}
 
@@ -784,6 +909,23 @@ class Controls extends FlxActionSet
 				func(_space, PRESSED);
 				func(_spaceP, JUST_PRESSED);
 				func(_spaceR, JUST_RELEASED);
+			case EXTRA1:
+				func(_extra1, PRESSED);
+				func(_extra1P, JUST_PRESSED);
+				func(_extra1R, JUST_RELEASED);
+			case EXTRA2:
+				func(_extra2, PRESSED);
+				func(_extra2P, JUST_PRESSED);
+				func(_extra2R, JUST_RELEASED);
+			case EXTRA3:
+				func(_extra3, PRESSED);
+				func(_extra3P, JUST_PRESSED);
+				func(_extra3R, JUST_RELEASED);
+			case EXTRA4:
+				func(_extra4, PRESSED);
+				func(_extra4P, JUST_PRESSED);
+				func(_extra4R, JUST_RELEASED);
+				
 		}
 	}
 
