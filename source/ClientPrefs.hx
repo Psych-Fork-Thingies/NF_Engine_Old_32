@@ -333,7 +333,6 @@ class ClientPrefs {
 			{
 				gameplaySettings.set(name, value);
 			}
-			gameplaySettings.set('opponentplay', false);
 		}
 		
 		
