@@ -1,3 +1,4 @@
+package;
 
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
