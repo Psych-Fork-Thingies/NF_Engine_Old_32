@@ -46,13 +46,6 @@ class HitboxSettingsSubState extends BaseOptionsMenu
 			true);
 		  addOption(option);
 		  
-		  var option:Option = new Option('Max Extra Controls',
-			"Allow Maximum Extra Controls (I'm lazy lol)",
-			'hitboxMaxExtend',
-			'bool',
-			true);
-		  addOption(option);
-		  
 		var option:Option = new Option('Extra Control Location:',
 			"Choose Extra Control Location",
 			'hitboxLocation',
