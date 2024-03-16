@@ -10,6 +10,10 @@ import flixel.input.touch.FlxTouch;
 import flixel.math.FlxPoint;
 import flixel.util.FlxDestroyUtil;
 import flixel.system.FlxSound;
+import flixel.FlxCamera;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.text.FlxText;
 
 /**
  * A simple button class that calls a function when clicked by the touch.
