@@ -1391,51 +1391,14 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
 		{
-			name = name.toLowerCase();
-		   
-		   #if android // Extend for check control for android
-           if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
-			    if (name == 'SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.justPressed){
-    			    return true;
-                }
-                if (name == 'SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.justPressed){
-    			    return true;
-                }
-           }
-           #end
-           
 			return Reflect.getProperty(FlxG.keys.justPressed, name);
 		});
 		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
 		{
-			name = name.toLowerCase();
-		   
-		   #if android // Extend for check control for android
-           if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
-			    if (name == 'SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.pressed){
-    			    return true;
-                }
-                if (name == 'SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.pressed){
-    			    return true;
-                }
-           }
-           #end
 			return Reflect.getProperty(FlxG.keys.pressed, name);
 		});
 		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
 		{
-			name = name.toLowerCase();
-		   
-		   #if android // Extend for check control for android
-           if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
-			    if (name == 'SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.justReleased){
-    			    return true;
-                }
-                if (name == 'SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.justReleased){
-    			    return true;
-                }
-           }
-           #end
 			return Reflect.getProperty(FlxG.keys.justReleased, name);
 		});
 
@@ -1509,6 +1472,7 @@ class FunkinLua {
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
+				case 'shift': key = (PlayState.instance.getControl('SHIFT_P') || FlxG.keys.justPressed.SHIFT);//an extra key for convinience
 				case 'space': key = (PlayState.instance.getControl('SPACE_P') || FlxG.keys.justPressed.SPACE);//an extra key for convinience
 			}
 			return key;
@@ -1520,6 +1484,7 @@ class FunkinLua {
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
+				case 'shift': key = (PlayState.instance.getControl('SHIFT') || FlxG.keys.pressed.SHIFT);//an extra key for convinience
 				case 'space': key = (PlayState.instance.getControl('SPACE') || FlxG.keys.pressed.SPACE);//an extra key for convinience
 			}
 			return key;
@@ -1531,6 +1496,7 @@ class FunkinLua {
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_R');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP_R');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_R');
+				case 'shift': key = (PlayState.instance.getControl('SHIFT_R') || FlxG.keys.justReleased.SHIFT);//an extra key for convinience
 				case 'space': key = (PlayState.instance.getControl('SPACE_R') || FlxG.keys.justReleased.SPACE);//an extra key for convinience
 			}
 			return key;

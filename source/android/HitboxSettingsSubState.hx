@@ -25,7 +25,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
-//import Controls;
+import Controls;
 import options.BaseOptionsMenu;
 import options.Option;
 import openfl.Lib;
@@ -37,32 +37,28 @@ class HitboxSettingsSubState extends BaseOptionsMenu
 	public function new()
 	{
 		title = 'Hitbox Settings';
-		rpcTitle = 'Hitbox Settings Menu'; 
+		rpcTitle = 'Hitbox Settings Menu'; //hi, you can ask what is that, i will answer it's all what you needed lol.
 
-		var option:Option = new Option('Space Extend',
-			"Allow Extend Space Control --Made by NF|Beihu",
-			'spaceExtend',
-			'bool');
+		var option:Option = new Option('Extra Controls',
+			"Allow Extra Controls",
+			'hitboxExtend',
+			'bool',
+			true);
 		  addOption(option);
-		 
-		var option:Option = new Option('Shift Extend',
-			"Allow Extend Shift Control --Made by NF|Beihu",
-			'shiftExtend',
-			'bool');
-		  addOption(option);   
 		  
-		  
-		var option:Option = new Option('Extend Location:',
-			"Choose Extend Control Location",
+		var option:Option = new Option('Extra Control Location:',
+			"Choose Extra Control Location",
 			'hitboxLocation',
 			'string',
-			['Bottom', 'Middle', 'Top']);
+			'Bottom',
+			['Bottom', 'Top']);
 		  addOption(option);  
 		  
 		var option:Option = new Option('Hitbox Alpha:', //mariomaster was here again
 			'Changes Hitbox Alpha',
 			'hitboxalpha',
-			'float');
+			'float',
+			0.2);
 		option.scrollSpeed = 1.6;
 		option.minValue = 0.0;
 		option.maxValue = 1;
@@ -70,10 +66,11 @@ class HitboxSettingsSubState extends BaseOptionsMenu
 		option.decimals = 1;
 		addOption(option);
 		
-		var option:Option = new Option('VirtualPad Alpha:',
+		var option:Option = new Option('VirtualPad Alpha:', //mariomaster was here again
 			'Changes VirtualPad Alpha',
 			'VirtualPadAlpha',
-			'float');
+			'float',
+			0.75);
 		option.scrollSpeed = 1.6;
 		option.minValue = 0.1;
 		option.maxValue = 1;
@@ -84,11 +81,11 @@ class HitboxSettingsSubState extends BaseOptionsMenu
 		super();
 	}
 	
-	var OGpadAlpha:Float = ClientPrefs.data.VirtualPadAlpha;
+	var OGpadAlpha:Float = ClientPrefs.VirtualPadAlpha;
 	function onChangePadAlpha()
 	{
 	ClientPrefs.saveSettings();
-	MusicBeatState._virtualpad.alpha = ClientPrefs.data.VirtualPadAlpha / OGpadAlpha;
+	_virtualpad.alpha = ClientPrefs.VirtualPadAlpha / OGpadAlpha;
 	}
 
 /*
