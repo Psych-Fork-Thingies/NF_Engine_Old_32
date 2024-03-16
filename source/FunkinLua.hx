@@ -1389,6 +1389,11 @@ class FunkinLua {
 			return Std.parseInt(color);
 		});
 
+        public static function implement(funk:FunkinLua)
+	    {
+	   	var lua:State = funk.lua;
+		
+		// Keyboard & Gamepads
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
 		{
 			name = name.toLowerCase();
