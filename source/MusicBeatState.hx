@@ -64,11 +64,8 @@ class MusicBeatState extends FlxUIState
 	}
 	#end
 
-    
-
 	#if android
 	public function addAndroidControls() {
-		public function addAndroidControls() {
 		androidc = new AndroidControls();
 		
         Controls.CheckPress = true;
@@ -109,7 +106,7 @@ class MusicBeatState extends FlxUIState
 		Controls.CheckControl = true;
 	}
 	#end
-
+	
 	#if android
         public function addPadCamera() {
 		var camcontrol = new flixel.FlxCamera();
