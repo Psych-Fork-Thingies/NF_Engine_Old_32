@@ -2950,7 +2950,7 @@ class PlayState extends MusicBeatState
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
-		}*/
+		}
 		callOnLuas('onUpdate', [elapsed]);        
 		
 		switch (curStage)
@@ -3082,7 +3082,6 @@ class PlayState extends MusicBeatState
 					}
 				}
 		}
-		*/
 		
 		
 			var balls = notesHitArray.length - 1;
@@ -5279,7 +5278,6 @@ class PlayState extends MusicBeatState
 		{
 			lightningStrikeShit();
 		}
-		*/
 		lastBeatHit = curBeat;
 
 		setOnLuas('curBeat', curBeat); //DAWGG?????
