@@ -230,10 +230,8 @@ class FunkinLua {
 		set('buildTarget', 'unknown');
 		#end
 
-        public static function implement(funk:FunkinLua)
+        public static function implement()
 	    {
-	   	var lua:State = funk.lua;
-		
 		// Keyboard & Gamepads
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
 		{
