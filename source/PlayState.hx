@@ -1785,7 +1785,7 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	function tankIntro()
+	/*function tankIntro()
 	{
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		dadGroup.alpha = 0.00001;
@@ -2950,9 +2950,8 @@ class PlayState extends MusicBeatState
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
-		}
+		}*/
 		callOnLuas('onUpdate', [elapsed]);        
-		
 		switch (curStage)
 		{
 			case 'tank':
@@ -3082,6 +3081,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 		}
+		*/
 		
 		
 			var balls = notesHitArray.length - 1;
@@ -5223,7 +5223,6 @@ class PlayState extends MusicBeatState
 		{
 			dad.dance();
 		}
-        
 		switch (curStage)
 		{
 			case 'tank':
