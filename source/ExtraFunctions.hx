@@ -5,7 +5,7 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
-import funkinlua
+import FunkinLua
 import flixel.util.FlxSave;
 import openfl.utils.Assets;
 //import flixel.input.keyboard.FlxKey;
