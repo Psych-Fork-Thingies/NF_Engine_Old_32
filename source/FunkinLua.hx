@@ -230,8 +230,10 @@ class FunkinLua {
 		set('buildTarget', 'unknown');
 		#end
 
-        public static function implement()
+        public static function implement(funk:FunkinLua)
 	    {
+	   	var lua:State = funk.lua;
+		
 		// Keyboard & Gamepads
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
 		{
@@ -287,6 +289,7 @@ class FunkinLua {
            #end
 			return Reflect.getProperty(FlxG.keys.justReleased, name);
 		});
+	}
 		
 		// custom substate
 		Lua_helper.add_callback(lua, "openCustomSubstate", function(name:String, pauseGame:Bool = false) {
