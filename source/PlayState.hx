@@ -3080,8 +3080,7 @@ class PlayState extends MusicBeatState
 						heyTimer = 0;
 					}
 				}
-		}
-		*/
+	     	}
 		
 		
 			var balls = notesHitArray.length - 1;
