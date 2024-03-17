@@ -8,7 +8,12 @@ import flixel.FlxSprite;
 
 #if android
 import flixel.input.actions.FlxActionInput;
+import flixel.group.FlxGroup;
+import android.FlxNewHitbox;
 import android.FlxVirtualPad;
+import android.AndroidControls.AndroidControls;
+import flixel.ui.FlxButton;
+import android.flixel.FlxButton as FlxNewButton;
 #end
 
 class MusicBeatSubstate extends FlxSubState
