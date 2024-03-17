@@ -67,9 +67,6 @@ class FunkinLua {
 	public static var Function_Stop:Dynamic = "##PSYCHLUA_FUNCTIONSTOP";
 	public static var Function_Continue:Dynamic = "##PSYCHLUA_FUNCTIONCONTINUE";
 	public static var Function_StopLua:Dynamic = "##PSYCHLUA_FUNCTIONSTOPLUA";
-	public static function implement(funk:FunkinLua)
-	
-	var lua:State = funk.lua;
 
 	//public var errorHandler:String->Void;
 	#if LUA_ALLOWED
@@ -1391,10 +1388,11 @@ class FunkinLua {
 			if(!color.startsWith('0x')) color = '0xff' + color;
 			return Std.parseInt(color);
 		});
-		
+
 		// Keyboard & Gamepads
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
 		{
+		    var musicBeatState:MusicBeatState = new MusicBeatState();
 			name = name.toLowerCase();
 		   
 		   #if android // Extend for check control for android
@@ -1412,6 +1410,7 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
 		{
+		    var musicBeatState:MusicBeatState = new MusicBeatState();
 			name = name.toLowerCase();
 		   
 		   #if android // Extend for check control for android
@@ -1433,6 +1432,7 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String)
 		{
+		    var musicBeatState:MusicBeatState = new MusicBeatState();
 			name = name.toLowerCase();
 		   
 		   #if android // Extend for check control for android
