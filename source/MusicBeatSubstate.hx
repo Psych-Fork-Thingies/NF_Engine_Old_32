@@ -70,6 +70,7 @@ class MusicBeatSubstate extends FlxSubState
 	}
 	#end
 	
+	#if android
 	public function addAndroidControls() {
 		androidc = new AndroidControls();
 		
