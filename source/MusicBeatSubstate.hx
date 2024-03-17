@@ -5,6 +5,16 @@ import flixel.FlxG;
 import flixel.FlxSubState;
 import flixel.FlxBasic;
 import flixel.FlxSprite;
+import flixel.addons.ui.FlxUIState;
+import flixel.math.FlxRect;
+import flixel.util.FlxTimer;
+import flixel.addons.transition.FlxTransitionableState;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
+import flixel.util.FlxGradient;
+import flixel.FlxState;
+import flixel.FlxCamera;
 
 #if android
 import flixel.input.actions.FlxActionInput;
@@ -57,6 +67,39 @@ class MusicBeatSubstate extends FlxSubState
 	public function removeVirtualPad() {
 		controls.removeFlxInput(trackedinputsUI);
 		remove(_virtualpad);
+	}
+	#end
+	
+	public function addAndroidControls() {
+		androidc = new AndroidControls();
+		
+        Controls.CheckPress = true;
+        
+		switch (androidc.mode)
+		{
+			case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
+				//controls.setVirtualPadNOTES(androidc.vpad, FULL, NONE);
+				checkHitbox = false;
+			case DUO:
+				//controls.setVirtualPadNOTES(androidc.vpad, DUO, NONE);
+				checkHitbox = false;
+			case HITBOX:
+				//controls.setNewHitBox(androidc.newhbox);
+				checkHitbox = true;
+			//case KEYBOARD:				    
+			default:
+		}
+
+		var camcontrol = new flixel.FlxCamera();
+		FlxG.cameras.add(camcontrol, false);
+		camcontrol.bgColor.alpha = 0;
+		androidc.cameras = [camcontrol];
+
+		androidc.visible = false;
+		
+
+		add(androidc);
+		Controls.CheckControl = false;
 	}
 	#end
 

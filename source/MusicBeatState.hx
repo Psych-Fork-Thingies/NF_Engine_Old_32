@@ -69,26 +69,23 @@ class MusicBeatState extends FlxUIState
 	#if android
 	public function addAndroidControls() {
 		androidc = new AndroidControls();
-
+		
+        Controls.CheckPress = true;
+        
 		switch (androidc.mode)
 		{
 			case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
-				controls.setVirtualPadNOTES(androidc.vpad, FULL, NONE);
+				//controls.setVirtualPadNOTES(androidc.vpad, FULL, NONE);
 				checkHitbox = false;
 			case DUO:
-				controls.setVirtualPadNOTES(androidc.vpad, DUO, NONE);
+				//controls.setVirtualPadNOTES(androidc.vpad, DUO, NONE);
 				checkHitbox = false;
 			case HITBOX:
-				controls.setNewHitBox(androidc.newhbox);
+				//controls.setNewHitBox(androidc.newhbox);
 				checkHitbox = true;
 			default:
 		}
 
-		trackedinputsNOTES = controls.trackedinputsNOTES;
-		trackedinputsUI = controls.trackedinputsUI;
-		controls.trackedinputsNOTES = [];
-        controls.trackedinputsUI = [];
-        
 		var camcontrol = new flixel.FlxCamera();
 		FlxG.cameras.add(camcontrol, false);
 		camcontrol.bgColor.alpha = 0;
