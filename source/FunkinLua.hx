@@ -67,6 +67,9 @@ class FunkinLua {
 	public static var Function_Stop:Dynamic = "##PSYCHLUA_FUNCTIONSTOP";
 	public static var Function_Continue:Dynamic = "##PSYCHLUA_FUNCTIONCONTINUE";
 	public static var Function_StopLua:Dynamic = "##PSYCHLUA_FUNCTIONSTOPLUA";
+	public static function implement(funk:FunkinLua)
+	
+	var lua:State = funk.lua;
 
 	//public var errorHandler:String->Void;
 	#if LUA_ALLOWED
@@ -230,67 +233,6 @@ class FunkinLua {
 		set('buildTarget', 'unknown');
 		#end
 
-        public static function implement(funk:FunkinLua)
-	    {
-	   	var lua:State = funk.lua;
-		
-		// Keyboard & Gamepads
-		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
-		{
-			name = name.toLowerCase();
-		   
-		   #if android // Extend for check control for android
-           if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
-			    if (name == 'SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.justPressed){
-    			    return true;
-                }
-                if (name == 'SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.justPressed){
-    			    return true;
-                }
-           }
-           #end
-           
-			return Reflect.getProperty(FlxG.keys.justPressed, name);
-		});
-		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
-		{
-			name = name.toLowerCase();
-		   
-		   #if android // Extend for check control for android
-           if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
-			    if (name == 'SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.pressed){
-    			    return true;
-                }
-                if (name == 'SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.pressed){
-    			    return true;
-                }
-           }
-           #end
-			return Reflect.getProperty(FlxG.keys.pressed, name);
-		});
-		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
-		{
-			return Reflect.getProperty(FlxG.keys.justReleased, name);
-		});
-
-		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String)
-		{
-			name = name.toLowerCase();
-		   
-		   #if android // Extend for check control for android
-           if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
-			    if (name == 'SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.justReleased){
-    			    return true;
-                }
-                if (name == 'SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.justReleased){
-    			    return true;
-                }
-           }
-           #end
-			return Reflect.getProperty(FlxG.keys.justReleased, name);
-		});
-	}
-		
 		// custom substate
 		Lua_helper.add_callback(lua, "openCustomSubstate", function(name:String, pauseGame:Bool = false) {
 			if(pauseGame)
@@ -1450,7 +1392,62 @@ class FunkinLua {
 			return Std.parseInt(color);
 		});
 		
-   		Lua_helper.add_callback(lua, "anyGamepadPressed", function(name:String)
+		// Keyboard & Gamepads
+		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
+		{
+			name = name.toLowerCase();
+		   
+		   #if android // Extend for check control for android
+           if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
+			    if (name == 'SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.justPressed){
+    			    return true;
+                }
+                if (name == 'SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.justPressed){
+    			    return true;
+                }
+           }
+           #end
+           
+			return Reflect.getProperty(FlxG.keys.justPressed, name);
+		});
+		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
+		{
+			name = name.toLowerCase();
+		   
+		   #if android // Extend for check control for android
+           if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
+			    if (name == 'SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.pressed){
+    			    return true;
+                }
+                if (name == 'SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.pressed){
+    			    return true;
+                }
+           }
+           #end
+			return Reflect.getProperty(FlxG.keys.pressed, name);
+		});
+		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
+		{
+			return Reflect.getProperty(FlxG.keys.justReleased, name);
+		});
+
+		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String)
+		{
+			name = name.toLowerCase();
+		   
+		   #if android // Extend for check control for android
+           if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
+			    if (name == 'SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.justReleased){
+    			    return true;
+                }
+                if (name == 'SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.justReleased){
+    			    return true;
+                }
+           }
+           #end
+			return Reflect.getProperty(FlxG.keys.justReleased, name);
+		});
+		Lua_helper.add_callback(lua, "anyGamepadPressed", function(name:String)
 		{
 			return FlxG.gamepads.anyPressed(name);
 		});
