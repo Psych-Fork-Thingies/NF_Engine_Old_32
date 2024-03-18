@@ -19,7 +19,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup;
 import flixel.addons.ui.FlxInputText;
 import flixel.util.FlxStringUtil;
-import flixel.sound.FlxSound;
+import flixel.system.FlxSound;
 import flixel.ui.FlxBar;
 
 #if MODS_ALLOWED
@@ -30,6 +30,7 @@ import FreeplayState;
 import Paths as Mods;
 import Paths;
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.text.FlxText;
 import MusicBeatState;
 import flixel.math.FlxMath;
