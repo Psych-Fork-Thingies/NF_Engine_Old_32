@@ -27,6 +27,7 @@ import sys.FileSystem;
 #end
 
 import FreeplayState;
+import Paths as Mods;
 import Paths;
 import flixel.FlxG;
 import flixel.text.FlxText;
@@ -36,7 +37,7 @@ import flixel.math.FlxRect;
 import PlayState;
 import LoadingState;
 import MainMenuState;
-import OptionsState;
+import options.OptionsState;
 
 /*
 	create by TieGuo
