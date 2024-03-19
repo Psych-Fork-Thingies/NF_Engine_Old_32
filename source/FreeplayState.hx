@@ -896,16 +896,7 @@ class FreeplayState extends MusicBeatState {
 				timeLeft.alpha = 0;
 				timeRight.alpha = 0;
 			}
-
-			listeningSongTime.text = timeConverter(FlxG.sound.music.time) + '/' + timeConverter(maxTime);
-			progressBar.scale.x = FlxG.sound.music.time/FlxG.sound.music.length*300;
-			progressBar.updateHitbox();
-		} else {
-			progressBar.scale.x = 0;
-			timeLeft.alpha = 0;
-			timeRight.alpha = 0;
-		}
-	}
+	    }
 	
 	function setplaybackrate() {
 	}
