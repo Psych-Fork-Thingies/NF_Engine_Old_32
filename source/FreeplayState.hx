@@ -812,11 +812,7 @@ class FreeplayState extends MusicBeatState {
 		
 		if (PlayState.SONG.needsVoices)
 		{
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-			FlxG.sound.list.add(vocals);
-			else
 			vocals = new FlxSound();
-			}
 			vocals.persist = true;
 			vocals.looped = true;
 		}
