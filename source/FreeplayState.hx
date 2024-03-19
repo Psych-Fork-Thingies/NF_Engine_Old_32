@@ -21,6 +21,7 @@ import flixel.addons.ui.FlxInputText;
 import flixel.util.FlxStringUtil;
 import flixel.system.FlxSound;
 import flixel.ui.FlxBar;
+import flixel.util.FlxTimer;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -508,7 +509,6 @@ class FreeplayState extends MusicBeatState {
 	var startMouseY:Float;
 	var lastCurSelected:Int;
 	var canMove:Bool;
-	public static var vocals:FlxSound = null;
 	public static var instPlaying:Int = 0;
 	var leftcolor:FlxTween;
 	var rightcolor:FlxTween;
@@ -786,52 +786,6 @@ class FreeplayState extends MusicBeatState {
 	
 	function startMusic(play:Bool)
 	{
-		destroyFreeplayVocals();
-		var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-		PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-		
-		if (PlayState.SONG.needsVoices)
-		{
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-			FlxG.sound.list.add(vocals);
-			vocals.persist = true;
-			vocals.looped = true;
-		}
-		else if (vocals != null)
-		{
-			vocals.stop();
-			vocals.destroy();
-			vocals = null;
-		}
-	
-		if (play) {
-			FlxG.sound.music.stop();
-			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.8);
-			maxTime = FlxG.sound.music.length;
-			if(vocals != null)
-			{
-				vocals.play();
-				
-				vocals.volume = 0.8;
-			}
-			listeningSongTime.text = timeConverter(0) + '/' + timeConverter(maxTime);
-			
-			playingSong = curSelected;
-			
-			playingSongName.scale.set(1, 1);
-			playingSongName.updateHitbox();
-			
-			playingSongName.text = 'Playing: ' + (playingSong == -1 ? 'Freaky Menu' : songs[playingSong].songName);
-			playingSongName.x = 60 + (450-playingSongName.width)/2;
-			if (playingSongName.width > 450) {
-				playingSongName.scale.set(450/playingSongName.width, 450/playingSongName.width);
-			}
-			
-			setplaybackrate();
-		}
-		if (waitTimer != null) waitTimer.cancel();
-	}
-	
 	var waitTimer:FlxTimer;
 	var playmusiconexit:Bool = false;
 	function listenUpdate(elapsed:Float) {
@@ -847,7 +801,6 @@ class FreeplayState extends MusicBeatState {
 			playButton.alpha = 0.75;
 			
 			if (playText.text.indexOf('STOP') != -1) {
-				destroyFreeplayVocals();
 				FlxG.sound.music.stop();
 				playingSong = -1;
 				playmusiconexit = true;
@@ -907,30 +860,10 @@ class FreeplayState extends MusicBeatState {
 			songPlaybackRate = 1;
 			setplaybackrate();
 		}
-		
-		if (playingSong != -1) {
-			if ((FlxG.mouse.overlaps(pauseButton) && FlxG.mouse.justPressed)) {
-				pauseButton.alpha = 0.75;
-				
-				if (pausedsong) {
-					FlxG.sound.music.play();
-					if (vocals != null) vocals.play();
-				} else {
-					FlxG.sound.music.pause();
-					if (vocals != null) vocals.pause();
-				}
-				
-				if (vocals != null) {
-					vocals.time = FlxG.sound.music.time;
-				}
-				
-				pausedsong = !pausedsong;
-			}
 			
 			if ((FlxG.mouse.overlaps(timeLeft) && !pausedsong) || controls.UI_LEFT_P || controls.UI_LEFT) {
 				if (FlxG.mouse.justPressed || controls.UI_LEFT_P) {
 					FlxG.sound.music.pause();
-					if (vocals != null) vocals.pause();
 					changingTime = true;
 				}
 				
@@ -944,7 +877,6 @@ class FreeplayState extends MusicBeatState {
 			}else if ((FlxG.mouse.overlaps(timeRight) && !pausedsong) || controls.UI_RIGHT_P || controls.UI_RIGHT) {
 				if (FlxG.mouse.justPressed || controls.UI_RIGHT_P) {
 					FlxG.sound.music.pause();
-					if (vocals != null) vocals.pause();
 					changingTime = true;
 				}
 				
@@ -960,9 +892,6 @@ class FreeplayState extends MusicBeatState {
 			if (changingTime && FlxG.mouse.justReleased) {
 				changingTime = false;
 				FlxG.sound.music.play();
-				if (vocals != null) {
-					vocals.play();
-					vocals.time = FlxG.sound.music.time;
 				}
 				timeLeft.alpha = 0;
 				timeRight.alpha = 0;
@@ -979,17 +908,6 @@ class FreeplayState extends MusicBeatState {
 	}
 	
 	function setplaybackrate() {
-		songPlaybackRateText.text = '< ' + Std.string(songPlaybackRate) + 'x >';
-		if (vocals != null) vocals.pitch = songPlaybackRate;
-		FlxG.sound.music.pitch = songPlaybackRate;
-	}
-	
-	public static function destroyFreeplayVocals() {
-		if(vocals != null) {
-			vocals.stop();
-			vocals.destroy();
-		}
-		vocals = null;
 	}
 	
 	function closeListenMenu() {
@@ -998,7 +916,6 @@ class FreeplayState extends MusicBeatState {
 	
 	override function destroy() {
 		super.destroy();
-		destroyFreeplayVocals();
 	}
    
 	function timeConverter(time:Float) {
@@ -1219,7 +1136,6 @@ class FreeplayState extends MusicBeatState {
 		
 				FlxG.sound.music.volume = 0;
 					
-				destroyFreeplayVocals();
 				buttonControl = false;
 			} else if ((selectedThing == 'back' && FlxG.pixelPerfectOverlap(backButton, mousechecker, 25)) || controls.BACK) {
 				if (searching) {closeSearchMenu(); backText.text = 'EXIT'; return;}
@@ -1233,7 +1149,6 @@ class FreeplayState extends MusicBeatState {
 					bgColorChange.cancel();
 				}
 				if (playingSong != -1 || playmusiconexit) {
-					destroyFreeplayVocals();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 					if (waitTimer != null) waitTimer.cancel();
 					//FlxG.sound.music.volume = 0.1;
