@@ -808,14 +808,14 @@ class FreeplayState extends MusicBeatState {
 	{
 		destroyFreeplayVocals();
 		var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-		vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-				else
-					vocals = new FlxSound();
+		PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 		
 		if (PlayState.SONG.needsVoices)
 		{
 			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 			FlxG.sound.list.add(vocals);
+			else
+			vocals = new FlxSound();
 			vocals.persist = true;
 			vocals.looped = true;
 		}
