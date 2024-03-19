@@ -31,6 +31,7 @@ import Paths as Mods;
 import Paths;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.tweens.FlxTween;
 import flixel.text.FlxText;
 import MusicBeatState;
 import flixel.math.FlxMath;
