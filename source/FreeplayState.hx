@@ -808,7 +808,9 @@ class FreeplayState extends MusicBeatState {
 	{
 		destroyFreeplayVocals();
 		var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-		PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+		vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+				else
+					vocals = new FlxSound();
 		
 		if (PlayState.SONG.needsVoices)
 		{
