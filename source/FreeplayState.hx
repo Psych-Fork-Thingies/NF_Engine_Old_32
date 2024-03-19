@@ -816,6 +816,7 @@ class FreeplayState extends MusicBeatState {
 			FlxG.sound.list.add(vocals);
 			else
 			vocals = new FlxSound();
+			}
 			vocals.persist = true;
 			vocals.looped = true;
 		}
