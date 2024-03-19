@@ -712,8 +712,6 @@ class FreeplayState extends MusicBeatState
 			camSong.scroll.y = FlxMath.lerp((curSelectedFloat) * 75 * 0.75, camSong.scroll.y, FlxMath.bound(1 - (elapsed * 9), 0, 1));
 		}
 		
-		changeInfoMenu(elapsed);
-		
 		if ((controls.ACCEPT || FlxG.mouse.justReleased) && camUIInfo_Song.alpha > 0.99 && lookingTheTutorial) {
 			lookingTheTutorial = false;
 			curSelectedFloat = curSelected;
