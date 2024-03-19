@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import WeekData;
 import Highscore;
 import Song;
@@ -58,16 +61,41 @@ import LoadingState;
 import MainMenuState;
 import options.OptionsState;
 
-/*
-	create by TieGuo
-	artists, bug fix by Beihu & 487
+using StringTools;
+
+class FreeplayState extends MusicBeatState
+{
+	var songs:Array<SongMetadata> = [];
+
+	var selector:FlxText;
+	private static var curSelected:Int = 0;
+	var curDifficulty:Int = -1;
+	private static var lastDifficultyName:String = '';
+
+	var scoreBG:FlxSprite;
+	var scoreText:FlxText;
+	var diffText:FlxText;
+	var lerpScore:Int = 0;
+	var lerpRating:Float = 0;
+	var intendedScore:Int = 0;
+	var intendedRating:Float = 0;
+
+	private var grpSongs:FlxTypedGroup<Alphabet>;
+	private var curPlaying:Bool = false;
+
+	private var iconArray:Array<HealthIcon> = [];
+
+	var bg:FlxSprite;
+	var intendedColor:Int;
+	var colorTween:FlxTween;
 	
-	比暂停界面更屎的state出现了XD
-	这个玩意铁锅拖了3个月
-*/
-
-class FreeplayState extends MusicBeatState {
-
+	var bgMove:FlxBackdrop;
+	public static var Mainbpm:Float = 0;
+	public static var bpm:Float = 0;
+	var SoundTime:Float = 0;
+	var BeatTime:Float = 0;
+	var canBeat:Bool = true;
+	
 	var bg:FlxSprite;
 	var bgColorChange:FlxTween;
 	var songsbg:FlxSprite;
@@ -145,9 +173,28 @@ class FreeplayState extends MusicBeatState {
 	var camUIInfo_Search:FlxCamera;
 	
 	var lookingTheTutorial:Bool = false;
+	
+	var ColorArray:Array<Int> = [
+		0xFF9400D3,
+		0xFF4B0082,
+		0xFF0000FF,
+		0xFF00FF00,
+		0xFFFFFF00,
+		0xFFFF7F00,
+		0xFFFF0000
+	                                
+	    ];
+	public static var currentColor:Int = 1;    
+	public static var currentColorAgain:Int = 0;
+	
+	
+
 	override function create()
 	{
-		persistentUpdate = persistentDraw = true;
+		Paths.clearStoredMemory();
+		Paths.clearUnusedMemory();
+		
+		persistentUpdate = true;
 		PlayState.isStoryMode = false;
 		WeekData.reloadWeekFiles(false);
 		
@@ -523,24 +570,65 @@ class FreeplayState extends MusicBeatState {
 		
 		camSong.scroll.x = FlxMath.lerp(-(curSelected) * 20 * 0.75, camSong.scroll.x, 0);
 		camSong.scroll.y = FlxMath.lerp((curSelected) * 75 * 0.75, camSong.scroll.y, 0);
+
+        #if android
+        addVirtualPad(FULL, A_B_C_X_Y_Z);
+        #end
+
+		super.create();
 	}
-	
-	var startMouseY:Float;
+
+    var startMouseY:Float;
 	var lastCurSelected:Int;
 	var canMove:Bool;
 	public static var vocals:FlxSound = null;
 	public static var instPlaying:Int = 0;
 	var leftcolor:FlxTween;
 	var rightcolor:FlxTween;
-	
+
+	override function closeSubState() {
+		changeSelection(0, false);
+		persistentUpdate = true;
+		super.closeSubState();
+	}
+
+	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int)
+	{
+		songs.push(new SongMetadata(songName, weekNum, songCharacter, color));
+	}
+
+	function weekIsLocked(name:String):Bool {
+		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
+		return (!leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!StoryMenuState.weekCompleted.exists(leWeek.weekBefore) || !StoryMenuState.weekCompleted.get(leWeek.weekBefore)));
+	}
+
+	/*public function addWeek(songs:Array<String>, weekNum:Int, weekColor:Int, ?songCharacters:Array<String>)
+	{
+		if (songCharacters == null)
+			songCharacters = ['bf'];
+
+		var num:Int = 0;
+		for (song in songs)
+		{
+			addSong(song, weekNum, songCharacters[num]);
+			this.songs[this.songs.length-1].color = weekColor;
+
+			if (songCharacters.length != 1)
+				num++;
+		}
+	}*/
+
+	var instPlaying:Int = -1;
+	public static var vocals:FlxSound = null;
+	var holdTime:Float = 0;
 	override function update(elapsed:Float)
-	{		
+	{
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
-		
-		mousechecker.setPosition(FlxG.mouse.getScreenPosition(camUI).x, FlxG.mouse.getScreenPosition(camUI).y);
+
+		lmousechecker.setPosition(FlxG.mouse.getScreenPosition(camUI).x, FlxG.mouse.getScreenPosition(camUI).y);
 		
 		if (!lookingTheTutorial) {
 			if (FlxG.mouse.x > FlxG.width/2 || (!searching && ! listening)) {
@@ -551,16 +639,15 @@ class FreeplayState extends MusicBeatState {
 					curSelectedFloat = curSelected;
 				}
 				
-				if (controls.UI_DOWN_P) {
-					changeSong(1);
-					curSelectedFloat = curSelected;
-				} else if (controls.UI_UP_P) {
-					changeSong(-1);
-					curSelectedFloat = curSelected;
-				}
-			}
-			
-			if (!searching && !listening) {
+		if (controls.UI_LEFT_P)
+			changeDiff(-1);
+		else if (controls.UI_RIGHT_P)
+			changeDiff(1);
+		else if (upP || downP) changeDiff();
+		       }
+		}
+
+		if (!searching && !listening) {
 				if ((FlxG.mouse.justPressed && FlxG.pixelPerfectOverlap(difficultyLeft, mousechecker, 25)) || controls.UI_LEFT_P) {
 					changeDiff(-1);
 					difficultyLeft.color = FlxColor.fromRGB(0, 255, 0);
@@ -631,13 +718,8 @@ class FreeplayState extends MusicBeatState {
 			lookingTheTutorial = false;
 			curSelectedFloat = curSelected;
 		}
-		super.update(elapsed);
-	}
-	
-	override function closeSubState()
-	{				
-		super.closeSubState();
-		persistentUpdate = true;
+		        
+        super.update(elapsed);
 	}
 	
 	function overlapButton(tag:FlxSprite)
@@ -804,7 +886,7 @@ class FreeplayState extends MusicBeatState {
 		setplaybackrate();
 	}
 	
-	function startMusic(play:Bool)
+    function startMusic(play:Bool)
 	{
 		destroyFreeplayVocals();
 		var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
@@ -812,7 +894,8 @@ class FreeplayState extends MusicBeatState {
 		
 		if (PlayState.SONG.needsVoices)
 		{
-			vocals = new FlxSound();
+			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+			FlxG.sound.list.add(vocals);
 			vocals.persist = true;
 			vocals.looped = true;
 		}
@@ -1002,7 +1085,7 @@ class FreeplayState extends MusicBeatState {
 		if (vocals != null) vocals.pitch = songPlaybackRate;
 		FlxG.sound.music.pitch = songPlaybackRate;
 	}
-	
+
 	public static function destroyFreeplayVocals() {
 		if(vocals != null) {
 			vocals.stop();
@@ -1010,7 +1093,7 @@ class FreeplayState extends MusicBeatState {
 		}
 		vocals = null;
 	}
-	
+
 	function closeListenMenu() {
 		listening = false;
 	}
