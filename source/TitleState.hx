@@ -73,7 +73,7 @@ class TitleState extends MusicBeatState
 
 	var wackyImage:FlxSprite;
 
-	if TITLE_SCREEN_EASTER_EGG
+	#if TITLE_SCREEN_EASTER_EGG
 	var easterEggKeys:Array<String> = [
 		'KRALOYUNCU', 'BEIHU', 'NFENGINE', 'OLDTIMES'
 	];
@@ -172,7 +172,7 @@ class TitleState extends MusicBeatState
 		// IGNORE THIS!!!
 		titleJSON = Json.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
 
-		if TITLE_SCREEN_EASTER_EGG
+		#if TITLE_SCREEN_EASTER_EGG
 		if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
 		switch(FlxG.save.data.psychDevsEasterEgg.toUpperCase())
 		{
