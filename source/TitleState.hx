@@ -73,9 +73,9 @@ class TitleState extends MusicBeatState
 
 	var wackyImage:FlxSprite;
 
-	#if TITLE_SCREEN_EASTER_EGG
+	if TITLE_SCREEN_EASTER_EGG
 	var easterEggKeys:Array<String> = [
-		'SHADOW', 'RIVER', 'SHUBS', 'BBPANZU'
+		'KRALOYUNCU', 'BEIHU', 'NFENGINE', 'OLDTIMES'
 	];
 	var allowedKeys:String = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	var easterEggKeysBuffer:String = '';
@@ -172,22 +172,22 @@ class TitleState extends MusicBeatState
 		// IGNORE THIS!!!
 		titleJSON = Json.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
 
-		#if TITLE_SCREEN_EASTER_EGG
+		if TITLE_SCREEN_EASTER_EGG
 		if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
 		switch(FlxG.save.data.psychDevsEasterEgg.toUpperCase())
 		{
-			case 'SHADOW':
-				titleJSON.gfx += 210;
-				titleJSON.gfy += 40;
-			case 'RIVER':
-				titleJSON.gfx += 100;
-				titleJSON.gfy += 20;
-			case 'SHUBS':
-				titleJSON.gfx += 160;
-				titleJSON.gfy -= 10;
-			case 'BBPANZU':
-				titleJSON.gfx += 45;
-				titleJSON.gfy += 100;
+			case 'KRALOYUNCU':
+				PlayState.SONG = Song.loadFromJson("ugh-hard", "ugh");
+                LoadingState.loadAndSwitchState(new PlayState())
+			case 'BEIHU':
+				PlayState.SONG = Song.loadFromJson("test", "test");
+                LoadingState.loadAndSwitchState(new PlayState())
+			case 'NFENGINE':
+				PlayState.SONG = Song.loadFromJson("blammed-hard", "blammed");
+                LoadingState.loadAndSwitchState(new PlayState())
+			case 'OLDTIMES':
+				PlayState.SONG = Song.loadFromJson("fresh-hard", "fresh");
+                LoadingState.loadAndSwitchState(new PlayState())
 		}
 		#end
 
