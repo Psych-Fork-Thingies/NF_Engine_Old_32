@@ -3484,13 +3484,9 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-    function addLuaVirtualPad(DPad:String, Action:String)
+    function addLuaVirtualPad(?DPad:FlxDPadMode, ?Action:FlxActionMode)
 	{
-		_virtualpad = new FlxVirtualPad(DPad, Action, 0.75, ClientPrefs.globalAntialiasing);
-		add(_virtualpad);
-		controls.setVirtualPadUI(_virtualpad, DPad, Action);
-		trackedinputsUI = controls.trackedinputsUI;
-		controls.trackedinputsUI = [];
+		addVirtualPad(DPad, Action)
 	}
 
     function openOptionsMenu()
