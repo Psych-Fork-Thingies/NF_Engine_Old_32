@@ -3479,7 +3479,7 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-    function addVirtualPad(left:String, right:String)
+    function addLuaVirtualPad(left:String, right:String)
 	{
 		addVirtualPad(left, right);
 		addPadCamera();
