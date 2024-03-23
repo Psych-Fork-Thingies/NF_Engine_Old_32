@@ -72,6 +72,11 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
+#if android
+import flixel.input.actions.FlxActionInput;
+import android.FlxVirtualPad;
+#end
+
 #if VIDEOS_ALLOWED
 import vlc.MP4Handler;
 #end
@@ -3479,10 +3484,13 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-    function addLuaVirtualPad(left:String, right:String)
+    function addLuaVirtualPad(DPad:String, Action:String)
 	{
-		addVirtualPad(left, right);
-		addPadCamera();
+		_virtualpad = new FlxVirtualPad(DPad, Action, 0.75, ClientPrefs.globalAntialiasing);
+		add(_virtualpad);
+		controls.setVirtualPadUI(_virtualpad, DPad, Action);
+		trackedinputsUI = controls.trackedinputsUI;
+		controls.trackedinputsUI = [];
 	}
 
     function openOptionsMenu()
