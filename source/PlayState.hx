@@ -3484,16 +3484,17 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-    function addLuaVirtualPad(?DPad:FlxDPadMode, ?Action:FlxActionMode)
+    function addLuaVirtualPad()
 	{
-		addVirtualPad(DPad, Action);
+		addVirtualPad(NULL, V_E_F_G_S_X);
 	}
 
     function openOptionsMenu()
 	{
+	    MoveOption = true;
 		persistentUpdate = false;
-		paused = true;
-		cancelMusicFadeTween();
+		PlayState.deathCounter = 0;
+	    PlayState.seenCutscene = false;
 		MusicBeatState.switchState(new options.OptionsState());
 		FlxG.sound.playMusic(Paths.music('freakyMenu'));
 

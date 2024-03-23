@@ -1525,11 +1525,6 @@ class FunkinLua {
 			//trace('Triggered event: ' + name + ', ' + value1 + ', ' + value2);
 			return true;
 		});
-		
-		Lua_helper.add_callback(lua, "AddLuaVirtualPad", function(DPad:String, Action:String) {
-			PlayState.instance.addLuaVirtualPad(DPad, Action);
-			return false;
-		});
 
 		Lua_helper.add_callback(lua, "startCountdown", function() {
 			PlayState.instance.startCountdown();
