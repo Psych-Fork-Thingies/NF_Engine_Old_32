@@ -3479,10 +3479,10 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-    function PauseMenuButtons()
+    function addVirtualPad(left:String, right:String)
 	{
-		persistentUpdate = false;
-		addVirtualPad(FULL, A);
+		addVirtualPad(left, right);
+		addPadCamera();
 	}
 
     function openOptionsMenu()
