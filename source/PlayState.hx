@@ -3486,7 +3486,7 @@ class PlayState extends MusicBeatState
 
     function addLuaVirtualPad(?DPad:FlxDPadMode, ?Action:FlxActionMode)
 	{
-		addVirtualPad(DPad, Action)
+		addVirtualPad(DPad, Action);
 	}
 
     function openOptionsMenu()
