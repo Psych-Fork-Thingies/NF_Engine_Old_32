@@ -1474,6 +1474,8 @@ class FunkinLua {
 				case 'reset': key = PlayState.instance.getControl('RESET');
 				case 'shift': key = (PlayState.instance.getControl('SHIFT_P') || FlxG.keys.justPressed.SHIFT);//an extra key for convinience
 				case 'space': key = (PlayState.instance.getControl('SPACE_P') || FlxG.keys.justPressed.SPACE);//an extra key for convinience
+				case 'q': key = (PlayState.instance.getControl('Q_P') || FlxG.keys.justPressed.Q);//an extra key for convinience
+				case 'e': key = (PlayState.instance.getControl('E_P') || FlxG.keys.justPressed.E);//an extra key for convinience
 			}
 			return key;
 		});
@@ -1486,6 +1488,8 @@ class FunkinLua {
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
 				case 'shift': key = (PlayState.instance.getControl('SHIFT') || FlxG.keys.pressed.SHIFT);//an extra key for convinience
 				case 'space': key = (PlayState.instance.getControl('SPACE') || FlxG.keys.pressed.SPACE);//an extra key for convinience
+				case 'q': key = (PlayState.instance.getControl('Q') || FlxG.keys.Pressed.Q);//an extra key for convinience
+				case 'e': key = (PlayState.instance.getControl('E') || FlxG.keys.Pressed.E);//an extra key for convinience
 			}
 			return key;
 		});
@@ -1498,6 +1502,8 @@ class FunkinLua {
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_R');
 				case 'shift': key = (PlayState.instance.getControl('SHIFT_R') || FlxG.keys.justReleased.SHIFT);//an extra key for convinience
 				case 'space': key = (PlayState.instance.getControl('SPACE_R') || FlxG.keys.justReleased.SPACE);//an extra key for convinience
+				case 'q': key = (PlayState.instance.getControl('Q_R') || FlxG.keys.justReleased.Q);//an extra key for convinience
+				case 'e': key = (PlayState.instance.getControl('E_R') || FlxG.keys.justReleased.E);//an extra key for convinience
 			}
 			return key;
 		});

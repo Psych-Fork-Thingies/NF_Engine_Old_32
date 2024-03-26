@@ -42,9 +42,14 @@ class HitboxSettingsSubState extends BaseOptionsMenu
 		var option:Option = new Option('Extra Controls',
 			"Allow Extra Controls",
 			'hitboxExtend',
-			'bool',
-			true);
-		  addOption(option);
+			'float',
+			0.2);
+		option.scrollSpeed = 1.6;
+		option.minValue = 0;
+		option.maxValue = 4;
+		option.changeValue = 1;
+		option.decimals = 1;
+		addOption(option);
 		  
 		var option:Option = new Option('Extra Control Location:',
 			"Choose Extra Control Location",

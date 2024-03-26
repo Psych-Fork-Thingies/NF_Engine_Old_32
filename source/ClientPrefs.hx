@@ -41,7 +41,8 @@ class ClientPrefs {
 	public static var showRating = true;
 	public static var hitboxmode:String = 'New';  //starting new way to change between hitboxes yay
     
-	public static var hitboxExtend = true;
+    public static var hitboxExtend:Int = 0;
+	//public static var hitboxExtend = true;
 	public static var hitboxLocation:String = 'Top';
 	public static var hitboxalpha:Float = 0; //someone request this lol
 	public static var VirtualPadAlpha:Float = 0.75;
