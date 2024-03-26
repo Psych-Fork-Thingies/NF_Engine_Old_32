@@ -1488,8 +1488,8 @@ class FunkinLua {
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
 				case 'shift': key = (PlayState.instance.getControl('SHIFT') || FlxG.keys.pressed.SHIFT);//an extra key for convinience
 				case 'space': key = (PlayState.instance.getControl('SPACE') || FlxG.keys.pressed.SPACE);//an extra key for convinience
-				case 'q': key = (PlayState.instance.getControl('Q') || FlxG.keys.Pressed.Q);//an extra key for convinience
-				case 'e': key = (PlayState.instance.getControl('E') || FlxG.keys.Pressed.E);//an extra key for convinience
+				case 'q': key = (PlayState.instance.getControl('Q') || FlxG.keys.pressed.Q);//an extra key for convinience
+				case 'e': key = (PlayState.instance.getControl('E') || FlxG.keys.pressed.E);//an extra key for convinience
 			}
 			return key;
 		});
