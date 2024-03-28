@@ -24,6 +24,10 @@ import WeekData;
 import sys.FileSystem;
 #end
 
+import flixel.addons.ui.FlxInputText;
+import flixel.addons.transition.FlxTransitionableState;
+import flixel.ui.FlxButton;
+
 using StringTools;
 
 class FreeplayState extends MusicBeatState
@@ -34,6 +38,15 @@ class FreeplayState extends MusicBeatState
 	private static var curSelected:Int = 0;
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
+	
+	var searchInput:FlxInputText;
+	var chooseBG:FlxSprite;
+	
+	var underline_text_BG:FlxSprite;
+    var underline_BG:FlxSprite;
+    var searchTextBG:FlxSprite;
+    var textIntervals:FlxTypedGroup<FlxSprite>;
+    var searchSongNamesTexts:FlxTypedGroup<FlxText>;
 
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
@@ -229,6 +242,110 @@ class FreeplayState extends MusicBeatState
 		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.alpha = 0.6;
 		add(textBG);
+		
+		var width = 500;
+        var height = 300;
+        var showX = 180;
+        var showY = 0;
+        searchTextBG = new FlxSprite(showX, showY).makeGraphic(width, height, FlxColor.BLACK);
+		searchTextBG.alpha = 0.6;
+
+		searchInput = new FlxInputText(showX + 50, showY + 20, width - 100, '', 30, 0x00FFFFFF);
+		searchInput.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
+		searchInput.backgroundColor = FlxColor.TRANSPARENT;
+		searchInput.fieldBorderColor = FlxColor.TRANSPARENT;
+		searchInput.font = Paths.font("vcr.ttf");
+		
+		lineText = new FlxText(showX + 50, showY + 20, width - 100, 'Song Name For Search', 30);
+		lineText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		lineText.scrollFactor.set();
+		lineText.alpha = 0.6;
+		lineText.visible = true;
+		
+		notFoundSongText = new FlxText(showX + 5, showY + 100 + 40 * 2, 0, 'Not Found Song!', 30);
+		notFoundSongText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.RED, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		notFoundSongText.scrollFactor.set();
+
+		underline_text_BG = new FlxSprite(showX + 50, showY + 20 + 40).makeGraphic(width - 100, 6, FlxColor.WHITE);
+		underline_text_BG.alpha = 0.6;
+		
+		var lineHeight = 3;
+		underline_BG = new FlxSprite(showX, showY + 100).makeGraphic(width , lineHeight, 0xFF00FFFF);
+		
+		chooseBG = new FlxSprite(showX, showY + 100).makeGraphic(width , 40, FlxColor.WHITE);
+		chooseBG.alpha = 0.5;
+
+		textIntervals = new FlxTypedGroup<FlxSprite>();
+		searchSongNamesTexts = new FlxTypedGroup<FlxText>();
+		
+		var showCaseBG:FlxSprite;
+        var showCaseText:FlxText;
+        var addDataBG:FlxSprite;
+        var addDataText:FlxText;
+        var reduceDataBG:FlxSprite;
+        var reduceDataText:FlxText;
+
+        var searchCheck:String = ''; // update check song name change
+		var lineText:FlxText;
+		var notFoundSongText:FlxText;
+        var notFoundSongTextSine:Float = 0;
+
+		add(searchTextBG);
+		add(searchInput);
+		add(chooseBG);
+		add(lineText);
+		add(underline_text_BG);
+		add(notFoundSongText);
+		add(underline_BG);
+		add(textIntervals);
+		add(searchSongNamesTexts);
+
+		for (bgNum in 1...6)
+		{
+			var textInterval:FlxSprite = new FlxSprite(showX, showY + 100 + 40 * bgNum).makeGraphic(width , lineHeight, FlxColor.WHITE);
+			textInterval.ID = bgNum;
+			textIntervals.add(textInterval);
+        }
+        
+        for (textNum in 1...6)
+		{
+			var searchSongNamesText:FlxText = new FlxText(showX + 5, showY + 100 + 40 * (textNum-1), 0, '', 30);
+		    searchSongNamesText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		    searchSongNamesText.scrollFactor.set();
+			searchSongNamesText.ID = textNum;
+			searchSongNamesTexts.add(searchSongNamesText);
+        }
+        
+        var CHsize = 100;
+        var CH_Y = 200;
+
+        showCaseBG = new FlxSprite(FlxG.width - CHsize, CH_Y).makeGraphic(CHsize , CHsize, FlxColor.BLACK);
+		showCaseBG.alpha = 0.6;
+
+		showCaseText = new FlxText(FlxG.width - CHsize, CH_Y, CHsize, '<<', CHsize);
+		showCaseText.setFormat(Paths.font("vcr.ttf"), CHsize, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		showCaseText.scrollFactor.set();
+
+		reduceDataBG = new FlxSprite(FlxG.width - CHsize * 2, CH_Y + CHsize * 2).makeGraphic(CHsize , CHsize, FlxColor.BLACK);
+		reduceDataBG.alpha = 0.6;
+
+		reduceDataText = new FlxText(FlxG.width - CHsize * 2, CH_Y + CHsize * 2, CHsize, '↑', CHsize);
+		reduceDataText.setFormat(Paths.font("vcr.ttf"), CHsize, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		reduceDataText.scrollFactor.set();
+
+		addDataBG = new FlxSprite(FlxG.width - CHsize, CH_Y + CHsize * 2).makeGraphic(CHsize , CHsize, FlxColor.BLACK);
+		addDataBG.alpha = 0.6;
+
+		addDataText = new FlxText(FlxG.width - CHsize, CH_Y + CHsize * 2, CHsize, '↓', CHsize);
+		addDataText.setFormat(Paths.font("vcr.ttf"), CHsize, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		addDataText.scrollFactor.set();
+
+		add(showCaseBG);
+        add(showCaseText);
+        add(addDataBG);
+        add(addDataText);
+        add(reduceDataBG);
+        add(reduceDataText);
 
 		#if PRELOAD_ALL
 		#if android
@@ -305,6 +422,23 @@ class FreeplayState extends MusicBeatState
 			lerpScore = intendedScore;
 		if (Math.abs(lerpRating - intendedRating) <= 0.01)
 			lerpRating = intendedRating;
+			
+		lineText.visible = (searchInput.text == '');	
+			
+		if (searchCheck != searchInput.text){
+		    searchCheck = searchInput.text;
+		    updateSearch();
+		}
+		
+		//var songNameText:FlxText = searchSongNamesTexts.members[0];
+
+		if (searchInput.text != '' && searchSongNamesTexts.members[0].text == ''){
+		    notFoundSongTextSine += 180 * elapsed;
+			notFoundSongText.alpha = 1 - Math.sin((Math.PI * notFoundSongTextSine) / 180);
+		}
+		else {
+		    notFoundSongText.alpha = 0;
+		}
 
 		var ratingSplit:Array<String> = Std.string(Highscore.floorDecimal(lerpRating * 100, 2)).split('.');
 		if(ratingSplit.length < 2) { //No decimals, add an empty space
@@ -367,7 +501,7 @@ class FreeplayState extends MusicBeatState
 			changeDiff(1);
 		else if (upP || downP) changeDiff();
 
-		if (controls.BACK)
+		if (FlxG.keys.justPressed.ESCAPE #if android || MusicBeatState._virtualpad.buttonB.justPressed #end)
 		{
 			persistentUpdate = false;
 			if(colorTween != null) {
@@ -506,6 +640,40 @@ class FreeplayState extends MusicBeatState
 			vocals.destroy();
 		}
 		vocals = null;
+	}
+	
+	function updateSearch()
+	{
+	    var songName:Array<String> = [];
+		var songNum:Array<Int> = [];
+		var searchString:String = searchInput.text;
+		for (i in 0...songs.length)
+		{
+			var name:String = songs[i].songName.toLowerCase();
+			if (name.indexOf(searchString.toLowerCase()) != -1)
+			{
+				songName.push(songs[i].songName);
+				songNum.push(i);
+			}
+		}
+
+       if (searchInput.text != ''){
+    		for (i in 0...searchSongNamesTexts.length)
+    		{
+    		    var numFix:Int = i + 1;
+    			var songNameText:FlxText = searchSongNamesTexts.members[i];
+    			if (songName[i] != null) songNameText.text = numFix + ': ' + songName[i];
+    			else songNameText.text = '';
+    		}
+    	}	
+		    else{
+    		for (i in 0...searchSongNamesTexts.length)
+    		{
+    		    var numFix:Int = i + 1;
+    			var songNameText:FlxText = searchSongNamesTexts.members[i];
+    			else songNameText.text = '';
+		    }
+		}
 	}
 
 	function changeDiff(change:Int = 0)
