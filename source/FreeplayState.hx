@@ -501,7 +501,7 @@ class FreeplayState extends MusicBeatState
 			changeDiff(1);
 		else if (upP || downP) changeDiff();
 
-		if (FlxG.keys.justPressed.ESCAPE #if android || MusicBeatState._virtualpad.buttonB.justPressed #end)
+		if (controls.BACK)
 		{
 			persistentUpdate = false;
 			if(colorTween != null) {
