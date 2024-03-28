@@ -20,6 +20,7 @@ import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
 import flixel.addons.display.FlxBackdrop;
 import WeekData;
+import flixel.FlxCamera;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
