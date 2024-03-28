@@ -665,7 +665,6 @@ class FreeplayState extends MusicBeatState
     			if (songName[i] != null) songNameText.text = numFix + ': ' + songName[i];
     			else songNameText.text = '';
     		}
-    	}	
 		    else{
     		for (i in 0...searchSongNamesTexts.length)
     		{
