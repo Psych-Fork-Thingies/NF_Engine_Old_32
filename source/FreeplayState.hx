@@ -43,6 +43,8 @@ class FreeplayState extends MusicBeatState
 	var chooseBG:FlxSprite;
 	
 	var underline_text_BG:FlxSprite;
+	var line_Right_BG:FlxSprite;
+    var line_Left_BG:FlxSprite;
     var underline_BG:FlxSprite;
     var searchTextBG:FlxSprite;
     var textIntervals:FlxTypedGroup<FlxSprite>;
@@ -54,11 +56,39 @@ class FreeplayState extends MusicBeatState
     var addDataText:FlxText;
     var reduceDataBG:FlxSprite;
     var reduceDataText:FlxText;
+    var centerLine:FlxSprite;
+    var upLine:FlxSprite;
+    var downLine:FlxSprite;
+    var leftLine:FlxSprite;
+    var showCaseBGTween:FlxTween;
+    var addBGTween:FlxTween;
+    var reduceBGTween:FlxTween;
 
     var searchCheck:String = ''; // update check song name change
 	var lineText:FlxText;
 	var notFoundSongText:FlxText;
     var notFoundSongTextSine:Float = 0;
+    
+    var CHsize = 0; 
+    var showY = 0;
+    var showOffset = 5;
+
+    public var lineHeight = 3;
+
+    var songName:Array<String> = [];
+	var songNum:Array<Int> = [];
+    var maxUP:Int = 0;
+    var maxDown:Int = 0;
+    var startShow:Int = 0;
+    var chooseShow:Int = 0;
+    var isStart:Bool = false;
+    var isEnd:Bool = false;
+    var upCheck:Bool = false;
+    var DownCheck:Bool = false;
+
+    public var camGame:FlxCamera;
+	public var camSearch:FlxCamera;
+	public var camBlackFade:FlxCamera;
 
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
@@ -67,6 +97,9 @@ class FreeplayState extends MusicBeatState
 	var lerpRating:Float = 0;
 	var intendedScore:Int = 0;
 	var intendedRating:Float = 0;
+	
+	var openSearch:Bool = false;
+	var SearchTween:Array<FlxTween> = [];
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -103,6 +136,20 @@ class FreeplayState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+
+		camGame = new FlxCamera();
+		camSearch = new FlxCamera();
+		camBlackFade = new FlxCamera();
+		camBlackFade.bgColor.alpha = 0;
+		camSearch.bgColor.alpha = 0;
+
+		FlxG.cameras.reset(camGame);		
+		FlxG.cameras.add(camSearch, false);
+		FlxG.cameras.add(camBlackFade, false);
+		FlxG.cameras.setDefaultDrawTarget(camGame, true);
+		CustomFadeTransition.nextCamera = camBlackFade;
+
+		camSearch.y = -300 - showOffset;
 		
 		persistentUpdate = true;
 		PlayState.isStoryMode = false;
@@ -255,46 +302,67 @@ class FreeplayState extends MusicBeatState
 		textBG.alpha = 0.6;
 		add(textBG);
 		
-		var width = 500;
-        var height = 300;
+		var showWidth = 500;
+        var showHeight = 300;
         var showX = 180;
-        var showY = 0;
-        searchTextBG = new FlxSprite(showX, showY).makeGraphic(width, height, FlxColor.BLACK);
+        showY = -1;
+		
+        searchTextBG = new FlxSprite(showX, showY).makeGraphic(showWidth, showHeight, FlxColor.BLACK);
 		searchTextBG.alpha = 0.6;
+		searchTextBG.cameras = [camSearch];
 
-		searchInput = new FlxInputText(showX + 50, showY + 20, width - 100, '', 30, 0x00FFFFFF);
+		searchInput = new FlxInputText(showX + 50, showY + 20, showWidth - 100, '', 30, 0x00FFFFFF);
 		searchInput.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		searchInput.backgroundColor = FlxColor.TRANSPARENT;
 		searchInput.fieldBorderColor = FlxColor.TRANSPARENT;
 		searchInput.font = Paths.font("vcr.ttf");
+		searchInput.antialiasing = ClientPrefs.data.antialiasing;
+		searchInput.cameras = [camSearch];
 		
-		lineText = new FlxText(showX + 50, showY + 20, width - 100, 'Song Name For Search', 30);
+		lineText = new FlxText(showX + 50, showY + 20, showWidth - 100, 'Song Name For Search', 30);
 		lineText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		lineText.scrollFactor.set();
 		lineText.alpha = 0.6;
 		lineText.visible = true;
+		lineText.antialiasing = ClientPrefs.data.antialiasing;
+		lineText.cameras = [camSearch];
 		
-		notFoundSongText = new FlxText(showX + 5, showY + 100 + 40 * 2, 0, 'Not Found Song!', 30);
+		notFoundSongText = new FlxText(showX, showY + 100 + 40 * 2, showWidth, 'Not Found Song!', 30);
 		notFoundSongText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.RED, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		notFoundSongText.scrollFactor.set();
+		notFoundSongText.antialiasing = ClientPrefs.data.antialiasing;
+		notFoundSongText.cameras = [camSearch];
 
-		underline_text_BG = new FlxSprite(showX + 50, showY + 20 + 40).makeGraphic(width - 100, 6, FlxColor.WHITE);
+        var lineHeight = 3;
+		underline_text_BG = new FlxSprite(showX + 50, showY + 20 + 40).makeGraphic(showWidth - 100, 6, FlxColor.WHITE);
 		underline_text_BG.alpha = 0.6;
+		underline_text_BG.cameras = [camSearch];
 		
-		var lineHeight = 3;
-		underline_BG = new FlxSprite(showX, showY + 100).makeGraphic(width , lineHeight, 0xFF00FFFF);
+		line_Left_BG = new FlxSprite(showX - 3, showY).makeGraphic(lineHeight, showHeight + 2, FlxColor.WHITE);
+		line_Left_BG.cameras = [camSearch];
+
+		line_Right_BG = new FlxSprite(showX + showWidth, showY).makeGraphic(lineHeight, showHeight + 2, FlxColor.WHITE);
+		line_Right_BG.cameras = [camSearch];
 		
-		chooseBG = new FlxSprite(showX, showY + 100).makeGraphic(width , 40, FlxColor.WHITE);
-		chooseBG.alpha = 0.5;
+		underline_BG = new FlxSprite(showX, showY + 100).makeGraphic(showWidth , lineHeight, 0xFF00FFFF);
+		underline_BG.cameras = [camSearch];
+		
+		chooseBG = new FlxSprite(showX, showY + 100).makeGraphic(showWidth , 40, FlxColor.WHITE);
+		chooseBG.alpha = 0;
+		chooseBG.cameras = [camSearch];
 
 		textIntervals = new FlxTypedGroup<FlxSprite>();
+		textIntervals.cameras = [camSearch];
 		searchSongNamesTexts = new FlxTypedGroup<FlxText>();
+		searchSongNamesTexts.cameras = [camSearch];
 
 		add(searchTextBG);
 		add(searchInput);
 		add(chooseBG);
 		add(lineText);
 		add(underline_text_BG);
+		add(line_Left_BG);
+		add(line_Right_BG);
 		add(notFoundSongText);
 		add(underline_BG);
 		add(textIntervals);
@@ -302,8 +370,9 @@ class FreeplayState extends MusicBeatState
 
 		for (bgNum in 1...6)
 		{
-			var textInterval:FlxSprite = new FlxSprite(showX, showY + 100 + 40 * bgNum).makeGraphic(width , lineHeight, FlxColor.WHITE);
+			var textInterval:FlxSprite = new FlxSprite(showX, showY + 100 + 40 * bgNum).makeGraphic(showWidth , lineHeight, FlxColor.WHITE);
 			textInterval.ID = bgNum;
+			textInterval.cameras = [camSearch];
 			textIntervals.add(textInterval);
         }
         
@@ -313,32 +382,48 @@ class FreeplayState extends MusicBeatState
 		    searchSongNamesText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		    searchSongNamesText.scrollFactor.set();
 			searchSongNamesText.ID = textNum;
+			searchSongNamesText.antialiasing = ClientPrefs.data.antialiasing;
 			searchSongNamesTexts.add(searchSongNamesText);
+			searchSongNamesText.cameras = [camSearch];
         }
         
-        var CHsize = 100;
-        var CH_Y = 200;
+        CHsize = 100;
+        var CH_Y = 150;
+        var CH_X = 0;
+        var text1size = 50;
+        var text2size = 30;
 
-        showCaseBG = new FlxSprite(FlxG.width - CHsize, CH_Y).makeGraphic(CHsize , CHsize, FlxColor.BLACK);
+        showCaseBG = new FlxSprite(FlxG.width - CHsize, CH_Y + CHsize * 2 - 50).makeGraphic(CHsize , CHsize, 0xFFFFFFFF);
 		showCaseBG.alpha = 0.6;
+		showCaseBG.color = 0xFF000000;
 
-		showCaseText = new FlxText(FlxG.width - CHsize, CH_Y, CHsize, '<<', CHsize);
-		showCaseText.setFormat(Paths.font("vcr.ttf"), CHsize, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		showCaseText = new FlxText(FlxG.width - CHsize, CH_Y + CHsize * 2 - 50 + CHsize / 2 - text1size / 2, CHsize, '<<', text1size);
+		showCaseText.setFormat(Paths.font("vcr.ttf"), text1size, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		showCaseText.scrollFactor.set();
+		showCaseText.antialiasing = ClientPrefs.data.antialiasing;
 
-		reduceDataBG = new FlxSprite(FlxG.width - CHsize * 2, CH_Y + CHsize * 2).makeGraphic(CHsize , CHsize, FlxColor.BLACK);
+		reduceDataBG = new FlxSprite(FlxG.width, CH_Y).makeGraphic(CHsize , CHsize, 0xFFFFFFFF);
 		reduceDataBG.alpha = 0.6;
+		reduceDataBG.color = 0xFF000000;
 
-		reduceDataText = new FlxText(FlxG.width - CHsize * 2, CH_Y + CHsize * 2, CHsize, '↑', CHsize);
-		reduceDataText.setFormat(Paths.font("vcr.ttf"), CHsize, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		reduceDataText = new FlxText(FlxG.width, CH_Y + CHsize / 2 - text2size / 2, CHsize, 'UP', text2size);
+		reduceDataText.setFormat(Paths.font("vcr.ttf"), text2size, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		reduceDataText.scrollFactor.set();
+		reduceDataText.antialiasing = ClientPrefs.data.antialiasing;
 
-		addDataBG = new FlxSprite(FlxG.width - CHsize, CH_Y + CHsize * 2).makeGraphic(CHsize , CHsize, FlxColor.BLACK);
+		addDataBG = new FlxSprite(FlxG.width + CHsize, CH_Y).makeGraphic(CHsize , CHsize, 0xFFFFFFFF);
 		addDataBG.alpha = 0.6;
+		addDataBG.color = 0xFF000000;
 
-		addDataText = new FlxText(FlxG.width - CHsize, CH_Y + CHsize * 2, CHsize, '↓', CHsize);
-		addDataText.setFormat(Paths.font("vcr.ttf"), CHsize, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		addDataText = new FlxText(FlxG.width + CHsize, CH_Y + CHsize / 2 - text2size / 2, CHsize, 'DOWN', text2size);
+		addDataText.setFormat(Paths.font("vcr.ttf"), text2size, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		addDataText.scrollFactor.set();
+		addDataText.antialiasing = ClientPrefs.data.antialiasing;
+		
+		centerLine = new FlxSprite(FlxG.width + CHsize - 0.5, CH_Y).makeGraphic(1 , CHsize, FlxColor.WHITE);
+		upLine = new FlxSprite(FlxG.width, CH_Y - 0.5).makeGraphic(CHsize * 2, 1, FlxColor.WHITE);
+		downLine = new FlxSprite(FlxG.width, CH_Y + CHsize - 0.5).makeGraphic(CHsize * 2, 1, FlxColor.WHITE);
+		leftLine = new FlxSprite(FlxG.width - 0.5, CH_Y).makeGraphic(1 , CHsize, FlxColor.WHITE);
 
 		add(showCaseBG);
         add(showCaseText);
@@ -346,6 +431,10 @@ class FreeplayState extends MusicBeatState
         add(addDataText);
         add(reduceDataBG);
         add(reduceDataText);
+        add(centerLine);
+        add(upLine);
+        add(downLine);
+        add(leftLine);
 
 		#if PRELOAD_ALL
 		#if android
@@ -371,6 +460,7 @@ class FreeplayState extends MusicBeatState
                 #end
 
 		super.create();
+		CustomFadeTransition.nextCamera = camBlackFade;
 	}
 
 	override function closeSubState() {
@@ -423,22 +513,7 @@ class FreeplayState extends MusicBeatState
 		if (Math.abs(lerpRating - intendedRating) <= 0.01)
 			lerpRating = intendedRating;
 			
-		lineText.visible = (searchInput.text == '');	
-			
-		if (searchCheck != searchInput.text){
-		    searchCheck = searchInput.text;
-		    updateSearch();
-		}
-		
-		//var songNameText:FlxText = searchSongNamesTexts.members[0];
-
-		if (searchInput.text != '' && searchSongNamesTexts.members[0].text == ''){
-		    notFoundSongTextSine += 180 * elapsed;
-			notFoundSongText.alpha = 1 - Math.sin((Math.PI * notFoundSongTextSine) / 180);
-		}
-		else {
-		    notFoundSongText.alpha = 0;
-		}
+			checkSearch(elapsed);
 
 		var ratingSplit:Array<String> = Std.string(Highscore.floorDecimal(lerpRating * 100, 2)).split('.');
 		if(ratingSplit.length < 2) { //No decimals, add an empty space
@@ -642,10 +717,100 @@ class FreeplayState extends MusicBeatState
 		vocals = null;
 	}
 	
+	function checkSearch(elapsed:Float)
+	{
+	    lineText.visible = (searchInput.text == '');		
+
+		if (searchCheck != searchInput.text){
+		    searchCheck = searchInput.text;
+		    updateSearch();
+		}
+
+		if (searchInput.text != '' && songNum.length == 0){
+		    notFoundSongTextSine += 180 * elapsed;
+			notFoundSongText.alpha = 1 - Math.sin((Math.PI * notFoundSongTextSine) / 180);
+		}
+		else {
+		    notFoundSongText.alpha = 0;
+		}
+
+		if (FlxG.mouse.justPressed){
+		    if (FlxG.mouse.overlaps(showCaseBG)){
+		        openSearchCheck();
+		        showCaseBG.color = 0xFFFFFFFF;
+		        if (showCaseBGTween != null) showCaseBGTween.cancel();
+                showCaseBGTween = FlxTween.color(showCaseBG, 0.5, 0xFFFFFFFF, 0xFF000000, {ease: FlxEase.sineInOut});                
+		    }
+		    if (FlxG.mouse.overlaps(addDataBG)){
+                ChangeChoose(1);
+                addDataBG.color = 0xFFFFFFFF;
+                if (addBGTween != null) addBGTween.cancel();
+                addBGTween = FlxTween.color(addDataBG, 0.5, 0xFFFFFFFF, 0xFF000000, {ease: FlxEase.sineInOut});
+            }    
+		    if (FlxG.mouse.overlaps(reduceDataBG)){
+		        ChangeChoose(-1);
+		        reduceDataBG.color = 0xFFFFFFFF;
+		        if (reduceBGTween != null) reduceBGTween.cancel();
+		        reduceBGTween = FlxTween.color(reduceDataBG, 0.5, 0xFFFFFFFF, 0xFF000000, {ease: FlxEase.sineInOut});
+		    }
+		}    
+		addDataBG.alpha = 0.6;
+		reduceDataBG.alpha = 0.6;
+		showCaseBG.alpha = 0.6;
+	}
+
+	function openSearchCheck() 
+	{
+	    if (!openSearch){
+	        openSearch = true;
+	        showCaseText.text = '>>';
+	        moveSearch('open');
+	    }
+	    else{
+	        openSearch = false;
+	        showCaseText.text = '<<';
+	        moveSearch('close');
+	    }
+	}
+
+    function moveSearch(Type:String) 
+	{
+	for (i in 0...SearchTween.length){
+	    if (SearchTween[i] != null) SearchTween[i].cancel();
+	    } //close all move
+
+	    var moveTime = 0.25;
+	    if (Type == 'open'){
+	        SearchTween[1] = FlxTween.tween(addDataBG, {x: FlxG.width - CHsize * 2}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[2] = FlxTween.tween(addDataText, {x: FlxG.width - CHsize * 2}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[3] = FlxTween.tween(reduceDataBG, {x: FlxG.width - CHsize * 1}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[4] = FlxTween.tween(reduceDataText, {x: FlxG.width - CHsize * 1}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[5] = FlxTween.tween(centerLine, {x: FlxG.width - CHsize - 0.5}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[6] = FlxTween.tween(upLine, {x: FlxG.width - CHsize * 2}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[7] = FlxTween.tween(downLine, {x: FlxG.width - CHsize * 2}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[8] = FlxTween.tween(leftLine, {x: FlxG.width - CHsize * 2 - 0.5}, moveTime, {ease: FlxEase.expoInOut});
+	        
+	        SearchTween[9] = FlxTween.tween(camSearch, {y: -1}, moveTime, {ease: FlxEase.expoInOut});
+	        
+	    }
+	    else{
+	        SearchTween[1] = FlxTween.tween(addDataBG, {x: FlxG.width + showOffset}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[2] = FlxTween.tween(addDataText, {x: FlxG.width + showOffset}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[3] = FlxTween.tween(reduceDataBG, {x: FlxG.width + CHsize + showOffset}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[4] = FlxTween.tween(reduceDataText, {x: FlxG.width + CHsize + showOffset}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[5] = FlxTween.tween(centerLine, {x: FlxG.width + CHsize - 0.5 + showOffset}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[6] = FlxTween.tween(upLine, {x: FlxG.width + showOffset}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[7] = FlxTween.tween(downLine, {x: FlxG.width + showOffset}, moveTime, {ease: FlxEase.expoInOut});
+	        SearchTween[8] = FlxTween.tween(leftLine, {x: FlxG.width - 0.5 + showOffset}, moveTime, {ease: FlxEase.expoInOut});
+	        
+	        SearchTween[9] = FlxTween.tween(camSearch, {y: -300 - showOffset}, moveTime, {ease: FlxEase.expoInOut});
+	    }
+	}
+
 	function updateSearch()
 	{
-	    var songName:Array<String> = [];
-		var songNum:Array<Int> = [];
+	    songName = [];
+	    songNum = [];
 		var searchString:String = searchInput.text;
 		for (i in 0...songs.length)
 		{
@@ -669,11 +834,124 @@ class FreeplayState extends MusicBeatState
 		    else{
     		for (i in 0...searchSongNamesTexts.length)
     		{
-    		    var numFix:Int = i + 1;
     			var songNameText:FlxText = searchSongNamesTexts.members[i];
     			songNameText.text = '';
 		    }
 		}
+
+		startShow = 0;
+        chooseShow = 0;
+        
+        if (searchSongNamesTexts.members[0].text != ''){
+            chooseShow = 1;
+            chooseBG.alpha = 0.6;
+            chooseBG.y = showY + 100 + (chooseShow - 1) * 40;
+        }
+        else{
+            chooseBG.alpha = 0;
+        }
+        
+        checkPosition();
+        
+	}
+		
+	function ChangeChoose(change:Int = 0)
+	{
+	checkPosition();
+	
+	if (change > 0){
+            if(!isEnd){
+                if (chooseShow < maxDown) chooseShow++;
+                else if (chooseShow == maxDown){
+                    startShow++;
+                    updateSongText();
+                }
+            }
+            else{
+                if (chooseShow < maxDown) chooseShow++;
+                else if (chooseShow == maxDown){
+                    startShow = 0;              
+                    chooseShow = 1;
+                    updateSongText();
+                }
+            }
+        }
+
+        if (change < 0){
+            if (!isStart){
+                if (chooseShow > maxUP) chooseShow--;
+                if (chooseShow == maxUP) {                
+                    startShow--;
+                    updateSongText();
+                }
+            }
+            else{
+                if (chooseShow > maxUP) chooseShow--;
+                if (chooseShow == maxUP){
+                    if (songNum.length >= 5){
+                    startShow = songNum.length - 5 - 1;
+                    chooseShow = 5;
+                    updateSongText();
+                    }                    
+                }    
+            }
+        }
+
+	    if (chooseShow >= 1 && chooseShow <= 5){
+		    chooseBG.y = showY + 100 + (chooseShow - 1) * 40;
+		}
+		
+		if (searchSongNamesTexts.members[0].text != ''){
+            chooseBG.alpha = 0.6;
+        }
+        else{
+            chooseBG.alpha = 0;
+        }
+		
+		var realChoose:Int = startShow + chooseShow; 
+		realChoose -= 2; // -2 is fix code to 0
+		if (realChoose >= 0 && realChoose <= songNum.length){
+		    curSelected = songNum[realChoose]; //main move freeplay choose
+		    SearchChangeSelection(true);
+		}
+	}
+
+	function updateSongText()
+	{
+	    var numStart = startShow - 1;
+	    var numEnd = startShow + 4;
+	    for (num in numStart...numEnd)
+    		{
+    		    var numFix:Int = num + 1;
+    			var songNameText:FlxText = searchSongNamesTexts.members[num - numStart];
+    			if (songName[num] != null) songNameText.text = numFix + ': ' + songName[num];
+    			else songNameText.text = '';
+    		}
+	}
+	
+	function checkPosition()
+	{
+	    if((startShow - 1 + 5) >= songNum.length) isEnd = true;
+	    else isEnd = false;
+	    if(startShow == 1) isStart = true;
+	    else isStart = false;
+
+	    if (songNum.length >= 5){
+		    maxDown = 4;
+		}
+		else {
+		    maxDown = songNum.length;
+		}
+
+		if (songNum.length < 2){
+		    maxUP = 1;
+		}
+		else{
+		    maxUP = 2;
+		}
+
+		if (isStart) maxUP = 1;
+		if (isEnd) maxDown = 5;	
 	}
 
 	function changeDiff(change:Int = 0)
@@ -695,6 +973,64 @@ class FreeplayState extends MusicBeatState
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
 		positionHighscore();
+	}
+	
+	function SearchChangeSelection(playSound:Bool = true)
+	{
+		_updateSongLastDifficulty();
+		if(playSound) FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+
+		var lastList:Array<String> = Difficulty.list;
+
+		var newColor:Int = songs[curSelected].color;
+		if(newColor != intendedColor) {
+			if(colorTween != null) {
+				colorTween.cancel();
+			}
+			intendedColor = newColor;
+			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {
+				onComplete: function(twn:FlxTween) {
+					colorTween = null;
+				}
+			});
+		}
+
+		// selector.y = (70 * curSelected) + 30;
+
+		var bullShit:Int = 0;
+
+		for (i in 0...iconArray.length)
+		{
+			iconArray[i].alpha = 0.6;
+		}
+
+		iconArray[curSelected].alpha = 1;
+
+		for (item in grpSongs.members)
+		{
+			bullShit++;
+			item.alpha = 0.6;
+			if (item.targetY == curSelected)
+				item.alpha = 1;
+		}
+
+		Mods.currentModDirectory = songs[curSelected].folder;
+		PlayState.storyWeek = songs[curSelected].week;
+		Difficulty.loadFromWeek();
+
+		var savedDiff:String = songs[curSelected].lastDifficulty;
+		var lastDiff:Int = Difficulty.list.indexOf(lastDifficultyName);
+		if(savedDiff != null && !lastList.contains(savedDiff) && Difficulty.list.contains(savedDiff))
+			curDifficulty = Math.round(Math.max(0, Difficulty.list.indexOf(savedDiff)));
+		else if(lastDiff > -1)
+			curDifficulty = lastDiff;
+		else if(Difficulty.list.contains(Difficulty.getDefault()))
+			curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(Difficulty.getDefault())));
+		else
+			curDifficulty = 0;
+
+		changeDiff();
+		_updateSongLastDifficulty();
 	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
