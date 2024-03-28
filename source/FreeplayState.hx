@@ -47,6 +47,18 @@ class FreeplayState extends MusicBeatState
     var searchTextBG:FlxSprite;
     var textIntervals:FlxTypedGroup<FlxSprite>;
     var searchSongNamesTexts:FlxTypedGroup<FlxText>;
+    
+    var showCaseBG:FlxSprite;
+    var showCaseText:FlxText;
+    var addDataBG:FlxSprite;
+    var addDataText:FlxText;
+    var reduceDataBG:FlxSprite;
+    var reduceDataText:FlxText;
+
+    var searchCheck:String = ''; // update check song name change
+	var lineText:FlxText;
+	var notFoundSongText:FlxText;
+    var notFoundSongTextSine:Float = 0;
 
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
@@ -277,18 +289,6 @@ class FreeplayState extends MusicBeatState
 
 		textIntervals = new FlxTypedGroup<FlxSprite>();
 		searchSongNamesTexts = new FlxTypedGroup<FlxText>();
-		
-		var showCaseBG:FlxSprite;
-        var showCaseText:FlxText;
-        var addDataBG:FlxSprite;
-        var addDataText:FlxText;
-        var reduceDataBG:FlxSprite;
-        var reduceDataText:FlxText;
-
-        var searchCheck:String = ''; // update check song name change
-		var lineText:FlxText;
-		var notFoundSongText:FlxText;
-        var notFoundSongTextSine:Float = 0;
 
 		add(searchTextBG);
 		add(searchInput);
