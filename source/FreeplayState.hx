@@ -317,7 +317,7 @@ class FreeplayState extends MusicBeatState
 		searchInput.backgroundColor = FlxColor.TRANSPARENT;
 		searchInput.fieldBorderColor = FlxColor.TRANSPARENT;
 		searchInput.font = Paths.font("vcr.ttf");
-		searchInput.antialiasing = ClientPrefs.data.antialiasing;
+		searchInput.antialiasing = ClientPrefs.antialiasing;
 		searchInput.cameras = [camSearch];
 		
 		lineText = new FlxText(showX + 50, showY + 20, showWidth - 100, 'Song Name For Search', 30);
@@ -325,13 +325,13 @@ class FreeplayState extends MusicBeatState
 		lineText.scrollFactor.set();
 		lineText.alpha = 0.6;
 		lineText.visible = true;
-		lineText.antialiasing = ClientPrefs.data.antialiasing;
+		lineText.antialiasing = ClientPrefs.antialiasing;
 		lineText.cameras = [camSearch];
 		
 		notFoundSongText = new FlxText(showX, showY + 100 + 40 * 2, showWidth, 'Not Found Song!', 30);
 		notFoundSongText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.RED, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		notFoundSongText.scrollFactor.set();
-		notFoundSongText.antialiasing = ClientPrefs.data.antialiasing;
+		notFoundSongText.antialiasing = ClientPrefs.antialiasing;
 		notFoundSongText.cameras = [camSearch];
 
         var lineHeight = 3;
@@ -383,7 +383,7 @@ class FreeplayState extends MusicBeatState
 		    searchSongNamesText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		    searchSongNamesText.scrollFactor.set();
 			searchSongNamesText.ID = textNum;
-			searchSongNamesText.antialiasing = ClientPrefs.data.antialiasing;
+			searchSongNamesText.antialiasing = ClientPrefs.antialiasing;
 			searchSongNamesTexts.add(searchSongNamesText);
 			searchSongNamesText.cameras = [camSearch];
         }
@@ -401,7 +401,7 @@ class FreeplayState extends MusicBeatState
 		showCaseText = new FlxText(FlxG.width - CHsize, CH_Y + CHsize * 2 - 50 + CHsize / 2 - text1size / 2, CHsize, '<<', text1size);
 		showCaseText.setFormat(Paths.font("vcr.ttf"), text1size, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		showCaseText.scrollFactor.set();
-		showCaseText.antialiasing = ClientPrefs.data.antialiasing;
+		showCaseText.antialiasing = ClientPrefs.antialiasing;
 
 		reduceDataBG = new FlxSprite(FlxG.width, CH_Y).makeGraphic(CHsize , CHsize, 0xFFFFFFFF);
 		reduceDataBG.alpha = 0.6;
@@ -410,7 +410,7 @@ class FreeplayState extends MusicBeatState
 		reduceDataText = new FlxText(FlxG.width, CH_Y + CHsize / 2 - text2size / 2, CHsize, 'UP', text2size);
 		reduceDataText.setFormat(Paths.font("vcr.ttf"), text2size, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		reduceDataText.scrollFactor.set();
-		reduceDataText.antialiasing = ClientPrefs.data.antialiasing;
+		reduceDataText.antialiasing = ClientPrefs.antialiasing;
 
 		addDataBG = new FlxSprite(FlxG.width + CHsize, CH_Y).makeGraphic(CHsize , CHsize, 0xFFFFFFFF);
 		addDataBG.alpha = 0.6;
@@ -419,7 +419,7 @@ class FreeplayState extends MusicBeatState
 		addDataText = new FlxText(FlxG.width + CHsize, CH_Y + CHsize / 2 - text2size / 2, CHsize, 'DOWN', text2size);
 		addDataText.setFormat(Paths.font("vcr.ttf"), text2size, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		addDataText.scrollFactor.set();
-		addDataText.antialiasing = ClientPrefs.data.antialiasing;
+		addDataText.antialiasing = ClientPrefs.antialiasing;
 		
 		centerLine = new FlxSprite(FlxG.width + CHsize - 0.5, CH_Y).makeGraphic(1 , CHsize, FlxColor.WHITE);
 		upLine = new FlxSprite(FlxG.width, CH_Y - 0.5).makeGraphic(CHsize * 2, 1, FlxColor.WHITE);
