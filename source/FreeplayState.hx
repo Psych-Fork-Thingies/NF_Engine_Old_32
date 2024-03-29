@@ -893,6 +893,8 @@ class FreeplayState extends MusicBeatState
 	{
 	checkPosition();
 	
+	
+	
 	if (change > 0 && songNum.length != 0){
             if(!isEnd){
                 if (chooseShow < maxDown) chooseShow++;
