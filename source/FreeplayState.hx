@@ -888,12 +888,11 @@ class FreeplayState extends MusicBeatState
         checkPosition();
         
 	}
+	
 		
 	function ChangeChoose(change:Int = 0)
 	{
 	checkPosition();
-	
-	
 	
 	if (change > 0 && songNum.length != 0){
             if(!isEnd){
@@ -904,7 +903,7 @@ class FreeplayState extends MusicBeatState
                 }
             }
             else{
-                if (change < 0 && songNum.length != 0){
+                if (chooseShow < maxDown) chooseShow++;
                 else if (chooseShow == maxDown){
                     startShow = 0;              
                     chooseShow = 1;
@@ -912,8 +911,8 @@ class FreeplayState extends MusicBeatState
                 }
             }
         }
-
-        if (change < 0){
+        
+        if (change < 0 && songNum.length != 0){
             if (!isStart){
                 if (chooseShow > maxUP) chooseShow--;
                 else if (chooseShow == maxUP) {                
