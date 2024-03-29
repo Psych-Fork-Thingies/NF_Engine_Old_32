@@ -888,7 +888,6 @@ class FreeplayState extends MusicBeatState
         checkPosition();
         
 	}
-	*/
 		
 	function ChangeChoose(change:Int = 0)
 	{
