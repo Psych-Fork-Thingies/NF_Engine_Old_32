@@ -980,7 +980,7 @@ class FreeplayState extends MusicBeatState
 	{
 		if(playSound) FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
-		var lastList:Array<String> = Difficulty.list;
+		var lastList:Array<String> = curDifficulty.list;
 
 		var newColor:Int = songs[curSelected].color;
 		if(newColor != intendedColor) {
