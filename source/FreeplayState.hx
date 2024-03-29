@@ -29,13 +29,24 @@ import flixel.addons.ui.FlxInputText;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.ui.FlxButton;
 
+    /*
+    Song Search extend made by NF|beihu (北狐丶逐梦)
+    bilbil: https://b23.tv/SnqG443
+    youtube: https://youtube.com/@beihu235?si=NHnWxcUWPS46EqUt
+    discord: beihu235
+    
+    you can use it but must give me credit(dont forget my icon)
+    logic is very easy so I think everyone can understand it
+        
+    */
+
 using StringTools;
 
 class FreeplayState extends MusicBeatState
 {
 	var songs:Array<SongMetadata> = [];
 
-	var selector:FlxText;
+	//var selector:FlxText;
 	private static var curSelected:Int = 0;
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
@@ -52,6 +63,9 @@ class FreeplayState extends MusicBeatState
     var searchSongNamesTexts:FlxTypedGroup<FlxText>;
     
     var showCaseBG:FlxSprite;
+    var showCaseBGLeft:FlxSprite;
+    var showCaseBGUp:FlxSprite;
+    var showCaseBGDown:FlxSprite;
     var showCaseText:FlxText;
     var addDataBG:FlxSprite;
     var addDataText:FlxText;
@@ -70,9 +84,9 @@ class FreeplayState extends MusicBeatState
 	var notFoundSongText:FlxText;
     var notFoundSongTextSine:Float = 0;
     
-    var CHsize = 0; 
-    var showY = 0;
-    var showOffset = 5;
+    var CHsize:Int = 0; 
+    var showY:Int = 0;
+    var showOffset:Int = 5;
 
     public var lineHeight = 3;
 
@@ -84,12 +98,6 @@ class FreeplayState extends MusicBeatState
     var chooseShow:Int = 0;
     var isStart:Bool = false;
     var isEnd:Bool = false;
-    var upCheck:Bool = false;
-    var DownCheck:Bool = false;
-
-    public var camGame:FlxCamera;
-	public var camSearch:FlxCamera;
-	public var camBlackFade:FlxCamera;
 
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
@@ -98,6 +106,10 @@ class FreeplayState extends MusicBeatState
 	var lerpRating:Float = 0;
 	var intendedScore:Int = 0;
 	var intendedRating:Float = 0;
+	
+	var camGame:FlxCamera;
+	var camSearch:FlxCamera;
+	var camBlackFade:FlxCamera;
 	
 	var openSearch:Bool = false;
 	var SearchTween:Array<FlxTween> = [];
@@ -135,8 +147,12 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
-		Paths.clearStoredMemory();
-		Paths.clearUnusedMemory();
+		//Paths.clearStoredMemory();
+		//Paths.clearUnusedMemory();
+		
+		persistentUpdate = true;
+		PlayState.isStoryMode = false;
+		WeekData.reloadWeekFiles(false);
 
 		camGame = new FlxCamera();
 		camSearch = new FlxCamera();
@@ -249,36 +265,49 @@ class FreeplayState extends MusicBeatState
 			// songText.screenCenter(X);
 		}
 		WeekData.setDirectoryFromWeek();
+		
+	    scoreBG = new FlxSprite(FlxG.width * 0.7 - 6, 0).makeGraphic(1, 92, 0xFF000000);
+		scoreBG.alpha = 0.6;
 
-		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
-		scoreText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
+		//scoreText = new FlxText(FlxG.width * 0.7, 5, 0, '  ', 32);
+		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, '', 32);
+		//scoreText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
+		scoreText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreText.antialiasing = ClientPrefs.globalAntialiasing;
 		add(scoreText);
 		//scoreText.alpha = 0.6;
+		
+		scoreText.scrollFactor.set();
 
-		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 92, 0xFF000000);
-		scoreBG.alpha = 0.6;
-		add(scoreBG);
-
-		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
+        //diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, '   ', 24);
+		//diffText.font = Paths.font("vcr.ttf");
+		diffText = new FlxText(FlxG.width * 0.7, 5 + 44, 0, '', 24);
+		//diffText = new FlxText(FlxG.width * 0.7, 5 + 36, 0, '', 24);
 		diffText.font = scoreText.font;
+		diffText.scrollFactor.set();
 		diffText.antialiasing = ClientPrefs.globalAntialiasing;
 		add(diffText);
-
 		
+		add(scoreBG);
+		add(scoreText);
 
 		if(curSelected >= songs.length) curSelected = 0;
 		bg.color = songs[curSelected].color;
 		intendedColor = bg.color;
 
-		if(lastDifficultyName == '')
-		{
-			lastDifficultyName = CoolUtil.defaultDifficulty;
-		}
-		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
-		
-		changeSelection();
 		changeDiff();
+		
+		if (curSelected >= songs.length) curSelected = 0;
+		bg.color = songs[curSelected].color;
+		intendedColor = bg.color;
+		lerpSelected = curSelected;
+
+		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
+
+		changeSelection();
+		
+		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		diffText.font = Paths.font("vcr.ttf");
 
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
 
@@ -303,9 +332,9 @@ class FreeplayState extends MusicBeatState
 		textBG.alpha = 0.6;
 		add(textBG);
 		
-		var showWidth = 500;
-        var showHeight = 300;
-        var showX = 180;
+		var showWidth:Int = 500;
+        var showHeight:Int = 300;
+        var showX:Int = 180;
         showY = -1;
 		
         searchTextBG = new FlxSprite(showX, showY).makeGraphic(showWidth, showHeight, FlxColor.BLACK);
@@ -334,15 +363,15 @@ class FreeplayState extends MusicBeatState
 		notFoundSongText.antialiasing = ClientPrefs.globalAntialiasing;
 		notFoundSongText.cameras = [camSearch];
 
-        var lineHeight = 3;
+        var lineHeight:Int = 3;
 		underline_text_BG = new FlxSprite(showX + 50, showY + 20 + 40).makeGraphic(showWidth - 100, 6, FlxColor.WHITE);
 		underline_text_BG.alpha = 0.6;
 		underline_text_BG.cameras = [camSearch];
 		
-		line_Left_BG = new FlxSprite(showX - 3, showY).makeGraphic(lineHeight, showHeight + 2, FlxColor.WHITE);
+		line_Left_BG = new FlxSprite(showX - 3, showY).makeGraphic(lineHeight, showHeight + 3, FlxColor.WHITE);
 		line_Left_BG.cameras = [camSearch];
 
-		line_Right_BG = new FlxSprite(showX + showWidth, showY).makeGraphic(lineHeight, showHeight + 2, FlxColor.WHITE);
+		line_Right_BG = new FlxSprite(showX + showWidth, showY).makeGraphic(lineHeight, showHeight + 3, FlxColor.WHITE);
 		line_Right_BG.cameras = [camSearch];
 		
 		underline_BG = new FlxSprite(showX, showY + 100).makeGraphic(showWidth , lineHeight, 0xFF00FFFF);
@@ -389,14 +418,20 @@ class FreeplayState extends MusicBeatState
         }
         
         CHsize = 100;
-        var CH_Y = 150;
-        var CH_X = 0;
-        var text1size = 50;
-        var text2size = 30;
+        var CH_Y:Int = 150;
+        var CH_X:Int = 0;
+        var text1size:Int = 50;
+        var text2size:Int = 30;
 
         showCaseBG = new FlxSprite(FlxG.width - CHsize, CH_Y + CHsize * 2 - 50).makeGraphic(CHsize , CHsize, 0xFFFFFFFF);
 		showCaseBG.alpha = 0.6;
 		showCaseBG.color = 0xFF000000;
+		
+		showCaseBGLeft = new FlxSprite(FlxG.width - CHsize - 1, CH_Y + CHsize * 2 - 50 - 1).makeGraphic(1 , CHsize + 2, 0xFFFFFFFF);
+
+		showCaseBGUp = new FlxSprite(FlxG.width - CHsize, CH_Y + CHsize * 2 - 50 - 1).makeGraphic(CHsize , 1, 0xFFFFFFFF);
+
+		showCaseBGDown = new FlxSprite(FlxG.width - CHsize, CH_Y + CHsize * 2 - 50 + CHsize).makeGraphic(CHsize , 1, 0xFFFFFFFF);
 
 		showCaseText = new FlxText(FlxG.width - CHsize, CH_Y + CHsize * 2 - 50 + CHsize / 2 - text1size / 2, CHsize, '<<', text1size);
 		showCaseText.setFormat(Paths.font("vcr.ttf"), text1size, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -424,9 +459,12 @@ class FreeplayState extends MusicBeatState
 		centerLine = new FlxSprite(FlxG.width + CHsize - 0.5, CH_Y).makeGraphic(1 , CHsize, FlxColor.WHITE);
 		upLine = new FlxSprite(FlxG.width, CH_Y - 0.5).makeGraphic(CHsize * 2, 1, FlxColor.WHITE);
 		downLine = new FlxSprite(FlxG.width, CH_Y + CHsize - 0.5).makeGraphic(CHsize * 2, 1, FlxColor.WHITE);
-		leftLine = new FlxSprite(FlxG.width - 0.5, CH_Y).makeGraphic(1 , CHsize, FlxColor.WHITE);
+		leftLine = new FlxSprite(FlxG.width - 0.5 + showOffset, CH_Y).makeGraphic(1 , CHsize, FlxColor.WHITE);
 
 		add(showCaseBG);
+		add(showCaseBGLeft);
+		add(showCaseBGUp);
+		add(showCaseBGDown);
         add(showCaseText);
         add(addDataBG);
         add(addDataText);
@@ -451,14 +489,15 @@ class FreeplayState extends MusicBeatState
 		#end
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
 		text.setFormat("VCR OSD Mono", size, FlxColor.WHITE, CENTER);
+		text.antialiasing = ClientPrefs.globalAntialiasing;
+		text.screenCenter(X);
 		text.scrollFactor.set();
 		
-		text.antialiasing = ClientPrefs.globalAntialiasing;
 		add(text);
 
-                #if android
-                addVirtualPad(FULL, A_B_C_X_Y_Z);
-                #end
+        #if android
+        addVirtualPad(FULL, A_B_C_X_Y_Z);
+        #end
 
 		super.create();
 		CustomFadeTransition.nextCamera = camBlackFade;
@@ -816,7 +855,7 @@ class FreeplayState extends MusicBeatState
 		for (i in 0...songs.length)
 		{
 			var name:String = songs[i].songName.toLowerCase();
-			if (name.indexOf(searchString.toLowerCase()) != -1)
+			if (name.indexOf(searchString.toLowerCase()) != -1 && searchInput.text != '')
 			{
 				songName.push(songs[i].songName);
 				songNum.push(i);
@@ -843,24 +882,19 @@ class FreeplayState extends MusicBeatState
 		startShow = 0;
         chooseShow = 0;
         
-        if (searchSongNamesTexts.members[0].text != ''){
-            chooseShow = 1;
-            chooseBG.alpha = 0.6;
-            chooseBG.y = showY + 100 + (chooseShow - 1) * 40;
-        }
-        else{
-            chooseBG.alpha = 0;
-        }
+        chooseBG.alpha = 0;
+        chooseBG.y = showY + 100;
         
         checkPosition();
         
 	}
+	*/
 		
 	function ChangeChoose(change:Int = 0)
 	{
 	checkPosition();
 	
-	if (change > 0){
+	if (change > 0 && songNum.length != 0){
             if(!isEnd){
                 if (chooseShow < maxDown) chooseShow++;
                 else if (chooseShow == maxDown){
@@ -869,7 +903,7 @@ class FreeplayState extends MusicBeatState
                 }
             }
             else{
-                if (chooseShow < maxDown) chooseShow++;
+                if (change < 0 && songNum.length != 0){
                 else if (chooseShow == maxDown){
                     startShow = 0;              
                     chooseShow = 1;
@@ -881,36 +915,43 @@ class FreeplayState extends MusicBeatState
         if (change < 0){
             if (!isStart){
                 if (chooseShow > maxUP) chooseShow--;
-                if (chooseShow == maxUP) {                
+                else if (chooseShow == maxUP) {                
                     startShow--;
                     updateSongText();
                 }
             }
             else{
                 if (chooseShow > maxUP) chooseShow--;
-                if (chooseShow == maxUP){
+                else if (chooseShow == maxUP){
                     if (songNum.length >= 5){
-                    startShow = songNum.length - 5 - 1;
-                    chooseShow = 5;
-                    updateSongText();
-                    }                    
+                    startShow = songNum.length - 5;
+                        chooseShow = 5;
+                        updateSongText();
+                    }
+                    else{
+                        startShow = 0;
+                        chooseShow = songNum.length;
+                        updateSongText();
+                    }               
                 }    
             }
         }
+        
+        if (chooseShow < 0) chooseShow = 0; //fix someone press up at start
 
 	    if (chooseShow >= 1 && chooseShow <= 5){
 		    chooseBG.y = showY + 100 + (chooseShow - 1) * 40;
 		}
 		
-		if (searchSongNamesTexts.members[0].text != ''){
+		if (searchSongNamesTexts.members[0].text != '' && chooseShow >= 1 && chooseShow <= 5){
             chooseBG.alpha = 0.6;
         }
         else{
-            chooseBG.alpha = 0;
+            chooseBG.y = showY + 100;
         }
 		
 		var realChoose:Int = startShow + chooseShow; 
-		realChoose -= 2; // -2 is fix code to 0
+		realChoose -= 1; // -1 is fix code to 0
 		if (realChoose >= 0 && realChoose <= songNum.length){
 		    curSelected = songNum[realChoose]; //main move freeplay choose
 		    SearchChangeSelection(true);
@@ -919,8 +960,8 @@ class FreeplayState extends MusicBeatState
 
 	function updateSongText()
 	{
-	    var numStart = startShow - 1;
-	    var numEnd = startShow + 4;
+	    var numStart = startShow;
+	    var numEnd = startShow + 5;
 	    for (num in numStart...numEnd)
     		{
     		    var numFix:Int = num + 1;
@@ -932,9 +973,9 @@ class FreeplayState extends MusicBeatState
 	
 	function checkPosition()
 	{
-	    if((startShow - 1 + 5) >= songNum.length) isEnd = true;
+	    if((startShow + 5) >= songNum.length) isEnd = true;
 	    else isEnd = false;
-	    if(startShow == 1) isStart = true;
+	    if(startShow == 0) isStart = true;
 	    else isStart = false;
 
 	    if (songNum.length >= 5){
@@ -944,7 +985,7 @@ class FreeplayState extends MusicBeatState
 		    maxDown = songNum.length;
 		}
 
-		if (songNum.length < 2){
+		if (songNum.length <= 5){
 		    maxUP = 1;
 		}
 		else{
@@ -953,27 +994,9 @@ class FreeplayState extends MusicBeatState
 
 		if (isStart) maxUP = 1;
 		if (isEnd) maxDown = 5;	
-	}
-
-	function changeDiff(change:Int = 0)
-	{
-		curDifficulty += change;
-
-		if (curDifficulty < 0)
-			curDifficulty = CoolUtil.difficulties.length-1;
-		if (curDifficulty >= CoolUtil.difficulties.length)
-			curDifficulty = 0;
-
-		lastDifficultyName = CoolUtil.difficulties[curDifficulty];
-
-		#if !switch
-		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
-		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
-		#end
-
-		PlayState.storyDifficulty = curDifficulty;
-		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
-		positionHighscore();
+		
+		if (songNum.length < 5) maxDown = songNum.length; //check again
+		if (songNum.length < 2) maxUP = 1; //check again
 	}
 	
 	function SearchChangeSelection(playSound:Bool = true)
@@ -1047,6 +1070,31 @@ class FreeplayState extends MusicBeatState
 		{
 			curDifficulty = 0;
 		}
+	}
+	
+	function changeDiff(change:Int = 0)
+	{
+		curDifficulty += change;
+
+		if (curDifficulty < 0)
+			curDifficulty = Difficulty.list.length-1;
+		if (curDifficulty >= Difficulty.list.length)
+			curDifficulty = 0;
+
+		#if !switch
+		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
+		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
+		#end
+
+		lastDifficultyName = Difficulty.getString(curDifficulty);
+		if (Difficulty.list.length > 1)
+			diffText.text = '< ' + lastDifficultyName.toUpperCase() + ' >';
+		else
+			diffText.text = lastDifficultyName.toUpperCase();
+
+		positionHighscore();
+		missingText.visible = false;
+		missingTextBG.visible = false;
 	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
