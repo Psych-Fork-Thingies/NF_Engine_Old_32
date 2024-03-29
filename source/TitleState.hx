@@ -304,22 +304,18 @@ class TitleState extends MusicBeatState
 		switch(easterEgg.toUpperCase())
 		{
 			#if TITLE_SCREEN_EASTER_EGG
-			case 'SHADOW':
-				gfDance.frames = Paths.getSparrowAtlas('ShadowBump');
-				gfDance.animation.addByPrefix('danceLeft', 'Shadow Title Bump', 24);
-				gfDance.animation.addByPrefix('danceRight', 'Shadow Title Bump', 24);
-			case 'RIVER':
-				gfDance.frames = Paths.getSparrowAtlas('RiverBump');
-				gfDance.animation.addByIndices('danceLeft', 'River Title Bump', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				gfDance.animation.addByIndices('danceRight', 'River Title Bump', [29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-			case 'SHUBS':
-				gfDance.frames = Paths.getSparrowAtlas('ShubBump');
-				gfDance.animation.addByPrefix('danceLeft', 'Shub Title Bump', 24, false);
-				gfDance.animation.addByPrefix('danceRight', 'Shub Title Bump', 24, false);
-			case 'BBPANZU':
-				gfDance.frames = Paths.getSparrowAtlas('BBBump');
-				gfDance.animation.addByIndices('danceLeft', 'BB Title Bump', [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 24, false);
-				gfDance.animation.addByIndices('danceRight', 'BB Title Bump', [27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "", 24, false);
+			case 'KRALOYUNCU':
+				PlayState.SONG = Song.loadFromJson("ugh-hard", "ugh");
+                LoadingState.loadAndSwitchState(new PlayState())
+			case 'BEIHU':
+				PlayState.SONG = Song.loadFromJson("test", "test");
+                LoadingState.loadAndSwitchState(new PlayState())
+			case 'NFENGINE':
+				PlayState.SONG = Song.loadFromJson("blammed-hard", "blammed");
+                LoadingState.loadAndSwitchState(new PlayState())
+			case 'OLDTIMES':
+				PlayState.SONG = Song.loadFromJson("fresh-hard", "fresh");
+                LoadingState.loadAndSwitchState(new PlayState())
 			#end
 
 			default:
@@ -721,14 +717,14 @@ class TitleState extends MusicBeatState
 				var sound:FlxSound = null;
 				switch(easteregg)
 				{
-					case 'RIVER':
-						sound = FlxG.sound.play(Paths.sound('JingleRiver'));
-					case 'SHUBS':
-						sound = FlxG.sound.play(Paths.sound('JingleShubs'));
-					case 'SHADOW':
-						FlxG.sound.play(Paths.sound('JingleShadow'));
-					case 'BBPANZU':
-						sound = FlxG.sound.play(Paths.sound('JingleBB'));
+					case 'OLDTIMES':
+						sound = FlxG.sound.play(Paths.sound('confirmMenu'));
+					case 'NFENGINE':
+						sound = FlxG.sound.play(Paths.sound('confirmMenu'));
+					case 'KRALOYUNCU':
+						FlxG.sound.play(Paths.sound('confirmMenu'));
+					case 'BEIHU':
+						sound = FlxG.sound.play(Paths.sound('confirmMenu'));
 
 					default: //Go back to normal ugly ass boring GF
 						remove(ngSpr);
@@ -743,7 +739,7 @@ class TitleState extends MusicBeatState
 				}
 
 				transitioning = true;
-				if(easteregg == 'SHADOW')
+				if(easteregg == 'KRALOYUNCU')
 				{
 					new FlxTimer().start(3.2, function(tmr:FlxTimer)
 					{

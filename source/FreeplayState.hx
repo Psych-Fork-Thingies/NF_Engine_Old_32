@@ -35,6 +35,11 @@ import flixel.ui.FlxButton;
     youtube: https://youtube.com/@beihu235?si=NHnWxcUWPS46EqUt
     discord: beihu235
     
+    Song Search extend adapted to 0.6.3 (partially) by KralOyuncu (Prohack101010)
+    youtube1: https://youtube.com/@KralOyuncuRBX
+    youtube2: https://youtube.com/@KralOyuncuFNFz
+    discord: kraloyuncuofficial
+    
     you can use it but must give me credit(dont forget my icon)
     logic is very easy so I think everyone can understand it
         
