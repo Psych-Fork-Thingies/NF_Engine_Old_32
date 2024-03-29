@@ -300,7 +300,6 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length) curSelected = 0;
 		bg.color = songs[curSelected].color;
 		intendedColor = bg.color;
-		lerpSelected = curSelected;
 
 		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
 
@@ -1086,15 +1085,13 @@ class FreeplayState extends MusicBeatState
 		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
 		#end
 
-		lastDifficultyName = CoolUtil.difficulties.getString(curDifficulty);
+		lastDifficultyName = CoolUtil.difficulties[curDifficulty];
 		if (CoolUtil.difficulties.length > 1)
 			diffText.text = '< ' + lastDifficultyName.toUpperCase() + ' >';
 		else
 			diffText.text = lastDifficultyName.toUpperCase();
 
 		positionHighscore();
-		missingText.visible = false;
-		missingTextBG.visible = false;
 	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
