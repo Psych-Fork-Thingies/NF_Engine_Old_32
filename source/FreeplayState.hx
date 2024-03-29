@@ -1049,6 +1049,7 @@ class FreeplayState extends MusicBeatState
 		{
 			curDifficulty = 0;
 		}
+	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
