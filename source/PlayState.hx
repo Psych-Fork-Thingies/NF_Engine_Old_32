@@ -85,6 +85,9 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+    var noteRows:Array<Array<Array<Note>>> = [[],[]];
+    private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
+    
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
@@ -297,7 +300,6 @@ class PlayState extends MusicBeatState
 
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
-	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
 	public var inCutscene:Bool = false;
 	public var skipCountdown:Bool = false;
@@ -4713,6 +4715,36 @@ class PlayState extends MusicBeatState
 		});
 		combo = 0;
 		health -= daNote.missHealth * healthLoss;
+		
+		final char:Character = !daNote.gfNote ? !opponentChart ? boyfriend : dad : gf;
+			if(daNote.gfNote) {
+			}
+
+			if(char != null && !daNote.noMissAnimation && char.hasMissAnimations && ClientPrefs.charsAndBG)
+			{
+				var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
+				char.playAnim(animToPlay, true);
+			}
+			if (!ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4 && scoreTxt != null) updateScore();
+			if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
+		   		if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
+
+			daNote.tooLate = true;
+
+			callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
+			if (ClientPrefs.missRating) popUpScore(daNote, true);
+		}
+		if (daNoteAlt != null)
+		{
+			if (combo > 0)
+				combo = 0;
+			else combo -= 1 * polyphony;
+				comboMultiplier = 1; // Reset to 1 on a miss
+			if (health > 0)
+			{
+				missCombo += 1;
+				health -= daNoteAlt.missHealth * missCombo;
+			}
 		
 		if(instakillOnMiss)
 		{
