@@ -4657,7 +4657,7 @@ class PlayState extends MusicBeatState
 				&& daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit && !daNote.blockHit) {
 				goodNoteHit(daNote);
 				}
-			})
+			});
 
 			if (parsedHoldArray.contains(true) && !endingSong && !opponentChart) {
 			/*
