@@ -22,6 +22,7 @@ class ClientPrefs {
 	public static var cursing:Bool = true;
 	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
+	public static var doubleGhost:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -65,7 +66,9 @@ class ClientPrefs {
 		'instakill' => false,
 		'practice' => true,
 		'botplay' => false,
-		'opponentplay' => false
+		'opponentplay' => false,
+		'opponentdrain' => false,
+		'drainlevel' => 1,
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
@@ -142,6 +145,7 @@ class ClientPrefs {
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
+		FlxG.save.data.doubleGhost = doubleGhost;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
@@ -248,6 +252,9 @@ class ClientPrefs {
 		}*/
 		if(FlxG.save.data.camZooms != null) {
 			camZooms = FlxG.save.data.camZooms;
+		}
+		if(FlxG.save.data.doubleGhost != null) {
+			doubleGhost = FlxG.save.data.doubleGhost;
 		}
 		if(FlxG.save.data.hideHud != null) {
 			hideHud = FlxG.save.data.hideHud;
