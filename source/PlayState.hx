@@ -219,6 +219,7 @@ class PlayState extends MusicBeatState
 	public var hpDrainLevel:Float = 1;
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
+	public var fakecpuControlled:Bool = false;
 	public var practiceMode:Bool = false;
 	public var opponentDrain:Bool = false;
 	public static var opponentChart:Bool = false;
@@ -406,6 +407,7 @@ class PlayState extends MusicBeatState
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
+		fakecpuControlled = ClientPrefs.getGameplaySetting('opponentgame', false);
 		opponentChart = ClientPrefs.getGameplaySetting('opponentplay', false);
 		opponentDrain = ClientPrefs.getGameplaySetting('opponentdrain', false);
 
@@ -3471,6 +3473,7 @@ class PlayState extends MusicBeatState
         */
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);
+		setOnLuas('OpponentGame', fakecpuControlled);
 		setOnLuas('botPlay', cpuControlled);
 		callOnLuas('onUpdatePost', [elapsed]);
 	}
