@@ -4647,10 +4647,10 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('asdfa', upP);
 		var char:Character = boyfriend;
 		if (opponentChart) char = dad;
-		if (startedCountdown && !char.stunned && generatedMusic)(daNote:Note)
+		if (startedCountdown && !char.stunned && generatedMusic)
 		{
 			// rewritten inputs???
-			group.forEachAlive(function(daNote:Note)
+			notes.forEachAlive(function(daNote:Note)
 			{
 				// hold note functions
 				if (strumsBlocked[daNote.noteData] != true && daNote.isSustainNote && parsedHoldArray[daNote.noteData] && daNote.canBeHit
