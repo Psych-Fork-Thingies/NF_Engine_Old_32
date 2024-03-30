@@ -4645,7 +4645,7 @@ class PlayState extends MusicBeatState
 		}
 
 		// FlxG.watch.addQuick('asdfa', upP);
-		;var char:Character = boyfriend;
+		var char:Character = boyfriend;
 		if (opponentChart) char = dad;
 		if (startedCountdown && !char.stunned && generatedMusic)(daNote:Note)
 			{
