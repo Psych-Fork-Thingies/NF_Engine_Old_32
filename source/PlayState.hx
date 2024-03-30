@@ -2792,11 +2792,11 @@ class PlayState extends MusicBeatState
 			{
 				babyArrow.alpha = targetAlpha;
 			}
-
-			if (!opponentChart || opponentChart && ClientPrefs.middleScroll) playerStrums.add(babyArrow);
-				else opponentStrums.add(babyArrow);
+			
+			if (player == 1)
 			{
-				playerStrums.add(babyArrow);
+			    if (!opponentChart || opponentChart && ClientPrefs.middleScroll) playerStrums.add(babyArrow);
+				else opponentStrums.add(babyArrow);
 			}
 			else
 			{
