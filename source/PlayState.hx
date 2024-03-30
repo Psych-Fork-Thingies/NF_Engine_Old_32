@@ -4932,9 +4932,10 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					boyfriend.playAnim(animToPlay + note.animSuffix, true);
-					boyfriend.holdTimer = 0;
+					char.playAnim(animToPlay + note.animSuffix, true);
+					char.holdTimer = 0;
 				}
+				
 
 				if(note.noteType == 'Hey!') {
 					if(char.animOffsets.exists('hey')) {
