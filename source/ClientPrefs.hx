@@ -43,6 +43,7 @@ class ClientPrefs {
 	public static var hitboxmode:String = 'New';  //starting new way to change between hitboxes yay
     
     public static var hitboxExtend:Int = 0;
+    public static var fixopponentplay = true;
 	//public static var hitboxExtend = true;
 	public static var hitboxLocation:String = 'Top';
 	public static var hitboxalpha:Float = 0; //someone request this lol
@@ -181,7 +182,8 @@ class ClientPrefs {
 	    FlxG.save.data.hitboxExtend = hitboxExtend;
 	    FlxG.save.data.hitboxLocation = hitboxLocation;
 	        // new extend
-	
+	        
+	    FlxG.save.data.fixopponentplay = fixopponentplay;
 	    FlxG.save.data.NoteSkin = NoteSkin;
 	    //FlxG.save.data.NoteSkinName = NoteSkinName;
 	    //FlxG.save.data.ChangeSkin = ChangeSkin;
@@ -330,6 +332,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.VirtualPadAlpha != null) {
 			VirtualPadAlpha = FlxG.save.data.VirtualPadAlpha;
+		}
+		if(FlxG.save.data.fixopponentplay != null) {
+			fixopponentplay = FlxG.save.data.fixopponentplay;
 		}
 		if(FlxG.save.data.pauseMusic != null) {
 			pauseMusic = FlxG.save.data.pauseMusic;
