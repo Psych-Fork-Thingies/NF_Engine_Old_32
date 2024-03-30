@@ -4650,7 +4650,7 @@ class PlayState extends MusicBeatState
 		if (startedCountdown && !char.stunned && generatedMusic)
 		{
 			// rewritten inputs???
-			group.forEachAlive(function(daNote:Note)(daNote:Note)
+			group.forEachAlive(function(daNote:Note)
 			{
 				// hold note functions
 				if (strumsBlocked[daNote.noteData] != true && daNote.isSustainNote && parsedHoldArray[daNote.noteData] && daNote.canBeHit
