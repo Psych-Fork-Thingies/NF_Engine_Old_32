@@ -807,12 +807,12 @@ class FreeplayState extends MusicBeatState
 	{
 	    if (!openSearch){
 	        openSearch = true;
-	        showCaseText.text = 'CLOSE';
+	        showCaseText.text = '>>';
 	        moveSearch('open');
 	    }
 	    else{
 	        openSearch = false;
-	        showCaseText.text = 'OPEN';
+	        showCaseText.text = '<<';
 	        moveSearch('close');
 	    }
 	}

@@ -44,13 +44,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'bool',
 			#if android true #else false #end);
 		addOption(option);
-		
-		var option:Option = new Option('Fix Opponent Play',
-			'Do not Disable it',
-			'fixopponentplay',
-			'bool',
-			true);
-		addOption(option);
 
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Downscroll', //Name
