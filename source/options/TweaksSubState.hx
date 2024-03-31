@@ -57,7 +57,7 @@ typedef NoteSkinData =
 */
 
 
-class VisualsUISubState extends BaseOptionsMenu
+class TweaksSubState extends BaseOptionsMenu
 {
 
     var noteSkinList:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + Paths.getPreloadPath('images/NoteSkin/DataSet/noteSkinList.txt'));

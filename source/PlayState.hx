@@ -2345,11 +2345,6 @@ class PlayState extends MusicBeatState
         
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', [], false);
-		if (ClientPrefs.middleScroll || ClientPrefs.betterMidScroll)
-		{
-			laneunderlayOpponent.alpha = 0;
-			laneunderlay.screenCenter(X);
-		}
 		if(ret != FunkinLua.Function_Stop) {
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 			

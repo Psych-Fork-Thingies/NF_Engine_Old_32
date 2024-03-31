@@ -14,17 +14,7 @@ class NoteSplash extends FlxSprite
 		super(x, y);
 
 		var skin:String = 'noteSplashes';
-		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
-		if(texture == null && ClientPrefs.hudType == 'VS Impostor') {
-			texture = 'impostorNoteSplashes';
-			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
-		}
-		/*
-		if(texture == null && ClientPrefs.hudType == 'Indie Cross Sans') {
-			texture = 'indiecrossNoteSplashes';
-			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
-		}
-		*/
+		texture = 'noteSplashes';
 
 		loadAnims(skin);
 		
@@ -43,6 +33,16 @@ class NoteSplash extends FlxSprite
 			texture = 'noteSplashes';
 			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		}
+		if(texture == null && ClientPrefs.hudType == 'VS Impostor') {
+			texture = 'impostorNoteSplashes';
+			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+		}
+		/*
+		if(texture == null && ClientPrefs.hudType == 'Indie Cross Sans') {
+			texture = 'indiecrossNoteSplashes';
+			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+		}
+		*/
 
 		if(textureLoaded != texture) {
 			loadAnims(texture);
