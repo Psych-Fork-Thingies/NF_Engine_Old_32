@@ -14,7 +14,6 @@ class NoteSplash extends FlxSprite
 		super(x, y);
 
 		var skin:String = 'noteSplashes';
-		texture = 'noteSplashes';
 
 		loadAnims(skin);
 		
