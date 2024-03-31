@@ -121,8 +121,8 @@ class TweaksSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 		
-		var option:Option = new Option('Fix Opponent Play',
-			'don't disable this',
+		var option:Option = new Option('Fix Opponent Play Mechanics',
+			'dont disable this',
 			'fixopponentplay',
 			'bool',
 			true);
