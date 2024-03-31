@@ -15,6 +15,16 @@ class NoteSplash extends FlxSprite
 
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
+		if(texture == null && ClientPrefs.hudType == 'VS Impostor') {
+			texture = 'impostorNoteSplashes';
+			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+		}
+		/*
+		if(texture == null && ClientPrefs.hudType == 'Indie Cross Sans') {
+			texture = 'indiecrossNoteSplashes';
+			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+		}
+		*/
 
 		loadAnims(skin);
 		

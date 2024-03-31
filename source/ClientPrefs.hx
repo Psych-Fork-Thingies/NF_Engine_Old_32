@@ -9,6 +9,7 @@ import Controls;
 class ClientPrefs {
 	public static var downScroll:Bool = true;
 	public static var middleScroll:Bool = true;
+	public static var betterMidScroll:Bool = false;
 	public static var opponentStrums:Bool = true;
 	public static var showFPS:Bool = false;
 	public static var flashing:Bool = true;
@@ -28,10 +29,14 @@ class ClientPrefs {
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var vibration:Bool = false;
 	public static var ghostTapping:Bool = true;
+	public static var hudType:String = 'Kade Engine';
 	public static var timeBarType:String = 'Time Left';
+	public static var opponentLightStrum:Bool = true;
+	public static var botLightStrum:Bool = true;
 	public static var scoreZoom:Bool = true;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
+	public static var oppNoteAlpha:Float = 0.65;
 	public static var controllerMode:Bool = #if android true #else false #end;
 	public static var hitsoundVolume:Float = 0;
 	public static var misssoundVolume:Float = 0;
@@ -132,6 +137,7 @@ class ClientPrefs {
 	public static function saveSettings() {
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.middleScroll = middleScroll;
+		FlxG.save.data.betterMidScroll = betterMidScroll;
 		FlxG.save.data.opponentStrums = opponentStrums;
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.flashing = flashing;
@@ -183,6 +189,10 @@ class ClientPrefs {
 	    FlxG.save.data.hitboxLocation = hitboxLocation;
 	        // new extend
 	        
+	    FlxG.save.data.botLightStrum = botLightStrum;
+		FlxG.save.data.opponentLightStrum = opponentLightStrum;
+		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
+	    FlxG.save.data.hudType = hudType;
 	    FlxG.save.data.fixopponentplay = fixopponentplay;
 	    FlxG.save.data.NoteSkin = NoteSkin;
 	    //FlxG.save.data.NoteSkinName = NoteSkinName;
@@ -207,6 +217,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.middleScroll != null) {
 			middleScroll = FlxG.save.data.middleScroll;
+		}
+		if(FlxG.save.data.betterMidScroll != null) {
+			betterMidScroll = FlxG.save.data.betterMidScroll;
 		}
 		if(FlxG.save.data.opponentStrums != null) {
 			opponentStrums = FlxG.save.data.opponentStrums;
@@ -333,8 +346,20 @@ class ClientPrefs {
 		if(FlxG.save.data.VirtualPadAlpha != null) {
 			VirtualPadAlpha = FlxG.save.data.VirtualPadAlpha;
 		}
+		if(FlxG.save.data.oppNoteAlpha != null) {
+			oppNoteAlpha = FlxG.save.data.oppNoteAlpha;
+		}
+		if(FlxG.save.data.hudType != null) {
+			hudType = FlxG.save.data.hudType;
+		}
 		if(FlxG.save.data.fixopponentplay != null) {
 			fixopponentplay = FlxG.save.data.fixopponentplay;
+		}
+		if(FlxG.save.data.botLightStrum != null) {
+			botLightStrum = FlxG.save.data.botLightStrum;
+		}
+		if(FlxG.save.data.opponentLightStrum != null) {
+			opponentLightStrum = FlxG.save.data.opponentLightStrum;
 		}
 		if(FlxG.save.data.pauseMusic != null) {
 			pauseMusic = FlxG.save.data.pauseMusic;
