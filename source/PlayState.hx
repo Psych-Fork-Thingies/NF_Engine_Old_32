@@ -182,6 +182,8 @@ class PlayState extends MusicBeatState
         
     var notesHitArray:Array<Date> = [];
     var nps:Int = 0;
+	var maxNPS:Int = 0;
+	var npsCheck:Int = 0;
 	
 	public var camZooming:Bool = false;
 	public var camZoomingMult:Float = 1;
@@ -204,8 +206,6 @@ class PlayState extends MusicBeatState
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
-	public var nps:Int = 0;
-	public var maxNPS:Int = 0;
 
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
