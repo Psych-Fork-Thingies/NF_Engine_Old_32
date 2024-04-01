@@ -154,7 +154,8 @@ class PlayState extends MusicBeatState
 	public static var storyDifficulty:Int = 1;
 	public static var MoveOption:Bool;
 
-	public var spawnTime:Float = 2000;
+	public var spawnTime:Float = 1750;
+  //public var spawnTime:Float = 2000;
 
 	public var vocals:FlxSound;
 
@@ -205,6 +206,8 @@ class PlayState extends MusicBeatState
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
+	public var nps:Int = 0;
+	public var maxNPS:Int = 0;
 
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -223,6 +226,7 @@ class PlayState extends MusicBeatState
 	public var practiceMode:Bool = false;
 	public var opponentDrain:Bool = false;
 	public static var opponentChart:Bool = false;
+	var trollingMode:Bool = false;
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
@@ -343,11 +347,18 @@ class PlayState extends MusicBeatState
 	public static var lastCombo:FlxSprite;
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
+	
+	//cam panning
+	var moveCamTo:HaxeVector<Float> = new HaxeVector(2);
 
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
+		
+		#if cpp
+		cpp.vm.Gc.enable(false); //prevent lag spikes where it matters most
+		#end
 
 		// for lua
 		instance = this;
@@ -411,6 +422,7 @@ class PlayState extends MusicBeatState
 		cpuControlled_opponent = ClientPrefs.getGameplaySetting('opponentplay', false);
 		opponentChart = ClientPrefs.getGameplaySetting('opponentplay', false);
 		opponentDrain = ClientPrefs.getGameplaySetting('opponentdrain', false);
+		trollingMode = ClientPrefs.getGameplaySetting('thetrollingever', false);
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -1187,9 +1199,9 @@ class PlayState extends MusicBeatState
 		var splash:NoteSplash = new NoteSplash(100, 100, 0);
 		grpNoteSplashes.add(splash);
 		splash.alpha = 0.0;
-
-		opponentStrums = new FlxTypedGroup<StrumNote>();
+		
 		playerStrums = new FlxTypedGroup<StrumNote>();
+		opponentStrums = new FlxTypedGroup<StrumNote>();
 
 		// startCountdown();
 
@@ -2613,7 +2625,14 @@ class PlayState extends MusicBeatState
 
 		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.pitch = playbackRate;
+		if (!trollingMode) 
+		{
 		FlxG.sound.music.onComplete = finishSong.bind();
+		}
+		if (trollingMode) 
+		{
+		FlxG.sound.music.onComplete = loopSong.bind();
+		}
 		vocals.play();
 
 		if(startOnTime > 0)
@@ -2657,7 +2676,7 @@ class PlayState extends MusicBeatState
 	private function generateSong(dataPath:String):Void
 	{
 		// FlxG.log.add(ChartParser.parse());
-		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
+		/*songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
 
 		switch(songSpeedType)
 		{
@@ -2680,6 +2699,12 @@ class PlayState extends MusicBeatState
 		vocals.pitch = playbackRate;
 		FlxG.sound.list.add(vocals);
 		FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
+		*/ //don't load the audio again, that just takes up more memory
+		
+		var songData = SONG;
+		Conductor.changeBPM(songData.bpm);
+
+		curSong = songData.song;
 
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
@@ -2821,9 +2846,11 @@ class PlayState extends MusicBeatState
 				{
 					swagNote.x += FlxG.width / 2;
 				}
-
-				if(!noteTypeMap.exists(swagNote.noteType)) {
+                if (!trollingMode)
+				{
+				if(!noteTypeMap.exists(swagNote.noteType) && !trollingMode) {
 					noteTypeMap.set(swagNote.noteType, true);
+				}
 				}
 			}
 			daBeats += 1;
@@ -2840,6 +2867,7 @@ class PlayState extends MusicBeatState
 					value2: newEventNote[3]
 				};
 				eventNotes.push(subEvent);
+				if(!trollingMode)
 				eventPushed(subEvent);
 			}
 		}
@@ -3425,8 +3453,37 @@ class PlayState extends MusicBeatState
 
         iconP1.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
-		//iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
-		//iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		
+		if (generatedMusic) {
+			if (startedCountdown && canPause && !endingSong) {
+				var endingTimeLimit:Int = (playbackRate > 2 ? 100 : 20);
+				if (playbackRate > 8) endingTimeLimit = 200;
+				if (playbackRate > 12) endingTimeLimit = 300;
+				if (playbackRate > 20) endingTimeLimit = 500;
+				if (playbackRate > 40) endingTimeLimit = 800;
+				if (playbackRate > 50) endingTimeLimit = 1000;
+				if (playbackRate > 60) endingTimeLimit = 2000;
+				if (playbackRate > 80) endingTimeLimit = 4000;
+				if (playbackRate > 125) endingTimeLimit = 5000;
+				if (playbackRate > 140) endingTimeLimit = 6000;
+				if (playbackRate > 250) endingTimeLimit = 10000;
+				if (playbackRate > 500) endingTimeLimit = 5000;
+				if (playbackRate > 750) endingTimeLimit = 2500;
+				if (playbackRate > 1000) endingTimeLimit = 1000;
+				
+				
+				// Song ends abruptly on slow rate even with second condition being deleted,
+				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
+				// so no reason to delete it at all
+				//if (FlxG.sound.music.length - Conductor.songPosition <= 20 * playbackRate) {
+				if (FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit && trollingMode) { //stop crashes when playing normally
+					//endSong();
+					loopSong();
+					Conductor.songPosition = FlxG.sound.music.length;
+					//Conductor.songPosition = 0;
+				}
+			}
+		}
 
 		if (health > 2)
 			health = 2;
@@ -3517,7 +3574,8 @@ class PlayState extends MusicBeatState
         
 		if (unspawnNotes[0] != null)
 		{
-			var time:Float = spawnTime;
+			var time:Float = spawnTime * ClientPrefs.noteSpawnTime;
+			if (ClientPrefs.dynamicSpawnTime) time = spawnTime * songSpeed;
 			if(songSpeed < 1) time /= songSpeed;
 			if(songSpeed > 3) time / 2;
 			if(songSpeed > 6) time / 5;
@@ -4306,9 +4364,77 @@ class PlayState extends MusicBeatState
 	}
 
 
+	public function loopSong(?ignoreNoteOffset:Bool = false):Void
+	{				
+				FlxG.sound.music.stop();
+				vocals.stop();
+
+				FlxG.sound.music.volume = 1;
+				vocals.volume = 1;
+
+		timeBarBG.visible = true;
+		timeBar.visible = true;
+		timeTxt.visible = true;
+		canPause = true;
+		endingSong = false;
+		camZooming = true;
+		inCutscene = false;
+		updateTime = true;
+		startingSong = false;
+		/*
+		var difficulty:String = CoolUtil.getDifficultyFilePath();
+				if (difficulty != 'Normal')
+				{
+				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase() + difficulty, SONG.song.toLowerCase());
+				} else
+				{
+				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
+				}
+
+				playbackRate += 0.05;
+			*/
+		    /*
+				var difficulty:String = CoolUtil.getDifficultyFilePath();
+				if (difficulty != 'Normal')
+				{
+				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase() + difficulty, SONG.song.toLowerCase());
+				} else
+				{
+				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
+				}
+				*/ //no need to change the song if you're already playing it!
+
+			
+				/*
+				if (playbackRate >= 8192) playbackRate += 204.8;
+				if (playbackRate >= 4096) playbackRate += 102.4;
+				if (playbackRate >= 2048) playbackRate += 51.2;
+				if (playbackRate >= 1024) playbackRate += 25.6;
+				if (playbackRate >= 512) playbackRate += 12.8;
+				if (playbackRate >= 256) playbackRate += 6.4;
+				*/
+				if (playbackRate >= 128) playbackRate += 6.4;
+				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
+				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
+				if (playbackRate >= 16 && playbackRate <= 32) playbackRate += 0.8;
+				if (playbackRate >= 8 && playbackRate <= 16) playbackRate += 0.4;
+				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
+				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
+				if (playbackRate <= 2) playbackRate += 0.05;
+				//optimized the speed increase code
+				Conductor.songPosition = 0;
+				KillNotes();
+				generateSong(SONG.song);
+
+				vocals.play();
+				FlxG.sound.music.play();
+		callOnLuas('onLoopSong', []);
+	}
+
+
 	public var transitioning = false;
 	public function endSong():Void
-	{
+	{		
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
@@ -5434,6 +5560,9 @@ class PlayState extends MusicBeatState
 	}
 
 	override function destroy() {
+	    #if cpp
+		cpp.vm.Gc.enable(true);
+		#end
 		for (lua in luaArray) {
 			lua.call('onDestroy', []);
 			lua.stop();

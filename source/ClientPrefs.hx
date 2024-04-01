@@ -50,6 +50,8 @@ class ClientPrefs {
     
     public static var hitboxExtend:Int = 0;
     public static var fixopponentplay = true;
+    public static var dynamicSpawnTime:Bool = false;
+    public static var noteSpawnTime:Float = 1;
 	//public static var hitboxExtend = true;
 	public static var hitboxLocation:String = 'Top';
 	public static var hitboxalpha:Float = 0; //someone request this lol
@@ -76,7 +78,8 @@ class ClientPrefs {
 		'opponentplay' => false,
 		'opponentdrain' => false,
 		'drainlevel' => 1,
-		'randomspeed' => false
+		'randomspeed' => false,
+		'thetrollingever' => false
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
@@ -151,6 +154,8 @@ class ClientPrefs {
 		FlxG.save.data.framerate = framerate;
 		FlxG.save.data.rainbowFPS = rainbowFPS;
 		FlxG.save.data.gradientTimeBar = gradientTimeBar;
+		FlxG.save.data.dynamicSpawnTime = dynamicSpawnTime;
+		FlxG.save.data.noteSpawnTime = noteSpawnTime;
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
@@ -294,6 +299,12 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.splashType != null) {
 			splashType = FlxG.save.data.splashType;
+		}
+		if(FlxG.save.data.noteSpawnTime != null) {
+			noteSpawnTime = FlxG.save.data.noteSpawnTime;
+		}
+		if(FlxG.save.data.dynamicSpawnTime != null) {
+			dynamicSpawnTime = FlxG.save.data.dynamicSpawnTime;
 		}
 		if(FlxG.save.data.scoreZoom != null) {
 			scoreZoom = FlxG.save.data.scoreZoom;

@@ -96,6 +96,13 @@ class TweaksSubState extends BaseOptionsMenu
 			['Psych Engine', 'VS Impostor', 'Base Game', 'Doki Doki+', 'TGT V4', 'Indie Cross']);
 		addOption(option);
 		
+		var option:Option = new Option('Automatic Note Spawn Time', //Name
+			"If checked, the Notes' spawn time will instead depend on the scroll speed. \nUseful if you don't want notes just spawning out of thin air. \nNOTE: Disable this if you use Lua Extra Keys!!", //Description
+			'dynamicSpawnTime', //Save data variable name
+			'bool', //Variable type
+			true); //Default value
+		addOption(option);
+		
 		var option:Option = new Option('Better Middlescroll',
 			"If checked, your notes and the opponent's notes get centered.",
 			'betterMidScroll',

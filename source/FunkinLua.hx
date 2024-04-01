@@ -1352,6 +1352,12 @@ class FunkinLua {
 			PlayState.instance.songHits += value;
 			PlayState.instance.RecalculateRating();
 		});
+		Lua_helper.add_callback(lua, "addNPS", function(value:Int = 0) {
+			for (i in 0...Std.int(value))
+			{
+				PlayState.instance.nps += value;
+			}
+		});
 		Lua_helper.add_callback(lua, "setScore", function(value:Int = 0) {
 			PlayState.instance.songScore = value;
 			PlayState.instance.RecalculateRating();
