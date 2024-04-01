@@ -3328,42 +3328,6 @@ class PlayState extends MusicBeatState
 					balls = 0;
 				balls--;
 			}
-			
-			/*	
-			nps = notesHitArray.length;
-			if (nps > maxNPS)
-				maxNPS = nps;
-				
-			setOnLuas('nps', nps);
-			setOnLuas('maxFPS', maxNPS);	
-				
-			if (npsCheck != nps) {
-			
-			    npsCheck = nps;
-			
-			    scoreTxt.text = 
-                "NPS: "
-		        + nps
-		        + " (Max: "
-		        + maxNPS
-		        + ")"
-		        + " | " // 	NPS
-		        + "Score: " + songScore
-		        + " | Misses: " + songMisses
-		        + " | Accuracy: " + Math.ceil(ratingPercent * 10000) / 100 + '%'
-		        + " | ";
-		        
-		        if (ratingName == 'N/A'){
-		            scoreTxt.text += 'N/A';
-		        }
-		        else {
-		            scoreTxt.text += '(' + ratingFC + ') ' + ratingName;
-		        }
-		       
-		        
-			}
-			*/
-			
 			nps = notesHitArray.length;
 			if (nps > maxNPS)
 				maxNPS = nps;
