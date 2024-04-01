@@ -4377,9 +4377,8 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-
-	public function loopSong(?ignoreNoteOffset:Bool = false):Void
-	{				
+	    public function loopSong(?ignoreNoteOffset:Bool = false):Void
+    	{	
 				FlxG.sound.music.stop();
 				vocals.stop();
 
@@ -4395,8 +4394,7 @@ class PlayState extends MusicBeatState
 		inCutscene = false;
 		updateTime = true;
 		startingSong = false;
-		/*
-		var difficulty:String = CoolUtil.getDifficultyFilePath();
+			var difficulty:String = CoolUtil.getDifficultyFilePath();
 				if (difficulty != 'Normal')
 				{
 				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase() + difficulty, SONG.song.toLowerCase());
@@ -4443,44 +4441,7 @@ class PlayState extends MusicBeatState
 				vocals.play();
 				FlxG.sound.music.play();
 		        callOnLuas('onLoopSong', []);
-	}
-
-
-	    public function loopSong(?ignoreNoteOffset:Bool = false):Void
-    	{	
-				FlxG.sound.music.stop();
-				vocals.stop();
-
-				FlxG.sound.music.volume = 1;
-				vocals.volume = 1;
-
-		timeBarBG.visible = true;
-		timeBar.visible = true;
-		timeTxt.visible = true;
-		canPause = true;
-		endingSong = false;
-		camZooming = true;
-		inCutscene = false;
-		updateTime = true;
-		startingSong = false;
-			var difficulty:String = CoolUtil.getDifficultyFilePath();
-				if (difficulty != 'Normal')
-				{
-				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase() + difficulty, SONG.song.toLowerCase());
-				} else
-				{
-				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
-				}
-
-				playbackRate += 0.05;
-
-				Conductor.songPosition = 0;
-				KillNotes();
-				generateSong(SONG.song);
-
-				vocals.play();
-				FlxG.sound.music.play();
-		}
+			}
 
 		if (!trollingMode)
 		{
