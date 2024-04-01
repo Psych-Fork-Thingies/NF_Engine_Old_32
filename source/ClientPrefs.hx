@@ -30,6 +30,7 @@ class ClientPrefs {
 	public static var vibration:Bool = false;
 	public static var ghostTapping:Bool = true;
 	public static var hudType:String = 'Kade Engine';
+	public static var splashType:String = 'Psych Engine';
 	public static var timeBarType:String = 'Time Left';
 	public static var opponentLightStrum:Bool = true;
 	public static var botLightStrum:Bool = true;
@@ -75,6 +76,7 @@ class ClientPrefs {
 		'opponentplay' => false,
 		'opponentdrain' => false,
 		'drainlevel' => 1,
+		'randomspeed' => false
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
@@ -159,6 +161,7 @@ class ClientPrefs {
 		FlxG.save.data.vibration = vibration;
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.timeBarType = timeBarType;
+		FlxG.save.data.splashType = splashType;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
@@ -288,6 +291,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.timeBarType != null) {
 			timeBarType = FlxG.save.data.timeBarType;
+		}
+		if(FlxG.save.data.splashType != null) {
+			splashType = FlxG.save.data.splashType;
 		}
 		if(FlxG.save.data.scoreZoom != null) {
 			scoreZoom = FlxG.save.data.scoreZoom;

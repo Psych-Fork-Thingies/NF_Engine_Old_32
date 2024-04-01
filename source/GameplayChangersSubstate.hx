@@ -109,6 +109,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
+		
+		var option:GameplayOption = new GameplayOption('Random Playback Rate', 'randomspeed', 'bool', false);
+		optionsArray.push(option);
 	}
 
 	public function getOptionByName(name:String)

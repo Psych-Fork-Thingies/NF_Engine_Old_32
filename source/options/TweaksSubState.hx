@@ -88,6 +88,14 @@ class TweaksSubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangeNoteSkin;
 		
+		var option:Option = new Option('Note Splash Type:',
+			"Which note splash would you like?",
+			'splashType',
+			'string',
+			'Psych Engine',
+			['Psych Engine', 'VS Impostor', 'Base Game', 'Doki Doki+', 'TGT V4', 'Indie Cross']);
+		addOption(option);
+		
 		var option:Option = new Option('Better Middlescroll',
 			"If checked, your notes and the opponent's notes get centered.",
 			'betterMidScroll',

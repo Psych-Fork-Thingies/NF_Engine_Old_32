@@ -5067,6 +5067,11 @@ class PlayState extends MusicBeatState
 				char.holdTimer = 0;
 			}
 		}
+		
+		if(ClientPrefs.oppNoteSplashes && !note.isSustainNote)
+		{
+			spawnNoteSplashOnNote(true, note);
+		}
 
 		if (SONG.needsVoices)
 			vocals.volume = 1;
