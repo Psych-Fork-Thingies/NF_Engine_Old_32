@@ -3328,6 +3328,8 @@ class PlayState extends MusicBeatState
 					balls = 0;
 				balls--;
 			}
+			
+			/*	
 			nps = notesHitArray.length;
 			if (nps > maxNPS)
 				maxNPS = nps;
@@ -3360,7 +3362,12 @@ class PlayState extends MusicBeatState
 		       
 		        
 			}
-		
+			*/
+			
+			nps = notesHitArray.length;
+			if (nps > maxNPS)
+				maxNPS = nps;
+	    	}
 		
 		if(!inCutscene) {
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed * playbackRate, 0, 1);
@@ -4599,7 +4606,7 @@ class PlayState extends MusicBeatState
 	}
 	#end
     */
-    /*
+    
 	public function KillNotes() {
 		while(notes.length > 0) {
 			var daNote:Note = notes.members[0];
@@ -4613,7 +4620,7 @@ class PlayState extends MusicBeatState
 		unspawnNotes = [];
 		eventNotes = [];
 	}
-    */
+    
 	public var totalPlayed:Int = 0;
 	public var totalNotesHit:Float = 0.0;
 
