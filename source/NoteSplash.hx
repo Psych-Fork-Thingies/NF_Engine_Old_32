@@ -77,7 +77,7 @@ class NoteSplash extends FlxSprite
 
 	function loadAnims(skin:String) {
 		frames = Paths.getSparrowAtlas(skin);
-		if (ClientPrefs.splashType == 'Psych Engine')
+    	if (ClientPrefs.splashType == 'Psych Engine')
 		{
 		for (i in 1...3) {
 			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
