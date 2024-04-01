@@ -2620,15 +2620,30 @@ class PlayState extends MusicBeatState
 
 		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.pitch = playbackRate;
+		
+		    if (!trollingMode')
+		    {
+				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song, CoolUtil.difficultyString().toLowerCase()), 0, false);
+				vocals.volume = 0;
+			}
+			if (!trollingMode')
+				FlxG.sound.music.onComplete = finishSong.bind();
+				FlxG.sound.music.pitch = playbackRate;
+			vocals.play();
+			vocals.pitch = playbackRate;
+		
+		/*
 		if (!trollingMode) 
 		{
-		if (!trollingMode) FlxG.sound.music.onComplete = finishSong.bind();
+		FlxG.sound.music.onComplete = finishSong.bind();
+		vocals.play();
 		}
 		if (trollingMode) 
 		{
 		FlxG.sound.music.onComplete = loopSong.bind();
-		}
 		vocals.play();
+		}
+		*/
 
 		if(startOnTime > 0)
 		{
