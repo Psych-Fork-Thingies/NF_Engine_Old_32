@@ -2622,7 +2622,7 @@ class PlayState extends MusicBeatState
 		FlxG.sound.music.pitch = playbackRate;
 		if (!trollingMode) 
 		{
-		FlxG.sound.music.onComplete = finishSong.bind();
+		if (!trollingMode) FlxG.sound.music.onComplete = finishSong.bind();
 		}
 		if (trollingMode) 
 		{
@@ -2671,7 +2671,8 @@ class PlayState extends MusicBeatState
 	private function generateSong(dataPath:String):Void
 	{
 		// FlxG.log.add(ChartParser.parse());
-		/*songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
+		/*
+		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
 
 		switch(songSpeedType)
 		{
@@ -3454,6 +3455,18 @@ class PlayState extends MusicBeatState
 
         iconP1.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		
+		if (generatedMusic) {
+			if (startedCountdown && canPause && !endingSong) {
+				// Song ends abruptly on slow rate even with second condition being deleted,
+				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
+				// so no reason to delete it at all
+				if (FlxG.sound.music.length - Conductor.songPosition <= 20 * playbackRate) {
+					endSong();
+					Conductor.songPosition = 0;
+				}
+			}
+		}
 		
 		if (generatedMusic) {
 			if (startedCountdown && canPause && !endingSong) {
@@ -4429,13 +4442,48 @@ class PlayState extends MusicBeatState
 
 				vocals.play();
 				FlxG.sound.music.play();
-		callOnLuas('onLoopSong', []);
+		        callOnLuas('onLoopSong', []);
 	}
 
 
-	public var transitioning = false;
-	public function endSong():Void
-	{		
+	    public function loopSong(?ignoreNoteOffset:Bool = false):Void
+    	{	
+				FlxG.sound.music.stop();
+				vocals.stop();
+
+				FlxG.sound.music.volume = 1;
+				vocals.volume = 1;
+
+		timeBarBG.visible = true;
+		timeBar.visible = true;
+		timeTxt.visible = true;
+		canPause = true;
+		endingSong = false;
+		camZooming = true;
+		inCutscene = false;
+		updateTime = true;
+		startingSong = false;
+			var difficulty:String = CoolUtil.getDifficultyFilePath();
+				if (difficulty != 'Normal')
+				{
+				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase() + difficulty, SONG.song.toLowerCase());
+				} else
+				{
+				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
+				}
+
+				playbackRate += 0.05;
+
+				Conductor.songPosition = 0;
+				KillNotes();
+				generateSong(SONG.song);
+
+				vocals.play();
+				FlxG.sound.music.play();
+		}
+
+		if (!trollingMode)
+		{
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
