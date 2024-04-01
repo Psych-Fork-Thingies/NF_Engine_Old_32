@@ -2624,6 +2624,7 @@ class PlayState extends MusicBeatState
 				vocals.volume = 0;
 			}
 			if (!trollingMode)
+			{
 				FlxG.sound.music.onComplete = finishSong.bind();
 				FlxG.sound.music.pitch = playbackRate;
 			}
