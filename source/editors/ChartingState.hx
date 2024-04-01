@@ -369,6 +369,8 @@ class ChartingState extends MusicBeatState
 		\nHold Control and click on an arrow to select it
 		\nZ/X - Zoom in/out
 		\n
+		\nShift + O - Created sections will be for the Opponent;
+		\nShift + P - Created sections will be for the Player
 		\nEsc - Test your chart inside Chart Editor
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
@@ -388,8 +390,6 @@ class ChartingState extends MusicBeatState
 		\nB - Test your chart inside Chart Editor
 		\nUP/Down(Right Side) - Decrease/Increase Note Sustain Length
 		\nY - Stop/Resume song";
-		\nShift + O - Created sections will be for the Opponent
-		\nShift + P - Created sections will be for the Player
 		#end
 
         tipTextGroup = new FlxTypedGroup<FlxText>();
