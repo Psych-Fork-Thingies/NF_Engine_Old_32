@@ -1110,7 +1110,7 @@ class ChartingState extends MusicBeatState
 		{
 			if (curSelectedNote != null) {
 				for(i in 0...Std.int(spamLength)) {
-					addNote(curSelectedNote[0] + (15000/_song.header.bpm)/spamCloseness, curSelectedNote[1], curSelectedNote[2]);
+					addNote(curSelectedNote[0] + (15000/_song.notes[curSec].bpm)/spamCloseness, curSelectedNote[1], curSelectedNote[2]);
 				}
 				FlxG.log.add('added the spam');
 				updateGrid();
