@@ -4394,38 +4394,7 @@ class PlayState extends MusicBeatState
 		inCutscene = false;
 		updateTime = true;
 		startingSong = false;
-			var difficulty:String = CoolUtil.getDifficultyFilePath();
-				if (difficulty != 'Normal')
-				{
-				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase() + difficulty, SONG.song.toLowerCase());
-				} else
-				{
-				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
-				}
-
-				playbackRate += 0.05;
-			*/
-		    /*
-				var difficulty:String = CoolUtil.getDifficultyFilePath();
-				if (difficulty != 'Normal')
-				{
-				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase() + difficulty, SONG.song.toLowerCase());
-				} else
-				{
-				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
-				}
-				*/ //no need to change the song if you're already playing it!
-
-			
-				/*
-				if (playbackRate >= 8192) playbackRate += 204.8;
-				if (playbackRate >= 4096) playbackRate += 102.4;
-				if (playbackRate >= 2048) playbackRate += 51.2;
-				if (playbackRate >= 1024) playbackRate += 25.6;
-				if (playbackRate >= 512) playbackRate += 12.8;
-				if (playbackRate >= 256) playbackRate += 6.4;
-				*/
-				if (playbackRate >= 128) playbackRate += 6.4;
+			if (playbackRate >= 128) playbackRate += 6.4;
 				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
 				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
 				if (playbackRate >= 16 && playbackRate <= 32) playbackRate += 0.8;
@@ -4440,11 +4409,13 @@ class PlayState extends MusicBeatState
 
 				vocals.play();
 				FlxG.sound.music.play();
-		        callOnLuas('onLoopSong', []);
-			}
+		callOnLuas('onLoopSong', []);
+	}
 
-		if (!trollingMode)
-		{
+
+	public var transitioning = false;
+	public function endSong():Void
+	{		
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
