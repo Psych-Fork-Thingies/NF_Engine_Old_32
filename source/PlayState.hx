@@ -2618,12 +2618,12 @@ class PlayState extends MusicBeatState
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
 		
-		    if (!trollingMode')
+		    if (!trollingMode)
 		    {
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song, CoolUtil.difficultyString().toLowerCase()), 0, false);
 				vocals.volume = 0;
 			}
-			if (!trollingMode')
+			if (!trollingMode)
 				FlxG.sound.music.onComplete = finishSong.bind();
 				FlxG.sound.music.pitch = playbackRate;
 			}
