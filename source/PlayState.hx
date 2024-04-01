@@ -182,8 +182,6 @@ class PlayState extends MusicBeatState
         
     var notesHitArray:Array<Date> = [];
     var nps:Int = 0;
-	var maxNPS:Int = 0;
-	var npsCheck:Int = 0;
 	
 	public var camZooming:Bool = false;
 	public var camZoomingMult:Float = 1;
@@ -347,9 +345,6 @@ class PlayState extends MusicBeatState
 	public static var lastCombo:FlxSprite;
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
-	
-	//cam panning
-	var moveCamTo:HaxeVector<Float> = new HaxeVector(2);
 
 	override public function create()
 	{
