@@ -181,6 +181,7 @@ class PlayState extends MusicBeatState
 	public var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
         
     var notesHitArray:Array<Date> = [];
+    var npsCheck:Int = 0;
 	
 	public var camZooming:Bool = false;
 	public var camZoomingMult:Float = 1;
@@ -3316,8 +3317,59 @@ class PlayState extends MusicBeatState
 					}
 				}
 	     	}
-	     	
-	     	if(!inCutscene) {
+		
+		
+			var balls = notesHitArray.length - 1;
+			while (balls >= 0)
+			{
+				var cock:Date = notesHitArray[balls];
+				if (cock != null && cock.getTime() + 1000 < Date.now().getTime())
+					notesHitArray.remove(cock);
+				else
+					balls = 0;
+				balls--;
+			}
+			
+			nps = notesHitArray.length;
+			if (nps > maxNPS)
+				maxNPS = nps;
+				
+			setOnLuas('nps', nps);
+			setOnLuas('maxFPS', maxNPS);	
+				
+			if (npsCheck != nps) {
+			
+			    npsCheck = nps;
+			
+			    scoreTxt.text = 
+                "NPS: "
+		        + nps
+		        + " (Max: "
+		        + maxNPS
+		        + ")"
+		        + " | " // 	NPS
+		        + "Score: " + songScore
+		        + " | Misses: " + songMisses
+		        + " | Accuracy: " + Math.ceil(ratingPercent * 10000) / 100 + '%'
+		        + " | ";
+		        
+		        if (ratingName == 'N/A'){
+		            scoreTxt.text += 'N/A';
+		        }
+		        else {
+		            scoreTxt.text += '(' + ratingFC + ') ' + ratingName;
+		        }
+		       
+		        
+			}
+			/*
+			nps = notesHitArray.length;
+			if (nps > maxNPS)
+				maxNPS = nps;
+	    	}*/
+		
+		
+		if(!inCutscene) {
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed * playbackRate, 0, 1);
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 			if(!startingSong && !endingSong && boyfriend.animation.curAnim != null && boyfriend.animation.curAnim.name.startsWith('idle')) {
@@ -3329,22 +3381,6 @@ class PlayState extends MusicBeatState
 				boyfriendIdleTime = 0;
 			}
 		}
-			
-		{
-			var balls = notesHitArray.length - 1;
-			while (balls >= 0)
-			{
-				var cock:Date = notesHitArray[balls];
-				if (cock != null && cock.getTime() + 1000 < Date.now().getTime())
-					notesHitArray.remove(cock);
-				else
-					balls = 0;
-				balls--;
-			}
-			nps = notesHitArray.length;
-			if (nps > maxNPS)
-				maxNPS = nps;
-	    	}
 
 		super.update(elapsed);
 
