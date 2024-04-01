@@ -73,11 +73,12 @@ class NoteSplash extends FlxSprite
 		animNum = FlxG.random.int(0, 1);
 		animation.play('note' + note + '-' + animNum, true);
 		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
+		}
 	}
 
 	function loadAnims(skin:String) {
 		frames = Paths.getSparrowAtlas(skin);
-    	if (ClientPrefs.splashType == 'Psych Engine')
+		if (ClientPrefs.splashType == 'Psych Engine')
 		{
 		for (i in 1...3) {
 			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
