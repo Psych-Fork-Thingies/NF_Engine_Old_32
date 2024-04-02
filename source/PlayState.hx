@@ -1373,8 +1373,18 @@ class PlayState extends MusicBeatState
 		add(EngineWatermark);
 		EngineWatermark.text = SONG.song;
 		}
+		
+		if (ClientPrefs.hudType == 'Indie Cross')
+		{ 		
+		scoreTxt = new FlxText(0, healthBarBG.y + 50, FlxG.width, "", 20);
+		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+		scoreTxt.borderSize = 1;
+		scoreTxt.visible = !ClientPrefs.hideHud;
+		add(scoreTxt);
+		}
 
-		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Indie Cross')
+		if (ClientPrefs.hudType == 'Kade Engine')
 		{ 		
 		scoreTxt = new FlxText(0, healthBarBG.y + 50, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -1423,9 +1433,20 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
 		}
-		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Indie Cross')
+		if (ClientPrefs.hudType == 'Kade Engine')
 		{
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
+		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.scrollFactor.set();
+		botplayTxt.borderSize = 1.25;
+		botplayTxt.visible = cpuControlled;
+		add(botplayTxt);
+		if (ClientPrefs.downScroll) 
+			botplayTxt.y = timeBarBG.y - 78;
+		}
+		if (ClientPrefs.hudType == 'Indie Cross')
+		{
+		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "CROSSPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
@@ -1472,7 +1493,10 @@ class PlayState extends MusicBeatState
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
-		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Indie Cross') {
+		if (ClientPrefs.hudType == 'Kade Engine') {
+		EngineWatermark.cameras = [camHUD];
+		}
+		if (ClientPrefs.hudType == ClientPrefs.hudType == 'Indie Cross') {
 		EngineWatermark.cameras = [camHUD];
 		}
 
@@ -3424,8 +3448,17 @@ class PlayState extends MusicBeatState
 		setOnLuas('curDecStep', curDecStep);
 		setOnLuas('curDecBeat', curDecBeat);
 		
-		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Indie Cross') {
+		if (ClientPrefs.hudType == 'Kade Engine') {
 		scoreTxt.text = 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Accuracy: ';
+		if(cpuControlled) 
+			scoreTxt.text = 'Bot Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | Botplay Mode';
+		if(ratingName != '?')
+			scoreTxt.text += Highscore.floorDecimal(ratingPercent * 100, 2) + '% | ' + ratingFC + ratingCool;
+			else
+			scoreTxt.text += '0% | N/A';
+		}
+		if (ClientPrefs.hudType == 'Indie Cross') {
+		scoreTxt.text = 'BF Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Accuracy: ';
 		if(cpuControlled) 
 			scoreTxt.text = 'Bot Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | Botplay Mode';
 		if(ratingName != '?')
