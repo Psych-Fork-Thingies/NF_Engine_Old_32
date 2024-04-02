@@ -194,6 +194,7 @@ class PlayState extends MusicBeatState
 	public var combo:Int = 0;
 
 	private var healthBarBG:AttachedSprite;
+	private var healthBarBG2:AttachedSprite;
 	public var healthBar:FlxBar;
 	var songPercent:Float = 0;
 
@@ -1291,15 +1292,24 @@ class PlayState extends MusicBeatState
 		moveCameraSection();
 		
 		if (ClientPrefs.hudType == 'Indie Cross') {
-		healthBarBG = new AttachedSprite('sanshealthBar');
+		healthBarBG = new AttachedSprite('sanshealthBar1');
+		healthBarBG2 = new AttachedSprite('sanshealthBar2');
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
+		healthBarBG2.y = FlxG.height * 0.89;
+		healthBarBG2.screenCenter(X);
+		healthBarBG2.scrollFactor.set();
 		healthBarBG.visible = !ClientPrefs.hideHud;
-		healthBarBG.xAdd = -64;
-		healthBarBG.yAdd = -64;
+		healthBarBG2.visible = !ClientPrefs.hideHud;
+		healthBarBG.xAdd = -4;
+		healthBarBG.yAdd = -4;
+		healthBarBG2.xAdd = -64;
+		healthBarBG2.yAdd = -4;
 		add(healthBarBG);
+		add(healthBarBG2);
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
+		if(ClientPrefs.downScroll) healthBarBG2.y = 0.11 * FlxG.height;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
@@ -1309,6 +1319,7 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
+		healthBarBG2.sprTracker = healthBar;
 		}
 		
 		if (ClientPrefs.hudType == '!Indie Cross') {
