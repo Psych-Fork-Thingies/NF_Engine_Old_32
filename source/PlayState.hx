@@ -1334,13 +1334,17 @@ class PlayState extends MusicBeatState
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
-		iconP1.visible = !ClientPrefs.hideHud&& !ClientPrefs.hudType == 'Indie Cross';
+		if (ClientPrefs.hudType == '!Indie Cross') {
+		iconP1.visible = !ClientPrefs.hideHud;
+		}
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.y = healthBar.y - 75;
-		iconP2.visible = !ClientPrefs.hideHud && !ClientPrefs.hudType == 'Indie Cross';
+		if (ClientPrefs.hudType == '!Indie Cross') {
+		iconP2.visible = !ClientPrefs.hideHud;
+		}
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP2);
 		reloadHealthBarColors();
