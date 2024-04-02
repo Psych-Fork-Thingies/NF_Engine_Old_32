@@ -1496,7 +1496,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.hudType == 'Kade Engine') {
 		EngineWatermark.cameras = [camHUD];
 		}
-		if (ClientPrefs.hudType == ClientPrefs.hudType == 'Indie Cross') {
+		if (ClientPrefs.hudType == 'Indie Cross') {
 		EngineWatermark.cameras = [camHUD];
 		}
 
