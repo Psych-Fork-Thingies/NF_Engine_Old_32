@@ -1351,7 +1351,6 @@ class PlayState extends MusicBeatState
 		}
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP1);
-		}
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.y = healthBar.y - 75;
