@@ -1322,7 +1322,7 @@ class PlayState extends MusicBeatState
 		healthBarBG2.sprTracker = healthBar;
 		}
 		
-		if (ClientPrefs.hudType == '!Indie Cross') {
+		if (!ClientPrefs.hudType == 'Indie Cross') {
 		healthBarBG = new AttachedSprite('healthBar');
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
@@ -1344,22 +1344,23 @@ class PlayState extends MusicBeatState
 		healthBarBG2.sprTracker = healthBar;
 		}
 
-        if (!ClientPrefs.hudType == 'Indie Cross') {
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
+		if (!ClientPrefs.hudType == 'Indie Cross') {
 		iconP1.visible = !ClientPrefs.hideHud;
+		}
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP1);
 		}
 
-        if (!ClientPrefs.hudType == 'Indie Cross') {
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.y = healthBar.y - 75;
+		if (!ClientPrefs.hudType == 'Indie Cross') {
 		iconP2.visible = !ClientPrefs.hideHud;
+		}
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP2);
 		reloadHealthBarColors();
-		}
 		
 		if (ClientPrefs.hudType == 'Kade Engine') {
 		// Add Engine watermark
@@ -1494,7 +1495,9 @@ class PlayState extends MusicBeatState
 
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
+		if (ClientPrefs.hudType == 'Indie Cross') {
 		healthBarBG2.cameras = [camHUD];
+		}
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
