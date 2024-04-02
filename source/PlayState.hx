@@ -1319,7 +1319,6 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
-		healthBarBG2.sprTracker = healthBar;
 		}
 		
 		if (ClientPrefs.hudType == '!Indie Cross') {
