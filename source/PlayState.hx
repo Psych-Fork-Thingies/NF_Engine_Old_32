@@ -1322,7 +1322,7 @@ class PlayState extends MusicBeatState
 		healthBarBG2.sprTracker = healthBar;
 		}
 		
-		if (!ClientPrefs.hudType == 'Indie Cross') {
+		if (ClientPrefs.hudType == '!Indie Cross') {
 		healthBarBG = new AttachedSprite('healthBar');
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
@@ -1346,7 +1346,7 @@ class PlayState extends MusicBeatState
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
-		if (!ClientPrefs.hudType == 'Indie Cross') {
+		if (ClientPrefs.hudType == '!Indie Cross') {
 		iconP1.visible = !ClientPrefs.hideHud;
 		}
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
@@ -1354,7 +1354,7 @@ class PlayState extends MusicBeatState
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.y = healthBar.y - 75;
-		if (!ClientPrefs.hudType == 'Indie Cross') {
+		if (ClientPrefs.hudType == '!Indie Cross') {
 		iconP2.visible = !ClientPrefs.hideHud;
 		}
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
