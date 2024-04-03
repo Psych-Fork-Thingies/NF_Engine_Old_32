@@ -1304,7 +1304,7 @@ class PlayState extends MusicBeatState
 		healthBarBG2.visible = !ClientPrefs.hideHud;
 		healthBarBG.xAdd = -4;
 		healthBarBG.yAdd = -4;
-		healthBarBG2.xAdd = -64;
+		healthBarBG2.xAdd = -150;
 		healthBarBG2.yAdd = -4;
 		add(healthBarBG);
 		add(healthBarBG2);
@@ -1345,18 +1345,24 @@ class PlayState extends MusicBeatState
 		}
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		iconP1.y = healthBar.y - 75;
-		if (ClientPrefs.hudType == '!Indie Cross') {
-		iconP1.visible = !ClientPrefs.hideHud;
+		if (ClientPrefs.hudType == 'Indie Cross') {
+		iconP1.y = healthBar.y - 9999;
 		}
+		if (ClientPrefs.hudType == '!Indie Cross') {
+		iconP1.y = healthBar.y - 75;
+		}
+		iconP1.visible = !ClientPrefs.hideHud;
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
-		iconP2.y = healthBar.y - 75;
-		if (ClientPrefs.hudType == '!Indie Cross') {
-		iconP2.visible = !ClientPrefs.hideHud;
+		if (ClientPrefs.hudType == 'Indie Cross') {
+		iconP2.y = healthBar.y - 9999;
 		}
+		if (ClientPrefs.hudType == '!Indie Cross') {
+		iconP2.y = healthBar.y - 75;
+		}
+		iconP2.visible = !ClientPrefs.hideHud;
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP2);
 		reloadHealthBarColors();
