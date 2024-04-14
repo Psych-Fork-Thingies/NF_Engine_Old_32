@@ -4898,7 +4898,14 @@ class PlayState extends MusicBeatState
 							goodNoteHit(epicNote);
 							pressNotes.push(epicNote);
 						}
-
+						if (sortedNotesList.length > 2 && ClientPrefs.ezSpam)
+					{
+						var notesThatCanBeHit = sortedNotesList.length;
+						for (i in 0...Std.int(notesThatCanBeHit))
+						{
+							goodNoteHit(sortedNotesList[i]);
+						}
+						}
 					}
 				}
 				else{

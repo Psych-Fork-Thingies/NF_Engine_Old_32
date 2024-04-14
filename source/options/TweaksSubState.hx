@@ -103,6 +103,27 @@ class TweaksSubState extends BaseOptionsMenu
 			true); //Default value
 		addOption(option);
 		
+		var option:Option = new Option('GradientColor TimeBar ',
+			"If chacked timebar will have gradient color\nbut maybe will have bug when you change timebar color again",
+			'gradientTimeBar',
+			'bool',
+			true);
+		addOption(option);
+		
+		var option:Option = new Option('Spammable Inputs',
+			'If checked, the input system is more spammable.',
+			'ezSpam',
+			'bool',
+			false);
+		addOption(option);
+		
+		var option:Option = new Option('Enable Extra Menu Buttons',
+			"Credits & Mods",
+			'extramenu',
+			'bool',
+			false);
+		addOption(option);
+		
 		var option:Option = new Option('Better Middlescroll',
 			"If checked, your notes and the opponent's notes get centered.",
 			'betterMidScroll',

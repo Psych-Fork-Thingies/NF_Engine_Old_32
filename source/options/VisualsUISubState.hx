@@ -75,18 +75,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 		
-		
-		var option:Option = new Option('Note Skin',
-			"Choose Note Skin",
-			'NoteSkin',
-			'string',
-			'original',
-			noteSkinList);
-			
-		option.showNote = true;
-		addOption(option);
-		option.onChange = onChangeNoteSkin;
-
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
 			'hideHud',
@@ -100,13 +88,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			'string',
 			'Time Left',
 			['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
-		addOption(option);
-		
-		var option:Option = new Option('GradientColor TimeBar ',
-			"If chacked timebar will have gradient color\nbut maybe will have bug when you change timebar color again",
-			'gradientTimeBar',
-			'bool',
-			true);
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',

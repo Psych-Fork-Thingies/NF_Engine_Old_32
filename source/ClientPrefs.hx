@@ -50,6 +50,8 @@ class ClientPrefs {
     
     public static var hitboxExtend:Int = 0;
     public static var fixopponentplay = true;
+    public static var ezSpam:Bool = false;
+    public static var extramenu:Bool = false;
     public static var dynamicSpawnTime:Bool = false;
     public static var noteSpawnTime:Float = 1;
 	//public static var hitboxExtend = true;
@@ -202,6 +204,8 @@ class ClientPrefs {
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
 	    FlxG.save.data.hudType = hudType;
 	    FlxG.save.data.fixopponentplay = fixopponentplay;
+	    FlxG.save.data.ezSpam = ezSpam;
+	    FlxG.save.data.extramenu = extramenu;
 	    FlxG.save.data.NoteSkin = NoteSkin;
 	    //FlxG.save.data.NoteSkinName = NoteSkinName;
 	    //FlxG.save.data.ChangeSkin = ChangeSkin;
@@ -371,6 +375,12 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.fixopponentplay != null) {
 			fixopponentplay = FlxG.save.data.fixopponentplay;
+		}
+		if(FlxG.save.data.ezSpam != null) {
+			ezSpam = FlxG.save.data.ezSpam;
+		}
+		if(FlxG.save.data.extramenu != null) {
+			extramenu = FlxG.save.data.extramenu;
 		}
 		if(FlxG.save.data.botLightStrum != null) {
 			botLightStrum = FlxG.save.data.botLightStrum;
