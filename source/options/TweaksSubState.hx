@@ -117,12 +117,14 @@ class TweaksSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 		
+		/*
 		var option:Option = new Option('Enable Extra Menu Buttons',
 			"Credits & Mods",
 			'extramenu',
 			'bool',
 			false);
 		addOption(option);
+		*/
 		
 		var option:Option = new Option('Better Middlescroll',
 			"If checked, your notes and the opponent's notes get centered.",

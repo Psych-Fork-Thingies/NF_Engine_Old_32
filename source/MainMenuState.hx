@@ -36,16 +36,7 @@ class MainMenuState extends MusicBeatState
 	//private var camHUD:FlxCamera;
 	private var camAchievement:FlxCamera;
 	
-	if (ClientPrefs.extramenu)
-    {
-		var optionShit:Array<String> = [
-		'story_mode',
-		'freeplay',
-		'options'
-	];
-	}
-	else {
-		 var optionShit:Array<String> = [
+	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
 		#if MODS_ALLOWED 'mods', #end
@@ -54,7 +45,6 @@ class MainMenuState extends MusicBeatState
 		//#if !switch 'donate', #end
 		'options'
 	];
-	}
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
