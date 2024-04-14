@@ -204,8 +204,8 @@ class ClientPrefs {
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
 	    FlxG.save.data.hudType = hudType;
 	    FlxG.save.data.fixopponentplay = fixopponentplay;
-	    //FlxG.save.data.ezSpam = ezSpam;
-	    FlxG.save.data.extramenu = extramenu;
+	    FlxG.save.data.ezSpam = ezSpam;
+	    //FlxG.save.data.extramenu = extramenu;
 	    FlxG.save.data.NoteSkin = NoteSkin;
 	    //FlxG.save.data.NoteSkinName = NoteSkinName;
 	    //FlxG.save.data.ChangeSkin = ChangeSkin;
