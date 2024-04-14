@@ -40,9 +40,9 @@ class MainMenuState extends MusicBeatState
 		'story_mode',
 		'freeplay',
 		//#if MODS_ALLOWED 'mods', #end old one
-		if (ClientPrefs.extramenu) {'mods',}
+		if (ClientPrefs.extramenu) {'mods',};
 		//#if ACHIEVEMENTS_ALLOWED 'awards', #end
-		if (ClientPrefs.extramenu) {'credits',}
+		if (ClientPrefs.extramenu) {'credits',};
 		//#if !switch 'donate', #end
 		'options'
 	];
