@@ -36,22 +36,25 @@ class MainMenuState extends MusicBeatState
 	//private var camHUD:FlxCamera;
 	private var camAchievement:FlxCamera;
 	
-	var optionShit:Array<String> = [
+	if (ClientPrefs.extramenu)
+    {
+		var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
-		//#if MODS_ALLOWED 'mods', #end old one
-		if (ClientPrefs.extramenu)
-		 {
-		 'mods',
-		 }
+		'options'
+	];
+	}
+	else {
+		 var optionShit:Array<String> = [
+		'story_mode',
+		'freeplay',
+		#if MODS_ALLOWED 'mods', #end
 		//#if ACHIEVEMENTS_ALLOWED 'awards', #end
-		if (ClientPrefs.extramenu)
-		{
 		'credits',
-		}
 		//#if !switch 'donate', #end
 		'options'
 	];
+	}
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
