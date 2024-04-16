@@ -194,7 +194,6 @@ class PlayState extends MusicBeatState
 	public var combo:Int = 0;
 
 	private var healthBarBG:AttachedSprite;
-	private var healthBarBG2:AttachedSprite;
 	public var healthBar:FlxBar;
 	var songPercent:Float = 0;
 
@@ -1057,10 +1056,6 @@ class PlayState extends MusicBeatState
 		case 'Psych Engine':
 			timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			timeTxt.borderSize = 2;
-			
-		case 'Indie Cross':
-			timeTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			timeTxt.borderSize = 1;
 
 		case 'Kade Engine':
 			timeTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1109,33 +1104,6 @@ class PlayState extends MusicBeatState
 				timeTxt.y += 4;
 
 				case 'Kade Engine':
-				if (timeBarBG != null && timeBar != null){
-					timeBarBG.destroy();
-					timeBar.destroy();
-				}
-				timeBarBG = new AttachedSprite('KadeTimeBar');
-				timeBarBG.x = timeTxt.x;
-				timeBarBG.y = timeTxt.y + (timeTxt.height / 8);
-				timeBarBG.scrollFactor.set();
-				timeBarBG.alpha = 0;
-				timeBarBG.visible = showTime;
-				timeBarBG.color = FlxColor.BLACK;
-				timeBarBG.xAdd = -4;
-				timeBarBG.yAdd = -4;
-				timeBarBG.screenCenter(X);
-				add(timeBarBG);
-
-				timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
-				'songPercent', 0, 1);
-				timeBar.scrollFactor.set();
-				timeBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
-				timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
-				timeBar.alpha = 0;
-				timeBar.visible = showTime;
-				add(timeBar);
-				timeBarBG.sprTracker = timeBar;
-				
-			case 'Indie Cross':
 				if (timeBarBG != null && timeBar != null){
 					timeBarBG.destroy();
 					timeBar.destroy();
@@ -1291,38 +1259,6 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 		moveCameraSection();
 		
-		if (ClientPrefs.hudType == 'Indie Cross') {
-		healthBarBG = new AttachedSprite('sanshealthBar1');
-		healthBarBG2 = new AttachedSprite('sanshealthBar2');
-		healthBarBG.y = FlxG.height * 0.89;
-		healthBarBG.screenCenter(X);
-		healthBarBG.scrollFactor.set();
-		healthBarBG2.y = FlxG.height * 0.89;
-		healthBarBG2.screenCenter(X);
-		healthBarBG2.scrollFactor.set();
-		healthBarBG.visible = !ClientPrefs.hideHud;
-		healthBarBG2.visible = !ClientPrefs.hideHud;
-		healthBarBG.xAdd = -4;
-		healthBarBG.yAdd = -4;
-		healthBarBG2.xAdd = -150;
-		healthBarBG2.yAdd = -4;
-		add(healthBarBG);
-		add(healthBarBG2);
-		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
-		if(ClientPrefs.downScroll) healthBarBG2.y = 0.11 * FlxG.height;
-
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'health', 0, 2);
-		healthBar.scrollFactor.set();
-		// healthBar
-		healthBar.visible = !ClientPrefs.hideHud;
-		healthBar.alpha = ClientPrefs.healthBarAlpha;
-		add(healthBar);
-		healthBarBG.sprTracker = healthBar;
-		healthBarBG2.sprTracker = healthBar;
-		}
-		
-		if (ClientPrefs.hudType == '!Indie Cross') {
 		healthBarBG = new AttachedSprite('healthBar');
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
@@ -1341,26 +1277,15 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
-		}
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		if (ClientPrefs.hudType == 'Indie Cross') {
-		iconP1.y = healthBar.y - 9999;
-		}
-		if (ClientPrefs.hudType == '!Indie Cross') {
 		iconP1.y = healthBar.y - 75;
-		}
 		iconP1.visible = !ClientPrefs.hideHud;
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
-		if (ClientPrefs.hudType == 'Indie Cross') {
-		iconP2.y = healthBar.y - 9999;
-		}
-		if (ClientPrefs.hudType == '!Indie Cross') {
 		iconP2.y = healthBar.y - 75;
-		}
 		iconP2.visible = !ClientPrefs.hideHud;
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP2);
@@ -1374,14 +1299,6 @@ class PlayState extends MusicBeatState
 		add(EngineWatermark);
 		EngineWatermark.text = SONG.song + " " + CoolUtil.difficultyString() + " | PE 0.6.3";
 		}
-		if (ClientPrefs.hudType == 'Indie Cross') {
-		// Add Engine watermark
-		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
-		EngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-		EngineWatermark.scrollFactor.set();
-		add(EngineWatermark);
-		EngineWatermark.text = SONG.song + " " + CoolUtil.difficultyString() + " | IC V1.5";
-		}
 		if (ClientPrefs.hudType == 'Dave & Bambi') {
 		// Add Engine watermark
 		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
@@ -1389,16 +1306,6 @@ class PlayState extends MusicBeatState
 		EngineWatermark.scrollFactor.set();
 		add(EngineWatermark);
 		EngineWatermark.text = SONG.song;
-		}
-		
-		if (ClientPrefs.hudType == 'Indie Cross')
-		{ 		
-		scoreTxt = new FlxText(0, healthBarBG.y + 50, FlxG.width, "", 20);
-		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-		scoreTxt.scrollFactor.set();
-		scoreTxt.borderSize = 1;
-		scoreTxt.visible = !ClientPrefs.hideHud;
-		add(scoreTxt);
 		}
 
 		if (ClientPrefs.hudType == 'Kade Engine')
@@ -1461,17 +1368,6 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
 		}
-		if (ClientPrefs.hudType == 'Indie Cross')
-		{
-		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "CROSSPLAY", 32);
-		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		botplayTxt.scrollFactor.set();
-		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = cpuControlled;
-		add(botplayTxt);
-		if (ClientPrefs.downScroll) 
-			botplayTxt.y = timeBarBG.y - 78;
-		}
 		if (ClientPrefs.hudType == 'Dave & Bambi')
 		{
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
@@ -1499,9 +1395,6 @@ class PlayState extends MusicBeatState
 
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
-		if (ClientPrefs.hudType == 'Indie Cross') {
-		healthBarBG2.cameras = [camHUD];
-		}
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
@@ -1514,9 +1407,6 @@ class PlayState extends MusicBeatState
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		if (ClientPrefs.hudType == 'Kade Engine') {
-		EngineWatermark.cameras = [camHUD];
-		}
-		if (ClientPrefs.hudType == 'Indie Cross') {
 		EngineWatermark.cameras = [camHUD];
 		}
 
@@ -3477,15 +3367,6 @@ class PlayState extends MusicBeatState
 			else
 			scoreTxt.text += '0% | N/A';
 		}
-		if (ClientPrefs.hudType == 'Indie Cross') {
-		scoreTxt.text = 'BF Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Accuracy: ';
-		if(cpuControlled) 
-			scoreTxt.text = 'Bot Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | Botplay Mode';
-		if(ratingName != '?')
-			scoreTxt.text += Highscore.floorDecimal(ratingPercent * 100, 2) + '% | ' + ratingFC + ratingCool;
-			else
-			scoreTxt.text += '0% | N/A';
-		}
 		if (ClientPrefs.hudType == 'Dave & Bambi') {
 		scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '% | ' + ratingFC;
 		if(cpuControlled) 
@@ -5359,7 +5240,6 @@ class PlayState extends MusicBeatState
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 		if (ClientPrefs.hudType == 'VS Impostor') PlayState.SONG.splashSkin = 'impostorNoteSplashes';
-		//if (ClientPrefs.hudType == 'Indie Cross Sans') PlayState.SONG.splashSkin = 'indiecrossNoteSplashes';
 
 		var hue:Float = 0;
 		var sat:Float = 0;
@@ -5888,7 +5768,7 @@ class PlayState extends MusicBeatState
 		}
 			
 			// Rating FC
-			if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Indie Cross' && ClientPrefs.hudType == 'Dave & Bambi') {
+			if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave & Bambi') {
 			ratingFC = "";
 			if (sicks > 0) ratingFC = "(MFC)";
 			if (goods > 0) ratingFC = "(GFC)";

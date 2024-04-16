@@ -73,7 +73,7 @@ class TweaksSubState extends BaseOptionsMenu
 			'hudType',
 			'string',
 			'VS Impostor',
-			['VS Impostor', 'Kade Engine', 'Dave & Bambi', 'Psych Engine', 'Indie Cross']);
+			['VS Impostor', 'Kade Engine', 'Dave & Bambi', 'Psych Engine']);
 		addOption(option);
 		
 		
