@@ -93,7 +93,7 @@ class SUtil
 	#if android
 	public static function doPermissionsShit():Void
 	{
-		if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE)
+		if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE))
 		{
 			AndroidPermissions.requestPermission(AndroidPermissions.READ_EXTERNAL_STORAGE);
 			lime.app.Application.current.window.alert('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress Ok to see what happens', 'Notice!');
