@@ -4,6 +4,8 @@ package;
 import android.Tools;
 import android.Permissions;
 import android.PermissionsList;
+import android.Settings as AndroidSettings;
+import android.os.Environment as AndroidEnvironment;
 #end
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
@@ -48,6 +50,8 @@ class SUtil
 		{
 			Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
 			SUtil.applicationAlert('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
+			if (!AndroidEnvironment.isExternalStorageManager())
+				AndroidSettings.requestSetting("android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
 		}
 
 		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
