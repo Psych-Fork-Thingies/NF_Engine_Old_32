@@ -46,26 +46,44 @@ class SUtil
 		#end
 	}
 
-    #if android
-	public static function doTheCheck():void
+	public static function doTheCheck()
 	{
-	    if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE)
-			&& !AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE))
+	    #if android
+		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
-			AndroidPermissions.requestPermission(AndroidPermissions.READ_EXTERNAL_STORAGE);
-			AndroidPermissions.requestPermission(AndroidPermissions.WRITE_EXTERNAL_STORAGE);
-			showPopUp('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress Ok to see what happens', 'Notice!');
-			if (!AndroidEnvironment.isExternalStorageManager())
-				AndroidSettings.requestSetting("android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
+			Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
+			SUtil.applicationAlert('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
 		}
-		else
+
+		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
-				showPopUp("Please create folder to\n" + SUtil.getStorageDirectory(true) + "\nPress OK to close the game", "Error!");
-				LimeSystem.exit(1);
+			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file')))
+				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file'));
+
+			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
+			{
+				SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
+				CoolUtil.browserLoad('https://b23.tv/qnuSteM');
+				System.exit(0);
+			}
+			else
+			{
+				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
+				{
+					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					CoolUtil.browserLoad('https://b23.tv/qnuSteM');
+					System.exit(0);
+				}
+
+				if (!FileSystem.exists(SUtil.getPath() + 'mods'))
+				{
+					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					CoolUtil.browserLoad('https://b23.tv/qnuSteM');
+					System.exit(0);
+				}
 			}
 		}
-	}
-	#end
+		#end
 	}
 
     /*
