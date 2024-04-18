@@ -69,7 +69,7 @@ class SUtil
 		}
 	}
 	#end
-	#end
+	}
 	
 	public static function gameCrashCheck()
 	{
