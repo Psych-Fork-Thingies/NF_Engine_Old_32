@@ -4,7 +4,12 @@ package;
 import android.Tools;
 import android.Permissions;
 import android.PermissionsList;
+import android.content.Context as AndroidContext;
+import android.os.Environment as AndroidEnvironment;
+import android.Permissions as AndroidPermissions;
+import android.Settings as AndroidSettings;
 #end
+import lime.system.System as LimeSystem;
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
 import openfl.utils.Assets as OpenFlAssets;
@@ -35,9 +40,7 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-		    var forcedPath:String = '/storage/emulated/0/';
-		    var fileLocal:String = 'NF Engine';
-		    return aDir = force ? forcedPath + '.' + fileLocal : AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
+			return aDir = Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/';
 		#else
 		return '';
 		#end
@@ -45,7 +48,7 @@ class SUtil
 
 	public static function doTheCheck()
 	{
-		#if android
+				#if android
 		if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE)
 			&& !AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE))
 		{
