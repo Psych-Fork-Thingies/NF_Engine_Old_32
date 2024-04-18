@@ -109,10 +109,6 @@ class SUtil
 
 	public static function showPopUp(message:String, title:String):Void
 	{
-		#if (!ios || !iphonesim)
 		lime.app.Application.current.window.alert(message, title);
-		#else
-		trace('$title - $message');
-		#end
 	}
 }
