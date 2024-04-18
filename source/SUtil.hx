@@ -1,4 +1,4 @@
-package mobile.backend;
+package;
 
 #if android
 import android.content.Context as AndroidContext;
@@ -78,7 +78,7 @@ class SUtil
 			trace('File couldn\'t be saved. (${e.message})');
 	}
 	
-	public static function autosaveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'You forgor to add somethin\' in yo code :3'):Void
+	public static function AutosaveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'You forgor to add somethin\' in yo code :3'):Void
 	{
 		try
 		{
