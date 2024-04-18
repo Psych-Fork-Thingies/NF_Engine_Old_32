@@ -72,7 +72,7 @@ class SUtil
 				FileSystem.createDirectory('saves');
 
 			File.saveContent('saves/' + fileName + fileExtension, fileData);
-			showPopUp(fileName + " file has been saved.", "Success!");
+			lime.app.Application.current.window.alert(fileName + " file has been saved.", "Success!");
 		}
 		catch (e:haxe.Exception)
 			trace('File couldn\'t be saved. (${e.message})');
@@ -86,7 +86,7 @@ class SUtil
 		{
 			AndroidPermissions.requestPermission(AndroidPermissions.READ_EXTERNAL_STORAGE);
 			AndroidPermissions.requestPermission(AndroidPermissions.WRITE_EXTERNAL_STORAGE);
-			showPopUp('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress Ok to see what happens', 'Notice!');
+			lime.app.Application.current.window.alert('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress Ok to see what happens', 'Notice!');
 			if (!AndroidEnvironment.isExternalStorageManager())
 				AndroidSettings.requestSetting("android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
 		}
@@ -99,16 +99,10 @@ class SUtil
 			}
 			catch (e:Dynamic)
 			{
-				showPopUp("Please create folder to\n" + SUtil.getStorageDirectory(true) + "\nPress OK to close the game", "Error!");
+				lime.app.Application.current.window.alert("Please create folder to\n" + SUtil.getStorageDirectory(true) + "\nPress OK to close the game", "Error!");
 				LimeSystem.exit(1);
 			}
 		}
 	}
 	#end
 	}
-
-	public static function showPopUp(message:String, title:String):Void
-	{
-		lime.app.Application.current.window.alert(message, title);
-	}
-}
