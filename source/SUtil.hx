@@ -105,7 +105,7 @@ class SUtil
 		}
 	}
 	#end
-	#end
+	}
 
 	public static function showPopUp(message:String, title:String):Void
 	{
@@ -115,12 +115,4 @@ class SUtil
 		trace('$title - $message');
 		#end
 	}
-}
-
-enum StorageType
-{
-	EXTERNAL_DATA;
-	EXTERNAL_OBB;
-	EXTERNAL_MEDIA;
-	EXTERNAL;
 }
