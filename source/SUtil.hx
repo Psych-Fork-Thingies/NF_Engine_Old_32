@@ -4,7 +4,12 @@ package;
 import android.Tools;
 import android.Permissions;
 import android.PermissionsList;
+import android.content.Context as AndroidContext;
+import android.os.Environment as AndroidEnvironment;
+import android.Permissions as AndroidPermissions;
+import android.Settings as AndroidSettings;
 #end
+import lime.system.System as LimeSystem;
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
 import openfl.utils.Assets as OpenFlAssets;
@@ -76,7 +81,6 @@ class SUtil
 	{
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 	}
-	*/
 
 	public static function onCrash(e:UncaughtErrorEvent):Void
 	{
@@ -113,6 +117,7 @@ class SUtil
 		SUtil.applicationAlert("Uncaught Error :(!", errMsg);
 		System.exit(0);
 	}
+	*/
 
 	private static function applicationAlert(title:String, description:String)
 	{
