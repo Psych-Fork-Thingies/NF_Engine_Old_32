@@ -53,6 +53,7 @@ class Main extends Sprite
 	{
 		super();
 
+    /* Just Dieeee
     SUtil.gameCrashCheck();
 		if (stage != null)
 		{
@@ -63,6 +64,7 @@ class Main extends Sprite
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 	}
+	*/
 
 	private function init(?E:Event):Void
 	{
