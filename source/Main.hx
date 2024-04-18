@@ -53,6 +53,7 @@ class Main extends Sprite
 	{
 		super();
 
+    /*
     SUtil.gameCrashCheck();
 		if (stage != null)
 		{
@@ -62,6 +63,7 @@ class Main extends Sprite
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
+	*/
 	}
 
 	private function init(?E:Event):Void
@@ -88,7 +90,7 @@ class Main extends Sprite
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
 		
-		SUtil.doPermissionsShit();
+		SUtil.doTheCheck();
 	
 		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
