@@ -77,15 +77,27 @@ class SUtil
 		catch (e:haxe.Exception)
 			trace('File couldn\'t be saved. (${e.message})');
 	}
+	
+	public static function autosaveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'You forgor to add somethin\' in yo code :3'):Void
+	{
+		try
+		{
+			if (!FileSystem.exists('saves'))
+				FileSystem.createDirectory('saves');
+
+			File.saveContent('saves/' + fileName + fileExtension, fileData);
+			lime.app.Application.current.window.alert(fileName + " file has been saved.", "Success!");
+		}
+		catch (e:haxe.Exception)
+			//trace('File couldn\'t be saved. (${e.message})');
+	}
 
 	#if android
 	public static function doPermissionsShit():Void
 	{
 		if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE)
-			&& !AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE))
 		{
 			AndroidPermissions.requestPermission(AndroidPermissions.READ_EXTERNAL_STORAGE);
-			AndroidPermissions.requestPermission(AndroidPermissions.WRITE_EXTERNAL_STORAGE);
 			lime.app.Application.current.window.alert('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress Ok to see what happens', 'Notice!');
 			if (!AndroidEnvironment.isExternalStorageManager())
 				AndroidSettings.requestSetting("android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
@@ -94,12 +106,12 @@ class SUtil
 		{
 			try
 			{
-				if (!FileSystem.exists(SUtil.getStorageDirectory()))
-					FileSystem.createDirectory(SUtil.getStorageDirectory());
+				if (!FileSystem.exists(SUtil.getPath()))
+					FileSystem.createDirectory(SUtil.getPath());
 			}
 			catch (e:Dynamic)
 			{
-				lime.app.Application.current.window.alert("Please create folder to\n" + SUtil.getStorageDirectory(true) + "\nPress OK to close the game", "Error!");
+				lime.app.Application.current.window.alert("Please create folder to\n" + SUtil.getPath(true) + "\nPress OK to close the game", "Error!");
 				LimeSystem.exit(1);
 			}
 		}
