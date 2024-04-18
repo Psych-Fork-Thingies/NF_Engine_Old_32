@@ -35,12 +35,15 @@ class SUtil
 	
 	public static function getPath():String
 	{
-	    var daPath:String = '';
 		#if android
-		var forcedPath:String = '/storage/emulated/0/';
-		var fileLocal:String = 'NF Engine';
-		daPath = force ? forcedPath + '.' + fileLocal : AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
-		daPath = haxe.io.Path.addTrailingSlash(daPath);
+		if (aDir != null && aDir.length > 0)
+			return aDir;
+		else
+		    var forcedPath:String = '/storage/emulated/0/';
+		    var fileLocal:String = 'NF Engine';
+		    return aDir = force ? forcedPath + '.' + fileLocal : AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
+		#else
+		return '';
 		#end
 	}
 
