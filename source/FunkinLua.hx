@@ -2357,8 +2357,6 @@ class FunkinLua {
 			#if android
 			if (period == null)
 				period = 0;
-			if (duration == null)
-				return FunkinLua.luaTrace('vibrate: No duration specified.');
 			Hardware.vibrate(period, duration);
 			#end
 		});
