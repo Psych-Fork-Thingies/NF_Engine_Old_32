@@ -58,7 +58,7 @@ import Discord;
 #end
 
 #if android
-import android.Hardware;
+import lime.ui.Haptic as Hardware;
 #end
 
 using StringTools;

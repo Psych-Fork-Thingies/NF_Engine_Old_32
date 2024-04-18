@@ -10,7 +10,7 @@ import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 #if android
-import android.Hardware;
+import lime.ui.Haptic as Hardware;
 #end
 
 class GameOverSubstate extends MusicBeatSubstate
