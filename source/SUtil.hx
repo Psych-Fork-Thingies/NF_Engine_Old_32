@@ -117,13 +117,14 @@ class SUtil
 		//SUtil.applicationAlert("Uncaught Error :(!", errMsg);
 		System.exit(0);
 	}
-	*/
 
 	private static function applicationAlert(title:String, description:String)
 	{
 		Application.current.window.alert(description, title);
 	}
-
+    */
+    
+    /*
 	#if android
 	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code')
 	{
@@ -133,13 +134,28 @@ class SUtil
 		File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
 		showPopUp('Done :)!', 'File Saved Successfully!');
 	}
+	*/
+	
+	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'You forgor to add somethin\' in yo code :3'):Void
+	{
+		try
+		{
+			if (!FileSystem.exists('saves'))
+				FileSystem.createDirectory('saves');
+
+			File.saveContent('saves/' + fileName + fileExtension, fileData);
+			showPopUp(fileName + " file has been saved.", "Success!");
+		}
+		catch (e:haxe.Exception)
+			trace('File couldn\'t be saved. (${e.message})');
+	}
     
     public static function AutosaveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code')
 	{
-		if (!FileSystem.exists(SUtil.getPath() + 'saves'))
-			FileSystem.createDirectory(SUtil.getPath() + 'saves');
+		if (!FileSystem.exists('saves'))
+				FileSystem.createDirectory('saves');
 
-		File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
+		File.saveContent('saves/' + fileName + fileExtension, fileData);
 		//SUtil.applicationAlert('Done :)!', 'File Saved Successfully!');
 	}
 	
