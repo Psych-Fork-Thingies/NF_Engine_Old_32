@@ -26,7 +26,7 @@ import flixel.graphics.FlxGraphic;
 import flixel.addons.display.FlxBackdrop;
 import Controls;
 #if android
-import android.Hardware;
+import lime.ui.Haptic as Hardware;
 #end
 
 using StringTools;
@@ -201,7 +201,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 	{
 		if(ClientPrefs.vibration)
 		{
-			Hardware.vibrate(500);
+			Hardware.vibrate(0, 500);
 		}
 	}
 	#end

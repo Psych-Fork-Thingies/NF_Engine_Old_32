@@ -65,7 +65,8 @@ class GameOverSubstate extends MusicBeatSubstate
 		#if android
 		if(ClientPrefs.vibration)
 		{
-			Hardware.vibrate(vibrationTime);
+			//Hardware.vibrate(vibrationTime);
+			Hardware.vibrate(0, 500);
 		}
 		#end
 

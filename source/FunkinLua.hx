@@ -2353,9 +2353,13 @@ class FunkinLua {
 			#end
 		});
 
-		Lua_helper.add_callback(lua, "vibration", function(milliseconds:Int) {
+		funk.set("vibrate", function(duration:Null<Int>, ?period:Null<Int>) {
 			#if android
-			Hardware.vibrate(milliseconds);
+			if (period == null)
+				period = 0;
+			if (duration == null)
+				return FunkinLua.luaTrace('vibrate: No duration specified.');
+			Hardware.vibrate(period, duration);
 			#end
 		});
 
