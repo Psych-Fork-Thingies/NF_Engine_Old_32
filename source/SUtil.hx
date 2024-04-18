@@ -4,12 +4,7 @@ package;
 import android.Tools;
 import android.Permissions;
 import android.PermissionsList;
-import android.content.Context as AndroidContext;
-import android.os.Environment as AndroidEnvironment;
-import android.Permissions as AndroidPermissions;
-import android.Settings as AndroidSettings;
 #end
-import lime.system.System as LimeSystem;
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
 import openfl.utils.Assets as OpenFlAssets;
@@ -30,17 +25,18 @@ using StringTools;
 
 class SUtil
 {
-	#if android
-	private static var aDir:String = null; // android dir
-	#end
 
-	public static function getPath():String
+	public static function getPath(?force:Bool = false):String
 	{
+	    var daPath:String = '';
 		#if android
+		var forcedPath:String = '/storage/emulated/0/';
+		var fileLocal:String = 'NF Engine';
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/';
+			return aDir = force ? forcedPath + '.' + fileLocal : AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
+			daPath = haxe.io.Path.addTrailingSlash(daPath);
 		#else
 		return '';
 		#end
@@ -48,7 +44,7 @@ class SUtil
 
 	public static function doTheCheck()
 	{
-	    #if android
+		#if android
 		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
 			Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
@@ -70,14 +66,14 @@ class SUtil
 			{
 				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
 				{
-					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
 					CoolUtil.browserLoad('https://b23.tv/qnuSteM');
 					System.exit(0);
 				}
 
 				if (!FileSystem.exists(SUtil.getPath() + 'mods'))
 				{
-					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
 					CoolUtil.browserLoad('https://b23.tv/qnuSteM');
 					System.exit(0);
 				}
@@ -86,12 +82,10 @@ class SUtil
 		#end
 	}
 
-    /*
 	public static function gameCrashCheck()
 	{
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 	}
-	*/
 
 	public static function onCrash(e:UncaughtErrorEvent):Void
 	{
