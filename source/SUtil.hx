@@ -128,11 +128,6 @@ class SUtil
 	{
 		Application.current.window.alert(description, title);
 	}
-	
-	public static function System.crash()
-	{
-	    System.exit(0);
-	}
 
 	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'You forgor to add somethin\' in yo code :3'):Void
 	{
