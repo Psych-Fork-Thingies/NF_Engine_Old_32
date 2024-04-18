@@ -3,12 +3,8 @@ package;
 #if android
 import android.Tools;
 import android.Permissions;
-import android.content.Context as AndroidContext;
-import android.os.Environment as AndroidEnvironment;
-import android.Permissions as AndroidPermissions;
-import android.Settings as AndroidSettings;
+import android.PermissionsList;
 #end
-import lime.system.System as LimeSystem;
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
 import openfl.utils.Assets as OpenFlAssets;
@@ -32,7 +28,7 @@ class SUtil
 	#if android
 	private static var aDir:String = null; // android dir
 	#end
-	
+
 	public static function getPath():String
 	{
 		#if android
@@ -47,9 +43,9 @@ class SUtil
 		#end
 	}
 
-	#if android
-	public static function doPermissionsShit():Void
+	public static function doTheCheck()
 	{
+		#if android
 		if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE)
 			&& !AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE))
 		{
@@ -69,11 +65,11 @@ class SUtil
 			catch (e:Dynamic)
 			{
 				showPopUp("Please create folder to\n" + SUtil.getStorageDirectory(true) + "\nPress OK to close the game", "Error!");
-				LimeSystem.exit(1);
+				System.exit(0);
+				}
 			}
 		}
-	}
-	#end
+		#end
 	}
 
 	public static function gameCrashCheck()
