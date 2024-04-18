@@ -2,7 +2,7 @@ package;
 
 #if android
 import android.Tools;
-import android.Permissions;
+import android.Permissions as AndroidPermissions;
 import android.Settings as AndroidSettings;
 import android.os.Environment as AndroidEnvironment;
 #end
