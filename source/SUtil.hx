@@ -46,10 +46,10 @@ class SUtil
 		#end
 	}
 
-	public static function doTheCheck()
+    #if android
+	public static function doTheCheck():void
 	{
-	    #if android
-		if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE)
+	    if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE)
 			&& !AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE))
 		{
 			AndroidPermissions.requestPermission(AndroidPermissions.READ_EXTERNAL_STORAGE);
@@ -62,13 +62,18 @@ class SUtil
 		{
 			try
 			{
+				if (!FileSystem.exists(SUtil.getStorageDirectory()))
+					FileSystem.createDirectory(SUtil.getStorageDirectory());
+			}
+			catch (e:Dynamic)
+			{
 				showPopUp("Please create folder to\n" + SUtil.getStorageDirectory(true) + "\nPress OK to close the game", "Error!");
-				System.exit(0);
-				}
+				LimeSystem.exit(1);
 			}
 		}
-		#end
 	}
+	#end
+	#end
 
     /*
 	public static function gameCrashCheck()
