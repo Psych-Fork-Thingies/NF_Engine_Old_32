@@ -2353,7 +2353,7 @@ class FunkinLua {
 			#end
 		});
 
-		funk.set("vibrate", function(duration:Null<Int>, ?period:Null<Int>) {
+        Lua_helper.add_callback(lua, "vibrate", function(duration:Null<Int>, ?period:Null<Int>) {
 			#if android
 			if (period == null)
 				period = 0;
