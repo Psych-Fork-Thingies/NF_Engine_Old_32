@@ -88,8 +88,6 @@ class SUtil
 			File.saveContent('saves/' + fileName + fileExtension, fileData);
 			lime.app.Application.current.window.alert(fileName + " file has been saved.", "Success!");
 		}
-		catch (e:haxe.Exception)
-			//trace('File couldn\'t be saved. (${e.message})');
 	}
 
 	#if android
