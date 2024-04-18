@@ -60,13 +60,6 @@ class SUtil
 		}
 		else
 		{
-			try
-			{
-				if (!FileSystem.exists(SUtil.getStorageDirectory()))
-					FileSystem.createDirectory(SUtil.getStorageDirectory());
-			}
-			catch (e:Dynamic)
-			{
 				showPopUp("Please create folder to\n" + SUtil.getStorageDirectory(true) + "\nPress OK to close the game", "Error!");
 				LimeSystem.exit(1);
 			}
