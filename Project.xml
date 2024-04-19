@@ -188,16 +188,15 @@
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 
 	<!-- _________________________________ Android Stuff _______________________________ -->
-	    <section if="android">
-			<!-- Do whatever you want I'm tired uninstall and install everytime -->
-			<certificate path="key.keystore" password="novaengine" alias="novadev" alias-password="novaengine" unless="debug" />
-
-			<config:android permission="android.permission.MANAGE_EXTERNAL_STORAGE" />
-
-			<!-- Fix Networking -->
-			<config:android permission="android.permission.INTERNET" />
-			<config:android permission="android.permission.ACCESS_NETWORK_STATE" />
-		</section>
+	<!-- Do whatever you want I'm tired uninstall and install everytime -->
+	<certificate path="key.keystore" password="novaengine" alias="novadev" alias-password="novaengine" unless="debug" />
+	
+	<!-- (⁠ ͝⁠°⁠ ͜⁠ʖ͡⁠°⁠) Android Permissions (⁠ ͝⁠°⁠ ͜⁠ʖ͡⁠°⁠) -->
+	<config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>
+	<config:android permission="android.permission.WRITE_EXTERNAL_STORAGE" if="android"/>
+	<config:android permission="android.permission.MANAGE_EXTERNAL_STORAGE" if="android"/>
+  <config:android gradle-version="7.5.1" />
+  <config:android gradle-plugin="7.3.1" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 
