@@ -37,8 +37,6 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
-		else
 		    var forcedPath:String = '/storage/emulated/0/.NF Engine';
 		    return aDir = forcedPath;
 			aDir = haxe.io.Path.addTrailingSlash(aDir);
