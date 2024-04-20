@@ -29,6 +29,8 @@ class SUtil
 {
 	#if android
 	private static var aDir:String = null; // android dir
+	var forcedPath:String = '/storage/emulated/0/.NF Engine';
+    var fileLocal:String = 'NF Engine';
 	#end
 
 	public static function getPath():String
@@ -37,8 +39,6 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-		    var forcedPath:String = '/storage/emulated/0/.NF Engine';
-		    var fileaLocal:String = 'NF Engine';
 		    return aDir = forcedPath + '.' + fileLocal;
 			aDir = haxe.io.Path.addTrailingSlash(aDir);
 		#else
