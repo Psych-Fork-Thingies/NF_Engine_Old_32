@@ -7,6 +7,8 @@ import android.Permissions as AndroidPermissions;
 import android.Settings as AndroidSettings;
 #end
 import lime.system.System as LimeSystem;
+import openfl.utils.Assets as OpenFlAssets;
+import openfl.Lib;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -131,6 +133,19 @@ class SUtil
 	}
 	#end
 	#end
+	
+	public static function saveClipboard(fileData:String = 'you forgot something to add in your code')
+	{
+		openfl.system.System.setClipboard(fileData);
+		//SUtil.applicationAlert('Done :)!', 'Data Saved to Clipboard Successfully!');
+		showPopUp(" Done :)!", "Data Saved to Clipboard Successfully!");
+	}
+
+	public static function copyContent(copyPath:String, savePath:String)
+	{
+		if (!FileSystem.exists(savePath))
+			File.saveBytes(savePath, OpenFlAssets.getBytes(copyPath));
+	}
 
 	public static function showPopUp(message:String, title:String):Void
 	{
@@ -142,19 +157,6 @@ class SUtil
 	}
 }
 
-    public static function saveClipboard(fileData:String = 'you forgot something to add in your code')
-	{
-		openfl.system.System.setClipboard(fileData);
-		SUtil.applicationAlert('Done :)!', 'Data Saved to Clipboard Successfully!');
-	}
-
-	public static function copyContent(copyPath:String, savePath:String)
-	{
-		if (!FileSystem.exists(savePath))
-			File.saveBytes(savePath, OpenFlAssets.getBytes(copyPath));
-	}
-	#end
-}
 
 enum StorageType
 {
