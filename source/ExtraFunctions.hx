@@ -230,13 +230,13 @@ class ExtraFunctions
 			{
 				return true;
 			}
-			return FileSystem.exists(Paths.getPath('assets/$filename', TEXT));
+			return FileSystem.exists(Paths.getStorageDirectory('assets/$filename', TEXT));
 			#else
 			if(absolute)
 			{
 				return Assets.exists(filename);
 			}
-			return Assets.exists(Paths.getPath('assets/$filename', TEXT));
+			return Assets.exists(Paths.getStorageDirectory('assets/$filename', TEXT));
 			#end
 		});
 		Lua_helper.add_callback(lua, "saveFile", function(path:String, content:String, ?absolute:Bool = false)
@@ -258,13 +258,13 @@ class ExtraFunctions
                     }
                 }
                 if(!absolute){
-    				if (!FileSystem.exists(SUtil.getPath() + 'mods/' + filesCheck)){
-    			        FileSystem.createDirectory(SUtil.getPath() + 'mods/' + filesCheck);
+    				if (!FileSystem.exists(SUtil.getStorageDirectory() + 'mods/' + filesCheck)){
+    			        FileSystem.createDirectory(SUtil.getStorageDirectory() + 'mods/' + filesCheck);
     			    }
 			    }
 			    else{
-			        if (!FileSystem.exists(SUtil.getPath() + filesCheck)){
-    			        FileSystem.createDirectory(SUtil.getPath() + filesCheck);
+			        if (!FileSystem.exists(SUtil.getStorageDirectory() + filesCheck)){
+    			        FileSystem.createDirectory(SUtil.getStorageDirectory() + filesCheck);
     			    }
 			    }
 			    
@@ -272,7 +272,7 @@ class ExtraFunctions
 					File.saveContent(Paths.mods(path), content);
 				else
 				#end
-					File.saveContent(SUtil.getPath() + path, content);
+					File.saveContent(SUtil.getStorageDirectory() + path, content);
 
 				return true;
 			} catch (e:Dynamic) {
@@ -295,7 +295,7 @@ class ExtraFunctions
 				}
 				#end
 
-				var lePath:String = Paths.getPath(path, TEXT);
+				var lePath:String = Paths.getStorageDirectory(path, TEXT);
 				if(Assets.exists(lePath))
 				{
 					FileSystem.deleteFile(lePath);
