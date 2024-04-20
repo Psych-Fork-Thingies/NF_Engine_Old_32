@@ -1,4 +1,4 @@
-package mobile.backend;
+package;
 
 #if android
 import android.content.Context as AndroidContext;
