@@ -38,8 +38,9 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
+		    aDir = forcedPath + '.' + fileLocal;
 			return aDir = forcedPath + '.' + fileLocal;
-		aDir = haxe.io.Path.addTrailingSlash(aDir);
+		    aDir = haxe.io.Path.addTrailingSlash(aDir);
 		#else
 		return '';
 		#end
