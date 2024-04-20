@@ -36,7 +36,7 @@ class SUtil
 		#if android
 		if (aDir != null && aDir.length > 0)
 			return aDir;
-		lse
+		else
 			return aDir = /storage/emulated/0/.NF Engine;
 			aDir = haxe.io.Path.addTrailingSlash(aDir);
 		#else
