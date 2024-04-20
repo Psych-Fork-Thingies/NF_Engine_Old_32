@@ -143,7 +143,6 @@ class CharacterEditorState extends MusicBeatState
 		add(camFollow);
 
 		var tipTextArray:Array<String> = "E/Q - Camera Zoom In/Out
-		\nHold G and Arrow Keys - Move Camera
 		\nR - Reset Camera Zoom
 		\nJKLI - Move Camera
 		\nW/S - Previous/Next Animation
@@ -1154,12 +1153,6 @@ class CharacterEditorState extends MusicBeatState
 				var addToCam:Float = 500 * elapsed;
 				if (FlxG.keys.pressed.SHIFT)
 					addToCam *= 4;
-					
-					if ((virtualPad.buttonG.pressed && virtualPad.buttonLeft.pressed) || FlxG.keys.pressed.J)
-					 FlxG.camera.scroll.x -= elapsed * 500 * shiftMult * ctrlMult;
-		if ((virtualPad.buttonG.pressed && virtualPad.buttonDown.pressed) || FlxG.keys.pressed.K) FlxG.camera.scroll.y += elapsed * 500 * shiftMult * ctrlMult;
-		if ((virtualPad.buttonG.pressed && virtualPad.buttonRight.pressed) || FlxG.keys.pressed.L) FlxG.camera.scroll.x += elapsed * 500 * shiftMult * ctrlMult;
-		if ((virtualPad.buttonG.pressed && virtualPad.buttonUp.pressed) || FlxG.keys.pressed.I) FlxG.camera.scroll.y -= elapsed * 500 * shiftMult * ctrlMult;
 
 				if (FlxG.keys.pressed.I #if android || (_virtualpad.buttonUp.pressed && _virtualpad.buttonC.pressed) #end)
 					camFollow.y -= addToCam;
