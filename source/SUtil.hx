@@ -26,22 +26,34 @@ using StringTools;
 
 class SUtil
 {
-	#if android
-	private static var aDir:String = null; // android dir
-	#end
-
-	public static function getPath():String
+	#if sys
+	public static function getStorageDirectory(?force:Bool = false #if (android), type:StorageType = #if EXTERNAL EXTERNAL #elseif OBB EXTERNAL_OBB #elseif MEDIA EXTERNAL_MEDIA #else EXTERNAL_DATA #end #end):String
 	{
+		var daPath:String = '';
 		#if android
-		if (aDir != null && aDir.length > 0)
-			return aDir;
-		else
-			return aDir = '/storage/emulated/0/.NF Engine/';
-		#else
-		return '';
+		var forcedPath:String = '/storage/emulated/0/';
+		var packageNameLocal:String = 'com.shadowmario.psychengine';
+		var fileLocal:String = 'NF Engine';
+		switch (type)
+		{
+			case EXTERNAL_DATA:
+				daPath = force ? forcedPath + 'Android/data/' + packageNameLocal + '/files' : AndroidContext.getExternalFilesDir();
+			case EXTERNAL_OBB:
+				daPath = force ? forcedPath + 'Android/obb/' + packageNameLocal : AndroidContext.getObbDir();
+			case EXTERNAL_MEDIA:
+				daPath = force ? forcedPath + 'Android/media/' + packageNameLocal : AndroidEnvironment.getExternalStorageDirectory() + '/Android/media/' + lime.app.Application.current.meta.get('packageName');
+			case EXTERNAL:
+				daPath = force ? forcedPath + '.' + fileLocal : AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
+		}
+		daPath = haxe.io.Path.addTrailingSlash(daPath);
+		#elseif ios
+		daPath = LimeSystem.documentsDirectory;
 		#end
+
+		return daPath;
 	}
 
+    /*
 	public static function doTheCheck()
 	{
 		#if android
@@ -84,6 +96,36 @@ class SUtil
 		}
 		#end
 	}
+	*/
+	
+	#if android
+	public static function doPermissionsShit():Void
+	{
+		if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE)
+			&& !AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE))
+		{
+			AndroidPermissions.requestPermission(AndroidPermissions.READ_EXTERNAL_STORAGE);
+			AndroidPermissions.requestPermission(AndroidPermissions.WRITE_EXTERNAL_STORAGE);
+			showPopUp('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress Ok to see what happens', 'Notice!');
+			if (!AndroidEnvironment.isExternalStorageManager())
+				AndroidSettings.requestSetting("android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
+		}
+		else
+		{
+			try
+			{
+				if (!FileSystem.exists(SUtil.getStorageDirectory()))
+					FileSystem.createDirectory(SUtil.getStorageDirectory());
+			}
+			catch (e:Dynamic)
+			{
+				showPopUp("Please create folder to\n" + SUtil.getStorageDirectory(true) + "\nPress OK to close the game", "Error!");
+				LimeSystem.exit(1);
+			}
+		}
+	}
+	#end
+	#end
 
 	public static function gameCrashCheck()
 	{
@@ -113,10 +155,10 @@ class SUtil
 
 		errMsg += e.error;
 
-		if (!FileSystem.exists(SUtil.getPath() + "crash"))
-		FileSystem.createDirectory(SUtil.getPath() + "crash");
+		if (!FileSystem.exists(SUtil.getStorageDirectory() + "crash"))
+		FileSystem.createDirectory(SUtil.getStorageDirectory() + "crash");
 
-		File.saveContent(SUtil.getPath() + path, errMsg + "\n");
+		File.saveContent(SUtil.getStorageDirectory() + path, errMsg + "\n");
 
 		Sys.println(errMsg);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
@@ -134,19 +176,19 @@ class SUtil
 	#if android
 	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code')
 	{
-		if (!FileSystem.exists(SUtil.getPath() + 'saves'))
-			FileSystem.createDirectory(SUtil.getPath() + 'saves');
+		if (!FileSystem.exists(SUtil.getStorageDirectory() + 'saves'))
+			FileSystem.createDirectory(SUtil.getStorageDirectory() + 'saves');
 
-		File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
+		File.saveContent(SUtil.getStorageDirectory() + 'saves/' + fileName + fileExtension, fileData);
 		SUtil.applicationAlert('Done :)!', 'File Saved Successfully!');
 	}
     
     public static function AutosaveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code')
 	{
-		if (!FileSystem.exists(SUtil.getPath() + 'saves'))
-			FileSystem.createDirectory(SUtil.getPath() + 'saves');
+		if (!FileSystem.exists(SUtil.getStorageDirectory() + 'saves'))
+			FileSystem.createDirectory(SUtil.getStorageDirectory() + 'saves');
 
-		File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
+		File.saveContent(SUtil.getStorageDirectory() + 'saves/' + fileName + fileExtension, fileData);
 		//SUtil.applicationAlert('Done :)!', 'File Saved Successfully!');
 	}
 	
@@ -163,3 +205,21 @@ class SUtil
 	}
 	#end
 } 
+
+public static function showPopUp(message:String, title:String):Void
+	{
+		#if (!ios || !iphonesim)
+		lime.app.Application.current.window.alert(message, title);
+		#else
+		trace('$title - $message');
+		#end
+	}
+}
+
+enum StorageType
+{
+	EXTERNAL_DATA;
+	EXTERNAL_OBB;
+	EXTERNAL_MEDIA;
+	EXTERNAL;
+}

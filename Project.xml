@@ -189,7 +189,10 @@
 
 	<!-- _________________________________ Android Stuff _______________________________ -->
 	<!-- Do whatever you want I'm tired uninstall and install everytime -->
-	<certificate path="key.keystore" password="novaengine" alias="novadev" alias-password="novaengine" unless="debug" />
+	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" unless="debug" />
+	
+	<!--Target SDK-->
+	<android target-sdk-version="31" />
 	
 	<!-- (⁠ ͝⁠°⁠ ͜⁠ʖ͡⁠°⁠) Android Permissions (⁠ ͝⁠°⁠ ͜⁠ʖ͡⁠°⁠) -->
 	<config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>
