@@ -106,7 +106,7 @@ class SUtil
 		{
 			AndroidPermissions.requestPermission(AndroidPermissions.READ_EXTERNAL_STORAGE);
 			AndroidPermissions.requestPermission(AndroidPermissions.WRITE_EXTERNAL_STORAGE);
-			showPopUp('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress Ok to see what happens', 'Notice!');
+			SUtil.applicationAlert('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress Ok to see what happens', 'Notice!');
 			if (!AndroidEnvironment.isExternalStorageManager())
 				AndroidSettings.requestSetting("android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
 		}
@@ -119,7 +119,7 @@ class SUtil
 			}
 			catch (e:Dynamic)
 			{
-				showPopUp("Please create folder to\n" + SUtil.getStorageDirectory(true) + "\nPress OK to close the game", "Error!");
+				SUtil.applicationAlert("Please create folder to\n" + SUtil.getStorageDirectory(true) + "\nPress OK to close the game", "Error!");
 				LimeSystem.exit(1);
 			}
 		}
@@ -205,16 +205,6 @@ class SUtil
 	}
 	#end
 } 
-
-public static function showPopUp(message:String, title:String):Void
-	{
-		#if (!ios || !iphonesim)
-		lime.app.Application.current.window.alert(message, title);
-		#else
-		trace('$title - $message');
-		#end
-	}
-}
 
 enum StorageType
 {
