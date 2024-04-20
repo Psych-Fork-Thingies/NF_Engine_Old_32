@@ -1,13 +1,10 @@
-name: Better Android Build
+name: Main
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
   workflow_dispatch:
 jobs:
     Android:
-    name: Android
     runs-on: ubuntu-latest
     strategy:
       matrix:
