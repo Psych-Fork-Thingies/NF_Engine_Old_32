@@ -164,7 +164,7 @@ class SUtil
 
 	private static function applicationAlert(title:String, description:String)
 	{
-		Application.current.window.alert(description, title);
+		lime.app.Application.current.window.alert(description, title);
 	}
 
 	#if android
