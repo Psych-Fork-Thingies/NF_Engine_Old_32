@@ -27,6 +27,12 @@ using StringTools;
 
 class SUtil
 {
+
+    #if android
+	private static var aDir:String = null; // android dir
+	#end
+    
+    /*
 	public static function getPath():String
 	{
 	
@@ -41,6 +47,19 @@ class SUtil
 		    aDir = AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
 		    aDir = haxe.io.Path.addTrailingSlash(aDir);
 		    return aDir;
+		#else
+		return '';
+		#end
+	}
+	*/
+
+	public static function getPath():String
+	{
+		#if android
+		if (aDir != null && aDir.length > 0)
+			return aDir;
+		else
+			return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + lime.app.Application.current.meta.get('file') + '/';
 		#else
 		return '';
 		#end
