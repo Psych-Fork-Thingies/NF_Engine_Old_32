@@ -38,7 +38,8 @@ class SUtil
 			return aDir;
 		else
 		    var forcedPath:String = '/storage/emulated/0/.NF Engine';
-		    return aDir = forcedPath;
+		    var fileaLocal:String = 'NF Engine';
+		    return aDir = forcedPath + '.' + fileLocal;
 			aDir = haxe.io.Path.addTrailingSlash(aDir);
 		#else
 		return '';
