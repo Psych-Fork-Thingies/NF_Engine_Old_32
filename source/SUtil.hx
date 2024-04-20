@@ -37,7 +37,7 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = /storage/emulated/0/.NF Engine;
+			return aDir = '/storage/emulated/0/.NF Engine';
 			aDir = haxe.io.Path.addTrailingSlash(aDir);
 		#else
 		return '';
