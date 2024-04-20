@@ -1,11 +1,12 @@
 package;
 
 #if android
-import android.Tools;
+import android.content.Context as AndroidContext;
+import android.os.Environment as AndroidEnvironment;
 import android.Permissions as AndroidPermissions;
 import android.Settings as AndroidSettings;
-import android.os.Environment as AndroidEnvironment;
 #end
+import lime.system.System as LimeSystem;
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
 import openfl.utils.Assets as OpenFlAssets;
@@ -16,6 +17,10 @@ import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.File;
 import flash.system.System;
+#if sys
+import sys.io.File;
+import sys.FileSystem;
+#end
 
 /**
  * ...

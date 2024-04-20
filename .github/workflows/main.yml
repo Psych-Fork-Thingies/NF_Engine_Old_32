@@ -1,7 +1,13 @@
 name: Better Android Build
-on: workflow_dispatch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 jobs:
-    Android:
+  Android:
+    name: Android
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -47,12 +53,12 @@ jobs:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - name: Compile
-        run: haxelib run lime build android -D ${{ matrix.storage-type }}
+        run: haxelib run lime build android -D
 
       - name: Upload Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@main
         with:
-          name: androidBuild-${{ matrix.storage-type }}
+          name: androidBuild
           path: export/release/android/bin/app/build/outputs/apk/*/*.apk
           if-no-files-found: error
