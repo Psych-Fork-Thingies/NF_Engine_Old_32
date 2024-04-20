@@ -59,7 +59,7 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + lime.app.Application.current.meta.get('file') + '/';
+			return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/';
 		#else
 		return '';
 		#end
@@ -164,7 +164,7 @@ class SUtil
 
 	private static function applicationAlert(title:String, description:String)
 	{
-		lime.app.Application.current.window.alert(description, title);
+		Application.current.window.alert(description, title);
 	}
 
 	#if android
