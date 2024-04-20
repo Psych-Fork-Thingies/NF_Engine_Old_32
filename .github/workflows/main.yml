@@ -1,8 +1,10 @@
-name: Main
+name: Better Android Build
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch
 jobs:
     Android:
     runs-on: ubuntu-latest
