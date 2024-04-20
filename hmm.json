@@ -1,9 +1,11 @@
 {
     "dependencies":[
         {
-            "name":"lime",
-            "type":"haxelib",
-            "version":"7.9.0"
+            "name": "lime",
+            "type": "git",
+            "dir": null,
+            "ref": "develop",
+            "url": "https://github.com/mcagabe19-stuff/lime"
         },
         {
             "name":"openfl",
@@ -79,7 +81,7 @@
             "type":"git",
             "dir":null,
             "ref":"main",
-            "url":"https://github.com/Prohack101010/extension-androidtools-2"
+            "url":"https://github.com/MAJigsaw77/extension-androidtools"
         }
     ]
         }
