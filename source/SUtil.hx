@@ -27,14 +27,25 @@ using StringTools;
 
 class SUtil
 {
-	#if android
-	private static var aDir:String = null; // android dir
-	var forcedPath:String = '/storage/emulated/0/.NF Engine';
-    var fileLocal:String = 'NF Engine';
-	#end
-
 	public static function getPath():String
 	{
+	
+	    var aDir:String = '';
+		#if android
+		var forcedPath:String = '/storage/emulated/0/';
+		var packageNameLocal:String = 'com.shadowmario.psychengine';
+		var fileLocal:String = 'NF Engine';
+		if (aDir != null && aDir.length > 0)
+			return aDir;
+		else
+			return aDir = force ? forcedPath + '.' + fileLocal : AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
+		aDir = haxe.io.Path.addTrailingSlash(daPath);
+		#else
+		return '';
+		#end
+	}
+	
+	/*
 		#if android
 		if (aDir != null && aDir.length > 0)
 			return aDir;
@@ -45,6 +56,7 @@ class SUtil
 		return '';
 		#end
 	}
+	*/
 
 	public static function doTheCheck()
 	{
