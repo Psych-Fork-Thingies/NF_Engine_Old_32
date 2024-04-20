@@ -6,11 +6,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 jobs:
-    Android:
+  buildAndroid:
+    name: buildAndroid
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        storage-type: [EXTERNAL, MEDIA, OBB, DATA]
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -30,7 +28,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.4
+          haxe-version: 4.2.0
 
       - name: Install Libraries
         run: |
@@ -43,16 +41,21 @@ jobs:
           haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_HOME
           haxelib run lime config JAVA_HOME $JAVA_HOME
           haxelib run lime config ANDROID_SETUP true
+          haxelib set lime 7.9.0
+          haxelib set openfl 9.1.0
+          haxelib set flixel 4.11.0
+          haxelib set flixel-addons 2.11.0
+          haxelib set hxcpp 4.2.1
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - name: Compile
-        run: haxelib run lime build android -D ${{ matrix.storage-type }}
+        run: haxelib run lime build android -D
 
       - name: Upload Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@main
         with:
-          name: androidBuild-${{ matrix.storage-type }}
-          path: export/release/android/bin/app/build/outputs/apk/release/*.apk
+          name: androidBuild
+          path: export/release/android/bin/app/build/outputs/apk/*/*.apk
           if-no-files-found: error
