@@ -38,7 +38,7 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = forcedPath + '.' + fileLocal : AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
+			return aDir = forcedPath + '.' + fileLocal;
 		aDir = haxe.io.Path.addTrailingSlash(aDir);
 		#else
 		return '';
