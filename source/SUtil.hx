@@ -33,13 +33,13 @@ class SUtil
 	    var aDir:String = '';
 		#if android
 		var forcedPath:String = '/storage/emulated/0/';
-		var packageNameLocal:String = 'com.shadowmario.psychengine';
+		var packageNameLocal:String = 'com.NFengine063test';
 		var fileLocal:String = 'NF Engine';
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = force ? forcedPath + '.' + fileLocal : AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
-		aDir = haxe.io.Path.addTrailingSlash(daPath);
+			return aDir = forcedPath + '.' + fileLocal : AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
+		aDir = haxe.io.Path.addTrailingSlash(aDir);
 		#else
 		return '';
 		#end
