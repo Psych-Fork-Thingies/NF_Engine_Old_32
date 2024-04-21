@@ -188,9 +188,6 @@
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 
 	<!-- _________________________________ Android Stuff _______________________________ -->
-	<!-- Do whatever you want I'm tired uninstall and install everytime -->
-	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" />
-
 	<!--Target SDK-->
 	<android target-sdk-version="29" />
 
