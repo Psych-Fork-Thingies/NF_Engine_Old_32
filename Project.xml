@@ -189,10 +189,7 @@
 
 	<!-- _________________________________ Android Stuff _______________________________ -->
 	<!-- Do whatever you want I'm tired uninstall and install everytime -->
-	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" />
-	
-	<!--Target SDK-->
-	<android target-sdk-version="29" />
+	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" unless="debug" />
 	
 	<!-- (⁠ ͝⁠°⁠ ͜⁠ʖ͡⁠°⁠) Android Permissions (⁠ ͝⁠°⁠ ͜⁠ʖ͡⁠°⁠) -->
 	<config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>
