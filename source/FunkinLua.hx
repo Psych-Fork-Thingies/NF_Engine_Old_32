@@ -1055,6 +1055,30 @@ class FunkinLua {
 			setVarInArray(Type.resolveClass(classVar), variable, value);
 			return true;
 		});
+		
+		#if android // Extend for check control for android,you can try to extend other key at same way but I'm so lazy. --Write by NF|beihu(北狐丶逐梦)
+           if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
+			    if (variable == 'keys.justPressed.SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.justPressed){
+    			    return LuaUtils.getVarInArray(myClass, variable, allowMaps);
+                }
+                else if (variable == 'keys.pressed.SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.pressed){
+                    return LuaUtils.getVarInArray(myClass, variable, allowMaps);
+                }
+                else if (variable == 'keys.justReleased.SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.justReleased){
+                    return LuaUtils.getVarInArray(myClass, variable, allowMaps);
+                }
+                
+                if (variable == 'keys.justPressed.SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.justPressed){
+    			    return LuaUtils.getVarInArray(myClass, variable, allowMaps);
+                }
+                else if (variable == 'keys.pressed.SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.pressed){
+                    return LuaUtils.getVarInArray(myClass, variable, allowMaps);
+                }
+                else if (variable == 'keys.justReleased.SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.justReleased){
+                    return LuaUtils.getVarInArray(myClass, variable, allowMaps);
+                }
+           }            
+           #end
 
 		//shitass stuff for epic coders like me B)  *image of obama giving himself a medal*
 		Lua_helper.add_callback(lua, "getObjectOrder", function(obj:String) {
@@ -3006,6 +3030,40 @@ class FunkinLua {
 				spr.frames = Paths.getSparrowAtlas(image);
 		}
 	}
+	
+	public static function getVarInArray(instance:Dynamic, variable:String, allowMaps:Bool = false):Any
+	{
+	    
+	    #if android //Extend for check control for android,you can try to extend other key at same way but I'm so lazy. --Write by NF|beihu(北狐丶逐梦)
+	        var pressCheck:Dynamic;
+	        if (MusicBeatState.androidc.newhbox != null){ //check for android control and dont check for keyboard
+			    if (variable == 'keys.justPressed.SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.justPressed){
+    			    pressCheck = true;
+                    return pressCheck;
+                }
+                else if (variable == 'keys.pressed.SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.pressed){
+                    pressCheck = true;
+                    return pressCheck;
+                }
+                else if (variable == 'keys.justReleased.SPACE' && MusicBeatState.androidc.newhbox.buttonSpace.justReleased){
+                    pressCheck = true;
+                    return pressCheck;
+                }
+                
+                if (variable == 'keys.justPressed.SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.justPressed){
+    			    pressCheck = true;
+                    return pressCheck;
+                }
+                else if (variable == 'keys.pressed.SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.pressed){
+                    pressCheck = true;
+                    return pressCheck;
+                }
+                else if (variable == 'keys.justReleased.SHIFT' && MusicBeatState.androidc.newhbox.buttonShift.justReleased){
+                    pressCheck = true;
+                    return pressCheck;
+                }
+            }
+        #end
 
 	function setGroupStuff(leArray:Dynamic, variable:String, value:Dynamic) {
 		var killMe:Array<String> = variable.split('.');
