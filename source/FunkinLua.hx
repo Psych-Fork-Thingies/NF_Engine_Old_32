@@ -3063,7 +3063,71 @@ class FunkinLua {
                     return pressCheck;
                 }
             }
+            
+            if (MusicBeatState.androidc.vpad != null){ //check for android control and dont check for keyboard
+			    if (variable == 'keys.justPressed.SPACE' && MusicBeatState.androidc.vpad.buttonG.justPressed){
+    			    pressCheck = true;
+                    return pressCheck;
+                }
+                else if (variable == 'keys.pressed.SPACE' && MusicBeatState.androidc.vpad.buttonG.pressed){
+                    pressCheck = true;
+                    return pressCheck;
+                }
+                else if (variable == 'keys.justReleased.SPACE' && MusicBeatState.androidc.vpad.buttonG.justReleased){
+                    pressCheck = true;
+                    return pressCheck;
+                }
+                
+                if (variable == 'keys.justPressed.SHIFT' && MusicBeatState.androidc.vpad.buttonF.justPressed){
+    			    pressCheck = true;
+                    return pressCheck;
+                }
+                else if (variable == 'keys.pressed.SHIFT' && MusicBeatState.androidc.vpad.buttonF.pressed){
+                    pressCheck = true;
+                    return pressCheck;
+                }
+                else if (variable == 'keys.justReleased.SHIFT' && MusicBeatState.androidc.vpad.buttonF.justReleased){
+                    pressCheck = true;
+                    return pressCheck;
+                }
+            }
         #end
+        
+		var splitProps:Array<String> = variable.split('[');
+		if(splitProps.length > 1)
+		{
+			var target:Dynamic = null;
+			if(PlayState.instance.variables.exists(splitProps[0]))
+			{
+				var retVal:Dynamic = PlayState.instance.variables.get(splitProps[0]);
+				if(retVal != null)
+					target = retVal;
+			}
+			else
+				target = Reflect.getProperty(instance, splitProps[0]);
+
+			for (i in 1...splitProps.length)
+			{
+				var j:Dynamic = splitProps[i].substr(0, splitProps[i].length - 1);
+				target = target[j];
+			}
+			return target;
+		}            
+
+		if(allowMaps && isMap(instance))
+		{
+			//trace(instance);
+			return instance.get(variable);
+		}
+
+		if(PlayState.instance.variables.exists(variable))
+		{
+			var retVal:Dynamic = PlayState.instance.variables.get(variable);
+			if(retVal != null)
+				return retVal;
+		}
+		return Reflect.getProperty(instance, variable);
+	}
 
 	function setGroupStuff(leArray:Dynamic, variable:String, value:Dynamic) {
 		var killMe:Array<String> = variable.split('.');
