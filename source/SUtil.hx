@@ -32,24 +32,6 @@ class SUtil
 	private static var aDir:String = null; // android dir
 	#end
     
-    /*
-	public static function getPath():String
-	{
-	
-		#if android
-		var forcedPath:String = '/storage/emulated/0/';
-		var packageNameLocal:String = 'com.NFengine063test';
-		var fileLocal:String = 'NF Engine';
-		if (aDir != null && aDir.length > 0)
-			return aDir;
-		else
-		    return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + lime.app.Application.current.meta.get('file' + '/');
-		#else
-		return '';
-		#end
-	}
-	*/
-
 	public static function getPath():String
 	{
 		#if android
@@ -62,35 +44,20 @@ class SUtil
 		#end
 	}
 	
-	/*
-		#if android
-		if (aDir != null && aDir.length > 0)
-			return aDir;
-		else
-		    return aDir = forcedPath + '.' + fileLocal;
-			aDir = haxe.io.Path.addTrailingSlash(aDir);
-		#else
-		return '';
-		#end
-	}
-	*/
-
 	public static function doTheCheck()
 	{
 		#if android
 		if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE) || !AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE))
 		{
-			AndroidPermissions.requestPermission(AndroidPermissions.READ_EXTERNAL_STORAGE);
-			AndroidPermissions.requestPermission(AndroidPermissions.WRITE_EXTERNAL_STORAGE);
+		    AndroidPermissions.requestPermission(AndroidPermissions.READ_EXTERNAL_STORAGE);
+		    AndroidPermissions.requestPermission(AndroidPermissions.WRITE_EXTERNAL_STORAGE);
 			SUtil.showPopUp('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
-			if (!AndroidEnvironment.isExternalStorageManager())
-				AndroidSettings.requestSetting("android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
 		}
 
 		if (AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE) || AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE))
 		{
-			if (!FileSystem.exists(SUtil.getPath()))
-				FileSystem.createDirectory(SUtil.getPath());
+			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file')))
+				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file'));
 
 			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
 			{
@@ -117,7 +84,7 @@ class SUtil
 		}
 		#end
 	}
-
+	
 	public static function gameCrashCheck()
 	{
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
