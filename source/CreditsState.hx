@@ -104,9 +104,9 @@ class CreditsState extends MusicBeatState
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
 
-		    ['NF Engine Old 32 Team'],
-		      //['KralOyuncu',		'KralOyuncu',		'Owner',							'https://youtube.com/@KralOyuncuRBX',	'FFC0CB'],
-			['Prohack101010',		'Prohack101010',		'32 bit support and video sprite script fixer',							'https://youtube.com/@KralOyuncuRBX',	'FFC0CB'],
+		    ['NF Engine Custom Build Team'],
+		    ['KralOyuncu',		'KralOyuncu',		'Its me KralOyuncu',							'https://youtube.com/@KralOyuncuRBX',	'FFC0CB'],
+		  //['Prohack101010',		'Prohack101010',		'32 bit support and video sprite script fixer',							'https://youtube.com/@KralOyuncuRBX',	'FFC0CB'],
 			['Prohack202020',		'Prohack202020',		'Helper',							'https://github.com/Prohack202020',	'5DE7FF'],
 			[''],
 		    ['NF Engine Team'],
