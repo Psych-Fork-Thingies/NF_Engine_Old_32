@@ -52,7 +52,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		SUtil.doPermissionsShit();
+		SUtil.doTheCheck();
 		Sys.setCwd(SUtil.getPath());
 		
 
