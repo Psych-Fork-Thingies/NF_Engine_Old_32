@@ -1,12 +1,10 @@
 package;
 
 #if android
-import android.content.Context as AndroidContext;
-import android.os.Environment as AndroidEnvironment;
-import android.Permissions as AndroidPermissions;
-import android.Settings as AndroidSettings;
+import android.Tools;
+import android.Permissions;
+import android.PermissionsList;
 #end
-import lime.system.System as LimeSystem;
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
 import openfl.utils.Assets as OpenFlAssets;
@@ -27,41 +25,39 @@ using StringTools;
 
 class SUtil
 {
-
-    #if android
+	#if android
 	private static var aDir:String = null; // android dir
 	#end
-    
+
 	public static function getPath():String
 	{
 		#if android
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + lime.app.Application.current.meta.get('file') + '/';
+			return aDir = Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/';
 		#else
 		return '';
 		#end
 	}
-	
+
 	public static function doTheCheck()
 	{
 		#if android
-		if (!AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE) || !AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE))
+		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
-		    AndroidPermissions.requestPermission(AndroidPermissions.READ_EXTERNAL_STORAGE);
-		    AndroidPermissions.requestPermission(AndroidPermissions.WRITE_EXTERNAL_STORAGE);
-			SUtil.showPopUp('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
+			Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
+			SUtil.applicationAlert('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
 		}
 
-		if (AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.READ_EXTERNAL_STORAGE) || AndroidPermissions.getGrantedPermissions().contains(AndroidPermissions.WRITE_EXTERNAL_STORAGE))
+		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
 			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file')))
 				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file'));
 
 			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
 			{
-				SUtil.showPopUp('Uncaught Error :(!', "Whoops, seems you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
+				SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
 				CoolUtil.browserLoad('https://b23.tv/qnuSteM');
 				System.exit(0);
 			}
@@ -69,14 +65,14 @@ class SUtil
 			{
 				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
 				{
-					SUtil.showPopUp('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
 					CoolUtil.browserLoad('https://b23.tv/qnuSteM');
 					System.exit(0);
 				}
 
 				if (!FileSystem.exists(SUtil.getPath() + 'mods'))
 				{
-					SUtil.showPopUp('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
 					CoolUtil.browserLoad('https://b23.tv/qnuSteM');
 					System.exit(0);
 				}
@@ -84,7 +80,7 @@ class SUtil
 		}
 		#end
 	}
-	
+
 	public static function gameCrashCheck()
 	{
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
@@ -122,13 +118,13 @@ class SUtil
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 		Sys.println("Making a simple alert ...");
 
-		SUtil.showPopUp("Uncaught Error :(!", errMsg);
+		SUtil.applicationAlert("Uncaught Error :(!", errMsg);
 		System.exit(0);
 	}
 
-	public static function showPopUp(title:String, description:String):Void
+	private static function applicationAlert(title:String, description:String)
 	{
-		lime.app.Application.current.window.alert(description, title);
+		Application.current.window.alert(description, title);
 	}
 
 	#if android
@@ -138,7 +134,7 @@ class SUtil
 			FileSystem.createDirectory(SUtil.getPath() + 'saves');
 
 		File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
-		SUtil.showPopUp('Done :)!', 'File Saved Successfully!');
+		SUtil.applicationAlert('Done :)!', 'File Saved Successfully!');
 	}
     
     public static function AutosaveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code')
@@ -147,13 +143,13 @@ class SUtil
 			FileSystem.createDirectory(SUtil.getPath() + 'saves');
 
 		File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
-		//SUtil.showPopUp('Done :)!', 'File Saved Successfully!');
+		//SUtil.applicationAlert('Done :)!', 'File Saved Successfully!');
 	}
 	
 	public static function saveClipboard(fileData:String = 'you forgot something to add in your code')
 	{
 		openfl.system.System.setClipboard(fileData);
-		SUtil.showPopUp('Done :)!', 'Data Saved to Clipboard Successfully!');
+		SUtil.applicationAlert('Done :)!', 'Data Saved to Clipboard Successfully!');
 	}
 
 	public static function copyContent(copyPath:String, savePath:String)
