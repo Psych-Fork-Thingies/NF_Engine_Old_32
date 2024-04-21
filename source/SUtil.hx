@@ -36,7 +36,6 @@ class SUtil
 	public static function getPath():String
 	{
 	
-	    var aDir:String = '';
 		#if android
 		var forcedPath:String = '/storage/emulated/0/';
 		var packageNameLocal:String = 'com.NFengine063test';
@@ -44,9 +43,7 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-		    aDir = AndroidEnvironment.getExternalStorageDirectory() + '/.' + lime.app.Application.current.meta.get('file');
-		    aDir = haxe.io.Path.addTrailingSlash(aDir);
-		    return aDir;
+		    return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + lime.app.Application.current.meta.get('file' + '/');
 		#else
 		return '';
 		#end
@@ -59,7 +56,7 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/';
+			return aDir = AndroidEnvironment.getExternalStorageDirectory() + '/' + '.' + lime.app.Application.current.meta.get('file') + '/';
 		#else
 		return '';
 		#end
