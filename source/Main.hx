@@ -52,10 +52,8 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		#if android
 		SUtil.doPermissionsShit();
 		Sys.setCwd(SUtil.getPath());
-		mobile.backend.CrashHandler.init();
 		
 
     /*
