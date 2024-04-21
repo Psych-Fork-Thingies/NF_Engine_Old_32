@@ -52,11 +52,6 @@ class MusicBeatState extends FlxUIState
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
-		
-	private function get_controls()
-	{
-		return Controls.instance;
-	}
 
 	#if android
 	public static var _virtualpad:FlxVirtualPad;
