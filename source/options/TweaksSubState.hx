@@ -64,7 +64,7 @@ class TweaksSubState extends BaseOptionsMenu
         
 	public function new()
 	{
-		title = 'Tweaks';
+		title = 'NF Engine Tweaks Menu';
 		rpcTitle = 'KralOyuncu & NF Engine Tweaks Menu'; //for Discord Rich Presence
         noteSkinList.unshift('original');
         
@@ -72,7 +72,7 @@ class TweaksSubState extends BaseOptionsMenu
 			"Which HUD would you like?",
 			'hudType',
 			'string',
-			'VS Impostor',
+			'Psych Engine',
 			['VS Impostor', 'Kade Engine', 'Dave & Bambi', 'Psych Engine']);
 		addOption(option);
 		
@@ -96,11 +96,11 @@ class TweaksSubState extends BaseOptionsMenu
 			['Psych Engine', 'VS Impostor', 'Base Game', 'Doki Doki+', 'TGT V4', 'Indie Cross']);
 		addOption(option);
 		
-		var option:Option = new Option('Automatic Note Spawn Time', //Name
-			"If checked, the Notes' spawn time will instead depend on the scroll speed. \nUseful if you don't want notes just spawning out of thin air. \nNOTE: Disable this if you use Lua Extra Keys!!", //Description
-			'dynamicSpawnTime', //Save data variable name
-			'bool', //Variable type
-			true); //Default value
+		var option:Option = new Option('Spammable Inputs',
+			'If chacked the input system is more spammable',
+			'ezSpam',
+			'bool',
+			true);
 		addOption(option);
 		
 		var option:Option = new Option('GradientColor TimeBar ',
@@ -108,13 +108,6 @@ class TweaksSubState extends BaseOptionsMenu
 			'gradientTimeBar',
 			'bool',
 			true);
-		addOption(option);
-		
-		var option:Option = new Option('Spammable Inputs',
-			'If checked, the input system is more spammable.',
-			'ezSpam',
-			'bool',
-			false);
 		addOption(option);
 		
 		/*
@@ -127,7 +120,7 @@ class TweaksSubState extends BaseOptionsMenu
 		*/
 		
 		var option:Option = new Option('Better Middlescroll',
-			"If checked, your notes and the opponent's notes get centered.",
+			"If chacked your notes and the opponent's notes get centered",
 			'betterMidScroll',
 			'bool',
 			false);
@@ -146,21 +139,28 @@ class TweaksSubState extends BaseOptionsMenu
 		addOption(option);
 		
 		var option:Option = new Option('Light Opponent Strums',
-			"If this is unchecked, the Opponent strums won't light up when the Opponent hits a note.",
+			"If this is unchecked, the Opponent strums won't light up when the Opponent hits a note",
 			'opponentLightStrum',
 			'bool',
 			true);
 		addOption(option);
 
 		var option:Option = new Option('Light Botplay Strums',
-			"If this is unchecked, the Player strums won't light when Botplay is active.",
+			"If this is unchecked, the Player strums won't light when Botplay is active",
 			'botLightStrum',
 			'bool',
 			true);
 		addOption(option);
 		
+		var option:Option = new Option('Automatic Note Spawn Time', //Name
+			"If checked, the Notes' spawn time will instead depend on the scroll speed. \nUseful if you don't want notes just spawning out of thin air. \nNOTE: Disable this if you use Lua Extra Keys!!", //Description
+			'dynamicSpawnTime', //Save data variable name
+			'bool', //Variable type
+			true); //Default value
+		addOption(option);
+		
 		var option:Option = new Option('Fix Opponent Play Mechanics',
-			'dont disable this',
+			'Just Mechanics Bro',
 			'fixopponentplay',
 			'bool',
 			true);

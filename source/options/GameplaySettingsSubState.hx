@@ -50,14 +50,14 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'If checked, notes go Down instead of Up, simple enough.', //Description
 			'downScroll', //Save data variable name
 			'bool', //Variable type
-			true); //Default value
+			false); //Default value
 		addOption(option);
 
 		var option:Option = new Option('Middlescroll',
 			'If checked, your notes get centered.',
 			'middleScroll',
 			'bool',
-			false);
+			true);
 		addOption(option);
 
 		var option:Option = new Option('Opponent Notes',

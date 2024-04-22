@@ -188,8 +188,8 @@
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 
 	<!-- _________________________________ Android Stuff _______________________________ -->
-	<!--Target SDK-->
-	<android target-sdk-version="29" />
+	<!--Target SDK (SDK 29 Not work lol)-->
+	<android target-sdk-version="28" />
 
 	<!-- (⁠ ͝⁠°⁠ ͜⁠ʖ͡⁠°⁠) Android Permissions (⁠ ͝⁠°⁠ ͜⁠ʖ͡⁠°⁠) -->
 	<config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>

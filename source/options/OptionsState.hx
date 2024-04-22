@@ -121,6 +121,12 @@ class OptionsState extends MusicBeatState
 			tipText.scrollFactor.set();
 			tipText.antialiasing = ClientPrefs.globalAntialiasing;
 			add(tipText);
+			tipText = new FlxText(150, FlxG.height - 64, 0, 'Press Z to Go In NF Tweaks Menu', 16);
+			tipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			tipText.borderSize = 1.25;
+			tipText.scrollFactor.set();
+			tipText.antialiasing = ClientPrefs.globalAntialiasing;
+			add(tipText);
 		#end	
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);	

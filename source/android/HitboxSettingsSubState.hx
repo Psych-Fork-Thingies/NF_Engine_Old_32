@@ -43,7 +43,7 @@ class HitboxSettingsSubState extends BaseOptionsMenu
 			"Allow Extra Controls",
 			'hitboxExtend',
 			'float',
-			0.2);
+			2);
 		option.scrollSpeed = 1.6;
 		option.minValue = 0;
 		option.maxValue = 4;
